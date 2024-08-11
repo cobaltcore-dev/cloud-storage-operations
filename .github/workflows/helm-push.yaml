@@ -19,7 +19,7 @@ env:
   ACTIONS_RUNNER_DEBUG: false
 
 jobs:
-  helm-release:
+  helm-push:
     runs-on: [ ubuntu-latest ]
 
     steps:
