@@ -68,6 +68,7 @@ jobs:
           ALL_CHANGED_FILES: ${{ steps.changed-chart-yaml-files.outputs.all_changed_files }}
         run: |
           for file in ${ALL_CHANGED_FILES}; do
+            echo "Checking ${file}"
             chart_name=$(yq .name "$file")
             chart_version=$(yq .version "$file")
             if helm pull "oci://${{ env.REGISTRY }}/${{ github.repository }}/charts/${{ chart_name }}" --version $chart_version; then
