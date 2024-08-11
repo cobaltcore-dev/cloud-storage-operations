@@ -5,11 +5,15 @@ apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 
 metadata:
+  name: prometheus-ceph-rules
+  namespace: rook-ceph
   labels:
     prometheus: rook-prometheus
     role: alert-rules
-  name: prometheus-ceph-rules
-  namespace: rook-ceph
+    # Only required if deployed via Greenhouse to link the PrometheusRule to the corresponding Prometheus.
+    {{- if and $root.Values.global $root.Values.global.greenhouse $root.Values.global.greenhouse.clusterName }}
+    plugin: kube-monitoring-{{ $root.Values.global.greenhouse.clusterName }}
+    {{- end }}
 
 spec:
 {{ printf "%s" $bytes | indent 2 }}
