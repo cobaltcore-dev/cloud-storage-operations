@@ -71,7 +71,7 @@ jobs:
             chart_name=$(yq .name "$file")
             chart_version=$(yq .version "$file")
             if helm pull "oci://${{ env.REGISTRY }}/${{ github.repository }}/charts/${{ chart_name }}" --version $chart_version; then
-              echo "chart=${chart_name}" >> "$GITHUB_OUTPUT"
+              echo "chart_name=${chart_name}" >> "$GITHUB_OUTPUT"
               echo "chart_version=${chart_version}" >> "$GITHUB_OUTPUT"
               echo "needsbump=true" >> "$GITHUB_OUTPUT"
               exit 1
