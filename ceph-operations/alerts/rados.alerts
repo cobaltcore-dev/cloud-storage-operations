@@ -1,0 +1,14 @@
+groups:
+- name: "rados"
+  rules:
+    - alert: "CephObjectMissing"
+      annotations:
+        description: "The latest version of a RADOS object can not be found, even though all OSDs are up. I/O requests for this object from clients will block (hang). Resolving this issue may require the object to be rolled back to a prior version manually, and manually verified."
+        documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#object-unfound"
+        summary: "Object(s) marked UNFOUND"
+      expr: "(ceph_health_detail{name=\"OBJECT_UNFOUND\"} == 1) * on() (count(ceph_osd_up == 1) == bool count(ceph_osd_metadata)) == 1"
+      for: "30s"
+      labels:
+        oid: "1.3.6.1.4.1.50495.1.2.1.10.1"
+        severity: "critical"
+        type: "ceph_default"

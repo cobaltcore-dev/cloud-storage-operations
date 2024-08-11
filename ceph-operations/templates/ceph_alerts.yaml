@@ -1,0 +1,17 @@
+{{- $root := . }}
+{{- range $path, $bytes := $.Files.Glob "alerts/*.alerts" }}
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+
+metadata:
+  labels:
+    prometheus: rook-prometheus
+    role: alert-rules
+  name: prometheus-ceph-rules
+  namespace: rook-ceph
+
+spec:
+{{ printf "%s" $bytes | indent 2 }}
+
+{{- end }}
