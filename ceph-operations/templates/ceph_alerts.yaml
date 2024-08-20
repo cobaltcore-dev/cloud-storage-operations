@@ -6,12 +6,14 @@ kind: PrometheusRule
 
 metadata:
   name: prometheus-ceph-rules
-  namespace: rook-ceph
+  namespace: {{ .Release.Namespace }}
   labels:
     prometheus: rook-prometheus
     role: alert-rules
     # Only required if deployed via Greenhouse to link the PrometheusRule to the corresponding Prometheus.
     {{- if and $root.Values.global $root.Values.global.greenhouse $root.Values.global.greenhouse.clusterName }}
+    # Currently assuming the kube-monitoring Greenhouse Plugin release name is *kube-monitoring-<cluster-name>*
+    # TODO: Needs to be spec'able
     plugin: kube-monitoring-{{ $root.Values.global.greenhouse.clusterName }}
     {{- end }}
 
