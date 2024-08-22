@@ -6,6 +6,7 @@ kind: PrometheusRule
 
 metadata:
   name: prometheus-ceph-rules
+  name: {{ printf "promtheus-ceph-rules-%s" (trimPrefix "alerts/" $path) | replace "." "-"}}
   namespace: {{ $.Release.Namespace }}
   labels:
     prometheus: rook-prometheus
