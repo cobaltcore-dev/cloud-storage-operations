@@ -6,12 +6,12 @@ kind: PluginDefinition
 metadata:
   name: ceph-operations
 spec:
-  version: "1.0.1"
+  version: "1.0.2"
   displayName: Ceph operations bundle
   description: Operations bundle for the Ceph storage backend
   docMarkDownUrl: https://raw.githubusercontent.com/cobaltcore-dev/cloud-storage-operations/main/ceph-operations/README.md
   icon: https://raw.githubusercontent.com/cobaltcore-dev/cloud-storage-operations/main/ceph-operations/ceph-logo.png
   helmChart:
     name: ceph-operations
-    repository: oci://ghcr.io/cobaltcore-dev/ceph-operations/charts
+    repository: oci://ghcr.io/cobaltcore-dev/cloud-storage-operations/charts
     version: 1.0.1
