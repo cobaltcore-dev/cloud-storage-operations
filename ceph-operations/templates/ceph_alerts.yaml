@@ -6,7 +6,7 @@ kind: PrometheusRule
 
 metadata:
   name: prometheus-ceph-rules
-  namespace: {{ .Release.Namespace }}
+  namespace: {{ $ .Release.Namespace }}
   labels:
     prometheus: rook-prometheus
     role: alert-rules
