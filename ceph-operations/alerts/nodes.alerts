@@ -66,6 +66,17 @@ groups:
         type: "ceph_default"
         service: ceph
         #support_group: storage
+    - alert: "CephNodeExporterMissing"
+      annotations:
+        summary: "Node exporter is not running on Node {{ $labels.node }}"
+        description: "Node exporter is not running on Node {{ $labels.node }}. Check the node exporter pod and network status of the node."
+      expr: |
+        up{job="node-exporter"} == 0
+      labels:
+        severity: "warning"
+        type: "ceph_default"
+        service: ceph
+        #support_group: storage
     - alert: "CephNodeDiskspaceWarning"
       annotations:
         description: "Mountpoint {{ $labels.mountpoint }} on {{ $labels.nodename }} will be full in less than 5 days based on the 48 hour trailing fill rate."
