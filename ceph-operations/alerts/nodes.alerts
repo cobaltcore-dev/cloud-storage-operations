@@ -61,6 +61,31 @@ groups:
         description: "Bond {{ $labels.master }} is degraded on Node {{ $labels.instance }}."
       expr: |
         node_bonding_slaves - node_bonding_active != 0
+      for: "10m"
+      labels:
+        severity: "warning"
+        type: "ceph_default"
+        service: ceph
+        #support_group: storage
+    - alert: "CephNodeBondInterfacesMismatch"
+      annotations:
+        summary: "Degraded Bond on Node {{ $labels.node }}"
+        description: "Bond {{ $labels.master }} does not have 2 active interfaces on Node {{ $labels.node }}."
+      expr: |
+        node_bonding_active != 2
+      for: "10m"
+      labels:
+        severity: "warning"
+        type: "ceph_default"
+        service: ceph
+        #support_group: storage
+    - alert: "CephNodeBondMetricsAbsent"
+      annotations:
+        summary: "Bond metrics are absent on Node {{ $labels.node }}"
+        description: "Bond metrics are absent on Node {{ $labels.node }}. Check the network status of the node."
+      expr: |
+        max_over_time(node_bonding_active[6h]) unless ignoring(instance, pod) node_bonding_active
+      for: "30m"
       labels:
         severity: "warning"
         type: "ceph_default"
@@ -72,6 +97,7 @@ groups:
         description: "Node exporter is not running on Node {{ $labels.node }}. Check the node exporter pod and network status of the node."
       expr: |
         up{job="node-exporter"} == 0
+      for: "10m"
       labels:
         severity: "warning"
         type: "ceph_default"
