@@ -12,7 +12,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephDaemonSlowOps"
       for: "30s"
       expr: "ceph_daemon_health_metrics{type=\"SLOW_OPS\"} > 0"
@@ -20,7 +20,7 @@ groups:
         severity: 'warning'
         type: 'ceph_default'
         service: ceph
-        #support_group: storage
+        support_group: storage
       annotations:
         summary: "{{ $labels.ceph_daemon }} operations are slow to complete"
         description: "{{ $labels.ceph_daemon }} operations are taking too long to process (complaint time exceeded)"

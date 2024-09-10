@@ -13,7 +13,7 @@ groups:
         severity: "critical"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
 
     - alert: "CephMgrPrometheusModuleInactive"
       annotations:
@@ -26,4 +26,4 @@ groups:
         severity: "critical"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
