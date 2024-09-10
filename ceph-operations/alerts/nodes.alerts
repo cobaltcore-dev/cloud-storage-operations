@@ -12,7 +12,7 @@ groups:
         severity: "critical"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephNodeNetworkPacketDrops"
       annotations:
         description: "Node {{ $labels.instance }} experiences packet drop > 0.5% or > 10 packets/s on interface {{ $labels.device }}."
@@ -33,7 +33,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephNodeNetworkPacketErrors"
       annotations:
         description: "Node {{ $labels.instance }} experiences packet errors > 0.01% or > 10 packets/s on interface {{ $labels.device }}."
@@ -54,7 +54,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephNodeNetworkBondDegraded"
       annotations:
         summary: "Degraded Bond on Node {{ $labels.instance }}"
@@ -66,7 +66,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephNodeBondInterfacesMismatch"
       annotations:
         summary: "Degraded Bond on Node {{ $labels.node }}"
@@ -78,7 +78,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephNodeBondMetricsAbsent"
       annotations:
         summary: "Bond metrics are absent on Node {{ $labels.node }}"
@@ -90,7 +90,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephNodeExporterMissing"
       annotations:
         summary: "Node exporter is not running on Node {{ $labels.node }}"
@@ -102,7 +102,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     - alert: "CephNodeDiskspaceWarning"
       annotations:
         description: "Mountpoint {{ $labels.mountpoint }} on {{ $labels.nodename }} will be full in less than 5 days based on the 48 hour trailing fill rate."
@@ -113,7 +113,7 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
-        #support_group: storage
+        support_group: storage
     # - alert: "CephNodeInconsistentMTU"
     #   annotations:
     #     description: "Node {{ $labels.instance }} has a different MTU size ({{ $value }}) than the median of devices named {{ $labels.device }}."
