@@ -12,6 +12,7 @@ groups:
         severity: "critical"
         type: "ceph_default"
         service: ceph
+        support_group: storage
         inhibited_by: cluster-maintenance
 
     - alert: "CephHealthWarning"
@@ -24,4 +25,5 @@ groups:
         severity: "warning"
         type: "ceph_default"
         service: ceph
+        support_group: storage
         inhibited_by: cluster-maintenance
