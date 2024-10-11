@@ -21,7 +21,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
-        {{`{{ $min := query \"floor(count(ceph_mon_metadata) / 2) + 1\" | first | value }}`}}Quorum requires a majority of monitors (x `{{`{{ $min }}`}}`) to be active. Without quorum the cluster will become inoperable, affecting all services and connected clients. The following monitors are down: `{{`{{- range query \"(ceph_mon_quorum_status == 0) + on(ceph_daemon) group_left(hostname) (ceph_mon_metadata * 0)\" }} - {{ .Labels.ceph_daemon }} on {{ .Labels.hostname }} {{- end }}`}}`
+        {{`{{ $min := query "floor(count(ceph_mon_metadata) / 2) + 1" | first | value }}`}}Quorum requires a majority of monitors (x `{{`{{ $min }}`}}`) to be active. Without quorum the cluster will become inoperable, affecting all services and connected clients. The following monitors are down: `{{`{{- range query "(ceph_mon_quorum_status == 0) + on(ceph_daemon) group_left(hostname) (ceph_mon_metadata * 0)" }} - {{ .Labels.ceph_daemon }} on {{ .Labels.hostname }} {{- end }}`}}`
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#mon-down"
       summary: "Monitor quorum is at risk"
 {{- end }}
@@ -54,7 +54,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
-        The free space available to a monitor's store is critically low. You should increase the space available to the monitor(s). The default directory is `/var/lib/ceph/mon-*/data/store.db` on traditional deployments, and `/var/lib/rook/mon-*/data/store.db` on the mon pod's worker node for Rook. Look for old, rotated versions of `*.log` and `MANIFEST*`. Do NOT touch any `*.sst` files. Also check any other directories under `/var/lib/rook` and other directories on the same filesystem, often `/var/log` and `/var/tmp` are culprits. Your monitor hosts are; `{{`{{- range query \"ceph_mon_metadata\"}} - {{ .Labels.hostname }} {{- end }}`}}`
+        The free space available to a monitor's store is critically low. You should increase the space available to the monitor(s). The default directory is `/var/lib/ceph/mon-*/data/store.db` on traditional deployments, and `/var/lib/rook/mon-*/data/store.db` on the mon pod's worker node for Rook. Look for old, rotated versions of `*.log` and `MANIFEST*`. Do NOT touch any `*.sst` files. Also check any other directories under `/var/lib/rook` and other directories on the same filesystem, often `/var/log` and `/var/tmp` are culprits. Your monitor hosts are; `{{`{{- range query "ceph_mon_metadata"}} - {{ .Labels.hostname }} {{- end }}`}}`
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#mon-disk-crit"
       summary: "Filesystem space on at least one monitor is critically low"
 {{- end }}
@@ -69,7 +69,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
-        The space available to a monitor's store is approaching full (>70% is the default). You should increase the space available to the monitor(s). The default directory is `/var/lib/ceph/mon-*/data/store.db` on traditional deployments, and `/var/lib/rook/mon-*/data/store.db` on the mon pod's worker node for Rook. Look for old, rotated versions of `*.log` and `MANIFEST*`.  Do NOT touch any `*.sst` files. Also check any other directories under `/var/lib/rook` and other directories on the same filesystem, often `/var/log` and `/var/tmp` are culprits. Your monitor hosts are; `{{`{{- range query \"ceph_mon_metadata\"}} - {{ .Labels.hostname }} {{- end }}`}}`
+        The space available to a monitor's store is approaching full (>70% is the default). You should increase the space available to the monitor(s). The default directory is `/var/lib/ceph/mon-*/data/store.db` on traditional deployments, and `/var/lib/rook/mon-*/data/store.db` on the mon pod's worker node for Rook. Look for old, rotated versions of `*.log` and `MANIFEST*`.  Do NOT touch any `*.sst` files. Also check any other directories under `/var/lib/rook` and other directories on the same filesystem, often `/var/log` and `/var/tmp` are culprits. Your monitor hosts are; `{{`{{- range query "ceph_mon_metadata"}} - {{ .Labels.hostname }} {{- end }}`}}`
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#mon-disk-low"
       summary: "Drive space on at least one monitor is approaching full"
   {{- end }}

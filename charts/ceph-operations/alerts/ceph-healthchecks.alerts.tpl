@@ -21,7 +21,7 @@ groups:
 {{- if not (.Values.prometheusRules.disabled.CephDaemonSlowOps | default false) }}
   - alert: CephDaemonSlowOps
     for: 30s
-    expr: ceph_daemon_health_metrics{type=\"SLOW_OPS\"} > 0
+    expr: ceph_daemon_health_metrics{type="SLOW_OPS"} > 0
     labels:
       severity: warning
       type: ceph_default

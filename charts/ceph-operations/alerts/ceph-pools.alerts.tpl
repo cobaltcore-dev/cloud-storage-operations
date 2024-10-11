@@ -27,7 +27,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
-        A pool has reached its MAX quota, or OSDs supporting the pool have reached the FULL threshold. Until this is resolved, writes to the pool will be blocked. Pool Breakdown (top 5) `{{`{{- range query \"topk(5, sort_desc(ceph_pool_percent_used * on(pool_id) group_right ceph_pool_metadata))\" }} - {{ .Labels.name }} at {{ .Value }}% {{- end }}`}}` Increase the pool's quota, or add capacity to the cluster first then increase the pool's quota (e.g. `ceph osd pool set quota <pool_name> max_bytes <bytes>`)
+        A pool has reached its MAX quota, or OSDs supporting the pool have reached the FULL threshold. Until this is resolved, writes to the pool will be blocked. Pool Breakdown (top 5) `{{`{{- range query "topk(5, sort_desc(ceph_pool_percent_used * on(pool_id) group_right ceph_pool_metadata))" }} - {{ .Labels.name }} at {{ .Value }}% {{- end }}`}}` Increase the pool's quota, or add capacity to the cluster first then increase the pool's quota (e.g. `ceph osd pool set quota <pool_name> max_bytes <bytes>`)
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#pool-full"
       summary: "Pool is full - writes are blocked"
 {{- end }}
