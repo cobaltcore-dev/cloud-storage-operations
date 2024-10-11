@@ -1,6 +1,6 @@
 {{- if not .Values.prometheusRules.ruleGroups.pgr }}
 groups: []
-{{- else }}
+{{- else -}}
 groups:
 - name: pgs
   rules:
@@ -13,7 +13,7 @@ groups:
       severity: critical
       type: ceph_default
       inhibited_by: cluster-maintenance
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         `{{`{{ $value }}`}}` PGs have been inactive for more than 5 minutes in pool `{{`{{ $labels.name }}`}}`. Inactive placement groups are not able to serve read/write requests.
@@ -29,7 +29,7 @@ groups:
       severity: warning
       type: ceph_default
       inhibited_by: cluster-maintenance
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         `{{`{{ $value }}`}}` PGs have been unclean for more than 15 minutes in pool `{{`{{ $labels.name }}`}}`. Unclean PGs have not recovered from a previous failure.
@@ -44,7 +44,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.7.4"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         During data consistency checks (scrub), at least one PG has been flagged as being damaged or inconsistent. Check to see which PG is affected, and attempt a manual repair if necessary. To list problematic placement groups, use `rados list-inconsistent-pg <pool>`. To repair PGs use the `ceph pg repair <pg_num>` command.
@@ -60,7 +60,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.7.5"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Data redundancy is at risk since one or more OSDs are at or above the `full` threshold. Add more capacity to the cluster, restore down/out OSDs, or delete unwanted data."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#pg-recovery-full"
@@ -75,7 +75,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.7.3"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Data availability is reduced, impacting the cluster's ability to service I/O. One or more placement groups (PGs) are in a state that blocks I/O."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#pg-availability"
@@ -90,7 +90,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.7.6"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Data redundancy may be at risk due to lack of free space within the cluster. One or more OSDs have reached the 'backfillfull' threshold. Add more capacity, or delete unwanted data."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#pg-backfill-full"
@@ -104,7 +104,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         One or more PGs have not been scrubbed recently. Scrubs check metadata integrity, protecting against bit-rot. They check that metadata is consistent across data replicas. When PGs miss their scrub interval, it may indicate that the scrub window is too small, or PGs were not in a 'clean' state during the scrub window. You can manually initiate a scrub with: `ceph pg scrub <pgid>`
@@ -119,7 +119,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         The number of placement groups per OSD is too high (exceeds the mon_max_pg_per_osd setting).\n Check that the pg_autoscaler has not been disabled for any pools with `ceph osd pool autoscale-status`, and that the profile selected is appropriate. You may also adjust the target_size_ratio of a pool to guide the autoscaler based on the expected relative size of the pool (`ceph osd pool set cephfs.cephfs.meta target_size_ratio .1`) or set the `pg_autoscaler` mode to `warn` and adjust `pg_num` appropriately for one or more pools.
@@ -134,7 +134,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         One or more PGs have not been deep scrubbed recently. Deep scrubs protect against bit-rot. They compare data replicas to ensure consistency. When PGs miss their deep scrub interval, it may indicate that the window is too small or PGs were not in a 'clean' state during the deep-scrub window.
@@ -149,7 +149,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The ceph-mgr hasn’t yet received any information about the PG’s state from an OSD since mgr started up."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/pg-states/"
@@ -163,7 +163,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The placement group is in an unknown state - the monitors have not received an update for it since the placement group mapping changed."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/pg-states/"
@@ -177,7 +177,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The set of OSDs for this PG has just changed and IO is temporarily paused until the previous interval’s leases expire."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/pg-states/"
@@ -191,7 +191,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "A replica is not acknowledging new leases from the primary in a timely fashion; IO is temporarily paused."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/pg-states/"
@@ -205,7 +205,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The placement group is undergoing the peering process"
       documentation: "https://docs.ceph.com/en/latest/rados/operations/pg-states/"
@@ -219,7 +219,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The placement group has peered, but cannot serve client IO due to not having enough copies to reach the pool’s configured min_size parameter. Recovery may occur in this state, so the pg may heal up to min_size eventually."
       documentation: "https://docs.ceph.com/en/latest/rados/operations/pg-states/"

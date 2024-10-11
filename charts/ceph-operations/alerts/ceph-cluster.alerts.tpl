@@ -1,6 +1,6 @@
 {{- if not .Values.prometheusRules.ruleGroups.clusterHealth }}
 groups: []
-{{- else }}
+{{- else -}}
 groups:
 - name: cluster-health
   rules:
@@ -13,7 +13,7 @@ groups:
       severity: critical
       type: ceph_default
       inhibited_by: cluster-maintenance
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The cluster state has been HEALTH_ERROR for more than 5 minutes. Please check `ceph health detail` for more information."
       summary: "Ceph is in the ERROR state"
@@ -27,7 +27,7 @@ groups:
       severity: warning
       type: ceph_default
       inhibited_by: cluster-maintenance
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The cluster state has been HEALTH_WARN for more than 15 minutes. Please check `ceph health detail` for more information."
       summary: "Ceph is in the WARNING state"

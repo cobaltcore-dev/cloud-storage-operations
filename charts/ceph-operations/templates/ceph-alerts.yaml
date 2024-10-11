@@ -6,7 +6,7 @@ kind: PrometheusRule
 metadata:
   name: {{ printf "%s-%s" $.Release.Name $path | replace "/" "-" | replace "." "-" | trimSuffix "-tpl" | replace "-alerts-" "-" | trunc 63 }}
   labels:
-{{ include "cloud-storage-operations.ruleSelectorLabels" (list $path $root) | indent 4 }} 
+{{- include "cloud-storage-operations.ruleSelectorLabels" (list $path $root) | indent 4 }} 
 {{ include "cloud-storage-operations.labels" (list $path $root) | indent 4 }}
 {{- if $.Values.prometheusRules.labels }}
 {{ toYaml $.Values.prometheusRules.labels | indent 4 }}

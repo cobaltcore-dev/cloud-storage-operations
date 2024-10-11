@@ -1,6 +1,6 @@
 {{- if not .Values.prometheusRules.ruleGroups.manager }}
 groups: []
-{{- else }}
+{{- else -}}
 groups:
 - name: mds
   rules:
@@ -12,7 +12,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.5.1"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Filesystem metadata has been corrupted. Data may be inaccessible. Analyze metrics from the MDS daemon admin socket, or escalate to support."
       documentation: "https://docs.ceph.com/en/latest/cephfs/health-messagescephfs-health-messages"
@@ -27,7 +27,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.5.3"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "All MDS ranks are unavailable. The MDS daemons managing metadata are down, rendering the filesystem offline."
       documentation: "https://docs.ceph.com/en/latest/cephfs/health-messages/mds-all-down"
@@ -42,7 +42,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.5.4"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "One or more metadata daemons (MDS ranks) are failed or in a damaged state. At best the filesystem is partially available, at worst the filesystem is completely unusable."
       documentation: "https://docs.ceph.com/en/latest/cephfs/health-messages/fs-degraded"
@@ -56,7 +56,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The filesystem's 'max_mds' setting defines the number of MDS ranks in the filesystem. The current number of active MDS daemons is less than this value."
       documentation: "https://docs.ceph.com/en/latest/cephfs/health-messages/mds-up-less-than-max"
@@ -70,7 +70,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The minimum number of standby daemons required by standby_count_wanted is less than the current number of standby daemons. Adjust the standby count or increase the number of MDS daemons."
       documentation: "https://docs.ceph.com/en/latest/cephfs/health-messages/mds-insufficient-standby"
@@ -85,7 +85,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.5.5"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "An MDS daemon has failed, leaving only one active rank and no available standby. Investigate the cause of the failure or add a standby MDS."
       documentation: "https://docs.ceph.com/en/latest/cephfs/health-messages/fs-with-failed-mds"
@@ -100,7 +100,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.5.2"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The filesystem has switched to READ ONLY due to an unexpected error when writing to the metadata pool. Either analyze the output from the MDS daemon admin socket, or escalate to support."
       documentation: "https://docs.ceph.com/en/latest/cephfs/health-messagescephfs-health-messages"

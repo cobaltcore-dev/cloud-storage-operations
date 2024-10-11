@@ -1,6 +1,6 @@
 {{- if not .Values.prometheusRules.ruleGroups.pools }}
 groups: []
-{{- else }}
+{{- else -}}
 groups:
 - name: pools
   rules:
@@ -10,7 +10,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "A pool is approaching the near full threshold, which will prevent recovery/backfill operations from completing. Consider adding more capacity."
       summary: "Free space in a pool is too low for recovery/backfill"
@@ -24,7 +24,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.9.1"
       severity: critical
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         A pool has reached its MAX quota, or OSDs supporting the pool have reached the FULL threshold. Until this is resolved, writes to the pool will be blocked. Pool Breakdown (top 5) `{{`{{- range query \"topk(5, sort_desc(ceph_pool_percent_used * on(pool_id) group_right ceph_pool_metadata))\" }} - {{ .Labels.name }} at {{ .Value }}% {{- end }}`}}` Increase the pool's quota, or add capacity to the cluster first then increase the pool's quota (e.g. `ceph osd pool set quota <pool_name> max_bytes <bytes>`)
@@ -39,7 +39,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: |
         A pool has exceeded the warning (percent full) threshold, or OSDs supporting the pool have reached the NEARFULL threshold. Writes may continue, but you are at risk of the pool going read-only if more capacity isn't made available. Determine the affected pool with `ceph df detail`, looking at QUOTA BYTES and STORED. Increase the pool's quota, or add capacity to the cluster first then increase the pool's quota (e.g. `ceph osd pool set quota <pool_name> max_bytes <bytes>`). Also ensure that the balancer is active.

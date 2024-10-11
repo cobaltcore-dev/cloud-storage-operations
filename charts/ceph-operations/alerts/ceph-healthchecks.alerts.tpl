@@ -1,6 +1,6 @@
 {{- if not .Values.prometheusRules.ruleGroups.healthChecks }}
 groups: []
-{{- else }}
+{{- else -}}
 groups:
 - name: healthchecks
   rules:
@@ -11,7 +11,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "`{{`{{ $value }}`}}` OSD requests are taking too long to process (osd_op_complaint_time exceeded)"
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#slow-ops"
@@ -25,7 +25,7 @@ groups:
     labels:
       severity: warning
       type: ceph_default
-      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "`{{`{{ $labels.ceph_daemon }}`}}` operations are slow to complete"
       description: "`{{`{{ $labels.ceph_daemon }}`}}` operations are taking too long to process (complaint time exceeded)"
