@@ -3,15 +3,15 @@ name: Validate Prometheus alerts
 on:
   push:
     paths:
-      - '**/alerts/*.alerts'
-      - '**/alerts/*.yml'
-      - '**/alerts/*.yaml'
+      - 'charts/**/alerts/*.alerts'
+      - 'charts/**/alerts/*.yml'
+      - 'charts/**/alerts/*.yaml'
 
   pull_request:
     paths:
-      - '**/alerts/*.alerts'
-      - '**/alerts/*.yml'
-      - '**/alerts/*.yaml'
+      - 'charts/**/alerts/*.alerts'
+      - 'charts/**/alerts/*.yml'
+      - 'charts/**/alerts/*.yaml'
 
 jobs:
   validate-alerts:

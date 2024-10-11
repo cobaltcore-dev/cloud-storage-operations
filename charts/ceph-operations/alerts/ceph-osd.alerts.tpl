@@ -1,0 +1,262 @@
+{{- if not .Values.prometheusRules.ruleGroups.osd }}
+groups: []
+{{- else }}
+groups:
+- name: osd
+  rules:
+{{- if not (.Values.prometheusRules.disabled.CephOSDDownHigh | default false) }}
+  - alert: CephOSDDownHigh
+    expr: count(ceph_osd_up == 0) / count(ceph_osd_up) * 100 >= 10
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.1"
+      severity: critical
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: |
+        `{{`{{ $value | humanize }}`}}%` or `{{`{{ with query "count(ceph_osd_up == 0)" }}{{ . | first | value }}{{ end }}`}}` of `{{`{{ with query "count(ceph_osd_up)" }}{{ . | first | value }}{{ end }}`}}` OSDs are down (>= 10%). The following OSDs are down: `{{`{{- range query "(ceph_osd_up * on(ceph_daemon) group_left(hostname) ceph_osd_metadata) == 0" }} - {{ .Labels.ceph_daemon }} on {{ .Labels.hostname }} {{- end }}`}}`
+      summary: More than 10% of OSDs are down
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDHostDown | default false) }}
+  - alert: CephOSDHostDown
+    expr: ceph_health_detail{name="OSD_HOST_DOWN"} == 1
+    for: 5m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.8"
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: |
+        The following OSDs are down: `{{`{{- range query "(ceph_osd_up * on(ceph_daemon) group_left(hostname) ceph_osd_metadata) == 0" }} - {{ .Labels.hostname }} : {{ .Labels.ceph_daemon }} {{- end }}`}}`
+      summary: "An OSD host is offline"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDDown | default false) }}
+  - alert: CephOSDDown
+    expr: ceph_health_detail{name="OSD_DOWN"} == 1
+    for: 5m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.2"
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: |
+        {{`{{ $num := query "count(ceph_osd_up == 0)" | first | value }}{{ $s := "" }}{{ if gt $num 1.0 }}{{ $s = "s" }}{{ end }}`}}`{{`{{ $num }}`}}` OSD`{{`{{ $s }}`}}` down for over 5mins. The following OSD`{{`{{ $s }}`}}` {{`{{ if eq $s "" }}is{{ else }}are{{ end }}`}} down: `{{`{{- range query "(ceph_osd_up * on(ceph_daemon) group_left(hostname) ceph_osd_metadata) == 0"}} - {{ .Labels.ceph_daemon }} on {{ .Labels.hostname }} {{- end }}`}}`
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#osd-down"
+      summary: "An OSD has been marked down"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDNearFull | default false) }}
+  - alert: CephOSDNearFull
+    expr: ceph_health_detail{name="OSD_NEARFULL"} == 1
+    for: 5m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.3"
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "One or more OSDs have reached the NEARFULL threshold. Use 'ceph health detail' and 'ceph osd df' to identify the problem. To resolve, add capacity to the affected OSD's failure domain, restore down/out OSDs, or delete unwanted data."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#osd-nearfull"
+      summary: "OSD(s) running low on free space (NEARFULL)"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDFull | default false) }}
+  - alert: CephOSDFull
+    expr: ceph_health_detail{name="OSD_FULL"} > 0
+    for: 1m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.6"
+      severity: critical
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "An OSD has reached the FULL threshold. Writes to pools that share the affected OSD will be blocked. Use `ceph health detail` and `ceph osd df` to identify the problem. To resolve, add capacity to the affected OSD's failure domain, restore down/out OSDs, or delete unwanted data."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#osd-full"
+      summary: "OSD full, writes blocked"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDBackfillFull | default false) }}
+  - alert: CephOSDBackfillFull
+    expr: ceph_health_detail{name="OSD_BACKFILLFULL"} > 0
+    for: 1m
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "An OSD has reached the BACKFILL FULL threshold. This will prevent rebalance operations from completing. Use `ceph health detail` and `ceph osd df` to identify the problem. To resolve, add capacity to the affected OSD's failure domain, restore down/out OSDs, or delete unwanted data."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#osd-backfillfull"
+      summary: "OSD(s) too full for backfill operations"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDTooManyRepairs | default false) }}
+  - alert: CephOSDTooManyRepairs
+    expr: ceph_health_detail{name="OSD_TOO_MANY_REPAIRS"} == 1
+    for: 30s
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "Reads from an OSD have used a secondary PG to return data to the client, indicating a potential failing drive."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#osd-too-many-repairs"
+      summary: "OSD reports a high number of read errors"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDTimeoutsPublicNetwork | default false) }}
+  - alert: CephOSDTimeoutsPublicNetwork
+    expr: ceph_health_detail{name="OSD_SLOW_PING_TIME_FRONT"} == 1
+    for: 1m
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "OSD heartbeats on the cluster's 'public' network (frontend) are running slow. Investigate the network for latency or loss issues. Use 'ceph health detail' to show the affected OSDs."
+      summary: "Network issues delaying OSD heartbeats (public network)"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDTimeoutsClusterNetwork | default false) }}
+  - alert: CephOSDTimeoutsClusterNetwork
+    expr: ceph_health_detail{name="OSD_SLOW_PING_TIME_BACK"} == 1
+    for: 1m
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "OSD heartbeats on the cluster's 'cluster' network (backend) are slow. Investigate the network for latency issues on this subnet. Use 'ceph health detail' to show the affected OSDs."
+      summary: "Network issues delaying OSD heartbeats (cluster network)"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDInternalDiskSizeMismatch | default false) }}
+  - alert: CephOSDInternalDiskSizeMismatch
+    expr: ceph_health_detail{name="BLUESTORE_DISK_SIZE_MISMATCH"} == 1
+    for: 1m
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "One or more OSDs have an internal inconsistency between metadata and the size of the device. This could lead to the OSD(s) crashing in future. You should redeploy the affected OSDs."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#bluestore-disk-size-mismatch"
+      summary: "OSD size inconsistency error"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephDeviceFailurePredicted | default false) }}
+  - alert: CephDeviceFailurePredicted
+    expr: ceph_health_detail{name="DEVICE_HEALTH"} == 1
+    for: 1m
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "The device health module has determined that one or more devices will fail soon. To review device status use `ceph device ls`. To show a specific device use `ceph device info <dev id>`. Mark the OSD out so that data may migrate to other OSDs. Once the OSD has drained, destroy the OSD, replace the device, and redeploy the OSD."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#id2"
+      summary: "Device(s) predicted to fail soon"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephDeviceFailurePredictionTooHigh | default false) }}
+  - alert: CephDeviceFailurePredictionTooHigh
+    expr: ceph_health_detail{name="DEVICE_HEALTH_TOOMANY"} == 1
+    for: 1m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.7"
+      severity: critical
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "The device health module has determined that devices predicted to fail can not be remediated automatically, since too many OSDs would be removed from the cluster to ensure performance and availabililty. Prevent data integrity issues by adding new OSDs so that data may be relocated."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#device-health-toomany"
+      summary: "Too many devices are predicted to fail, unable to resolve"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephDeviceFailureRelocationIncomplete | default false) }}
+  - alert: CephDeviceFailureRelocationIncomplete
+    expr: ceph_health_detail{name="DEVICE_HEALTH_IN_USE"} == 1
+    for: 1m
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "The device health module has determined that one or more devices will fail soon, but the normal process of relocating the data on the device to other OSDs in the cluster is blocked. \nEnsure that the cluster has available free space. It may be necessary to add capacity to the cluster to allow data from the failing device to successfully migrate, or to enable the balancer."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#device-health-in-use"
+      summary: "Device failure is predicted, but unable to relocate data"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDFlapping | default false) }}
+  - alert: CephOSDFlapping
+    expr: (rate(ceph_osd_up[5m]) * on(ceph_daemon) group_left(hostname) ceph_osd_metadata) * 60 > 1
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.4"
+      severity: "warning"
+      type: "ceph_default"
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: |
+        OSD `{{`{{ $labels.ceph_daemon }}`}}` on `{{`{{ $labels.hostname }}`}}` was marked down and back up `{{`{{ $value | humanize }}`}}` times once a minute for 5 minutes. This may indicate a network issue (latency, packet loss, MTU mismatch) on the cluster network, or the public network if no cluster network is deployed. Check the network stats on the listed host(s).
+      documentation: "https://docs.ceph.com/en/latest/rados/troubleshooting/troubleshooting-osd#flapping-osds"
+      summary: "Network issues are causing OSDs to flap (mark each other down)"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDReadErrors | default false) }}
+  - alert: CephOSDReadErrors
+    expr: ceph_health_detail{name="BLUESTORE_SPURIOUS_READ_ERRORS"} == 1
+    for: 30s
+    labels:
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "An OSD has encountered read errors, but the OSD has recovered by retrying the reads. This may indicate an issue with hardware or the kernel."
+      documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#bluestore-spurious-read-errors"
+      summary: "Device read errors detected"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDWriteErrors | default false) }}
+  - alert: CephAPodNodePGImbalance
+    expr: |
+      abs(
+       1 -
+       ceph_osd_numpg * on(ceph_daemon) group_left(hostname) ceph_osd_metadata{hostname=~"node[0-9]+-ap.*"} / on (job) group_left()
+       avg by (job) (ceph_osd_numpg * on(ceph_daemon) group_left() ceph_osd_metadata{hostname=~"node[0-9]+-ap.*"})
+      ) > 0.30
+    for: 5m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.5"
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "OSD `{{`{{ $labels.ceph_daemon }}`}}` on apod node `{{`{{ $labels.hostname }}`}}` deviates by more than 30% from average PG count."
+      summary: "PGs are not balanced across OSDs"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDWriteErrors | default false) }}
+  - alert: CephStorageNodePGImbalance
+    expr: |
+      abs(
+       1 -
+       ceph_osd_numpg * on(ceph_daemon) group_left(hostname) ceph_osd_metadata{hostname=~"node[0-9]+-st.*"} / on (job) group_left()
+       avg by (job) (ceph_osd_numpg * on(ceph_daemon) group_left() ceph_osd_metadata{hostname=~"node[0-9]+-st.*"})
+      ) > 0.30
+    for: 5m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.5"
+      severity: warning
+      type: ceph_default
+      {{ include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "OSD `{{`{{ $labels.ceph_daemon }}`}}` on storage node `{{`{{ $labels.hostname }}`}}` deviates by more than 30% from average PG count."
+      summary: "PGs are not balanced across OSDs"
+{{- end }}
+{{- end }}
