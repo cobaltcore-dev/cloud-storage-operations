@@ -1,0 +1,65 @@
+# SPDX-FileCopyrightText: 2024 SAP SE or an SAP affiliate company and Greenhouse contributors
+# SPDX-License-Identifier: Apache-2.0
+
+global:
+  ## Common labels to add to all resources
+  ## 
+  commonLabels: {}
+
+## Default rules for monitoring the cloud storage clusters
+##
+prometheusRules:
+  
+  ## Enables PrometheusRule resources to be created 
+  create: true
+
+  ## PrometheusRule groups to be created
+  ruleGroups:
+    clusterHealth: true
+    generic: true
+    healthChecks: true
+    manager: false
+    mon: true
+    nodes: true
+    osd: true
+    pgr: true
+    pools: true
+    rados: true
+
+  ## Disables specific PrometheusRule alerts
+  disabled:
+    CephNodeInconsistentMTU: true
+
+  ## Label selectors for the Prometheus rules to be picked up by Prometheus.
+  ruleSelectors:
+    # - name: plugin
+    #   value: kube-monitoring
+    # - name: prometheus
+    #   value: kubernetes
+
+  ## Labels for PrometheusRules
+  labels: {}
+
+  ## Annotations for PrometheusRules
+  annotations: {}
+
+  ## Additional labels for PrometheusRule alerts
+  ## This is useful for adding additional labels such as "support_group" or "service" for the routing of alerts to each rule
+  additionalRuleLabels:
+    # support_group: support
+    # service: my-service
+
+  ## Additional annotations for PrometheusRule alerts
+  additionalRuleAnnotations: {}
+
+## Create default dashboards for monitoring the cluster
+##
+dashboards:
+
+  ## Enables ConfigMap resources with dashboards to be created
+  create: true
+
+  ## Label selectors for the Plutono dashboards to be picked up by Plutono.
+  dashboardSelectors:
+    - name: plutono-dashboard
+      value: '"true"'

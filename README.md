@@ -10,6 +10,31 @@
 
 This repository contains packaged resources and configuration related to the operations of the vendor-neutral cloud storage backend within the ApeiroRA project.
 
+# Content
+
+The content is structured as follows:
+
+```
+cloud-storage-operations
+    │
+    ├── playbooks/              Step-by-step instructions for troubleshooting.
+    │ 
+    └── charts/
+         │
+         └── ceph-operations
+              │
+              ├── aggregations/             Prometheus aggregation rules for kubernetes.
+              │
+              ├── alerts/                   Prometheus alerts for kubernetes.
+              │
+              ├── dashboards/               Plutono dashboards for visualizing key metrics.
+              │
+              ├── Chart.yaml                Helm chart manifest.
+              │
+              └── plugindefintion.yaml      Links the Helm chart to the Greenhouse platform. 
+
+```
+
 ## Support, Feedback, Contributing
 
 This project is open to feature requests/suggestions, bug reports etc. via [GitHub issues](https://github.com/cobaltcore-dev/cloud-storage-operations/issues). Contribution and feedback are encouraged and always welcome. For more information about how to contribute, the project structure, as well as additional contribution information, see our [Contribution Guidelines](CONTRIBUTING.md).
