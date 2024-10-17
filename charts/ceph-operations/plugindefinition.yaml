@@ -6,7 +6,7 @@ kind: PluginDefinition
 metadata:
   name: ceph-operations
 spec:
-  version: 1.2.0
+  version: 1.2.1
   displayName: Ceph operations bundle
   description: Operations bundle for the Ceph storage backend
   docMarkDownUrl: https://raw.githubusercontent.com/cobaltcore-dev/cloud-storage-operations/main/ceph-operations/README.md
@@ -14,7 +14,7 @@ spec:
   helmChart:
     name: ceph-operations
     repository: oci://ghcr.io/cobaltcore-dev/cloud-storage-operations/charts
-    version: 1.2.0
+    version: 1.2.1
   options:
     - name: prometheusRules.create
       description: Create Prometheus rules

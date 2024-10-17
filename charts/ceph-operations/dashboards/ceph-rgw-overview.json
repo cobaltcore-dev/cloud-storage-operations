@@ -12,11 +12,11 @@
       }
     ]
   },
+  "description": "",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 288,
-  "iteration": 1727880563800,
+  "iteration": 1729173016307,
   "links": [],
   "panels": [
     {
@@ -3411,14 +3411,16 @@
   "refresh": "5m",
   "schemaVersion": 27,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "ceph"
+  ],
   "templating": {
     "list": [
       {
         "current": {
           "selected": false,
-          "text": "prometheus-st1",
-          "value": "prometheus-st1"
+          "text": "kube-monitoring-st1-qa-de-1-prometheus",
+          "value": "kube-monitoring-st1-qa-de-1-prometheus"
         },
         "description": null,
         "error": null,
@@ -3607,5 +3609,5 @@
   "timezone": "browser",
   "title": "ceph rgw overview",
   "uid": "cdvlgooiqk3cwt",
-  "version": 55
+  "version": 1
 }
