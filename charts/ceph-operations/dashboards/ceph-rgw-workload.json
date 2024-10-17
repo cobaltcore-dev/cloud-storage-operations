@@ -1,4 +1,3 @@
-
 {
   "annotations": {
     "list": [
@@ -16,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1521,
-  "iteration": 1717589135441,
+  "iteration": 1729173331275,
   "links": [],
   "panels": [
     {
@@ -71,7 +69,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -173,7 +171,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -270,7 +268,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -451,7 +449,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -554,7 +552,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -650,7 +648,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -747,7 +745,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -857,7 +855,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -959,7 +957,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1068,7 +1066,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.30",
+      "pluginVersion": "7.5.33",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1237,7 +1235,7 @@
   "schemaVersion": 27,
   "style": "dark",
   "tags": [
-    "overview"
+    "ceph"
   ],
   "templating": {
     "list": [
@@ -1272,8 +1270,8 @@
       {
         "current": {
           "selected": false,
-          "text": "prometheus-st1",
-          "value": "prometheus-st1"
+          "text": "kube-monitoring-st1-qa-de-1-prometheus",
+          "value": "kube-monitoring-st1-qa-de-1-prometheus"
         },
         "description": null,
         "error": null,
@@ -1325,5 +1323,5 @@
   "timezone": "",
   "title": "Ceph RGW Workload",
   "uid": "u8AwrPyIk",
-  "version": 6
+  "version": 2
 }
