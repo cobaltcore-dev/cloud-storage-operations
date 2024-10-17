@@ -1,10 +1,10 @@
 {{- if .Values.prometheusRules.create -}}
 {{- $root := . -}}
-{{- range $path, $bytes := .Files.Glob "alerts/*.alerts.tpl" }}
+{{- range $path, $bytes := .Files.Glob "alerts/*.yaml" }}
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: {{ printf "%s-%s" $.Release.Name $path | replace "/" "-" | replace "." "-" | trimSuffix "-tpl" | replace "-alerts-" "-" | trunc 63 }}
+  name: {{ printf "%s-%s-alerts" $.Release.Name $path | replace "/" "-" | replace ".yaml" "" | replace "-alerts-" "-" | trunc 63 }}
   labels:
 {{- include "cloud-storage-operations.ruleSelectorLabels" (list $path $root) | indent 4 }} 
 {{ include "cloud-storage-operations.labels" (list $path $root) | indent 4 }}
