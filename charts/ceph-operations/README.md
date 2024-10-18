@@ -22,5 +22,5 @@ The content is structured as follows:
 
 # Contributing
 
-When contributing to the `ceph-operations` chart, update the respective content and increment the version in the `Chart.yaml`.
-If you're using [Greenhouse](https://github.com/cloudoperators/greenhouse), update the version in the `plugindefinition.yaml` as well and let the operations platform handle the rollout.
+When contributing to the `ceph-operations` chart, update the respective content and increment the version in the [Chart.yaml](https://github.com/cobaltcore-dev/cloud-storage-operations/blob/main/charts/ceph-operations/Chart.yaml).
+If you're using [Greenhouse](https://github.com/cloudoperators/greenhouse), update the version in the [plugindefinition.yaml](https://github.com/cobaltcore-dev/cloud-storage-operations/blob/main/charts/ceph-operations/plugindefinition.yaml) as well and let the operations platform handle the rollout.
