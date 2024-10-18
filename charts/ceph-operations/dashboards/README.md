@@ -5,7 +5,7 @@
 
 The following [guide](https://github.com/cloudoperators/greenhouse-extensions/blob/main/plutono/README.md#example-datasource-config) will help you create a new dashboard in the Plutono UI:
 
-2. After creating and modifying the dashboard, you must save it, as it will be lost if it is saved in the browser's local storage.
+2. After creating and modifying the dashboard, you must export it, as it will be lost if it is saved in the browser's local storage.
 3. Export the dashboard.
    - Go to **Dashboard settings**.
    - Click **JSON Model**.
