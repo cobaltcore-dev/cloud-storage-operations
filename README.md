@@ -17,8 +17,6 @@ The content is structured as follows:
 ```
 cloud-storage-operations
     │
-    ├── playbooks/              Step-by-step instructions for troubleshooting.
-    │ 
     └── charts/
          │
          └── ceph-operations
@@ -28,6 +26,8 @@ cloud-storage-operations
               ├── alerts/                   Prometheus alerts for kubernetes.
               │
               ├── dashboards/               Plutono dashboards for visualizing key metrics.
+              │
+              ├── playbooks/                Step-by-step instructions for troubleshooting.        
               │
               ├── Chart.yaml                Helm chart manifest.
               │
