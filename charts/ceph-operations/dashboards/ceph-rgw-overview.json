@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1729173016307,
+  "iteration": 1729523414133,
   "links": [],
   "panels": [
     {
@@ -131,6 +131,93 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false
+          },
+          "mappings": [
+            {
+              "from": "",
+              "id": 1,
+              "text": "N/A",
+              "to": "",
+              "type": 1,
+              "value": "null"
+            }
+          ],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 2,
+        "y": 1
+      },
+      "id": 54,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "ceph_cluster_total_used_bytes{}",
+          "interval": "",
+          "legendFormat": "{{ cluster }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Used Cluster Capacity",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "thresholds"
           },
           "mappings": [],
@@ -160,7 +247,7 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 2,
+        "x": 10,
         "y": 1
       },
       "id": 53,
@@ -195,8 +282,115 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 1
+      },
+      "id": 17,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "irate(radosgw_cluster_throughput_bytes_per_sec{job=\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{ rgw_cluster_id }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Cluster Throughput",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "fixedColor": "blue",
             "mode": "fixed"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false
           },
           "mappings": [
             {
@@ -227,16 +421,74 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 6,
-        "x": 5,
-        "y": 1
+        "w": 8,
+        "x": 2,
+        "y": 6
       },
-      "id": 54,
+      "id": 51,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "ceph_cluster_total_bytes{}",
+          "interval": "",
+          "legendFormat": "{{ cluster }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Available Cluster Capacity",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "max": 1,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0.1
+              },
+              {
+                "color": "green",
+                "value": 0.3
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 10,
+        "y": 6
+      },
+      "id": 49,
+      "options": {
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -244,22 +496,25 @@
           "fields": "",
           "values": false
         },
-        "text": {},
-        "textMode": "auto"
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
       },
       "pluginVersion": "7.5.33",
       "targets": [
         {
           "exemplar": true,
-          "expr": "ceph_cluster_total_used_bytes{}",
+          "expr": "(ceph_cluster_total_bytes{} - ceph_cluster_total_used_bytes{}) / ceph_cluster_total_bytes{}",
           "interval": "",
-          "legendFormat": "{{ cluster }}",
+          "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
-      "title": "Used Cluster Capacity",
-      "type": "stat"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Available Cluster Capacity",
+      "type": "gauge"
     },
     {
       "datasource": "$DS_PROMETHEUS",
@@ -304,15 +559,15 @@
               }
             ]
           },
-          "unit": "s"
+          "unit": "ops"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 10,
-        "w": 13,
-        "x": 11,
-        "y": 1
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 8
       },
       "id": 28,
       "options": {
@@ -330,24 +585,24 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(ceph_rgw_get_initial_lat_sum[$__rate_interval])) / sum(rate(ceph_rgw_get_initial_lat_count[$__rate_interval]))",
+          "expr": "rate(radosgw_cluster_reads_per_sec{job=\"$job\"}[$__rate_interval])",
           "hide": false,
           "interval": "",
-          "legendFormat": "AVG Get",
+          "legendFormat": "Read OPs",
           "refId": "A"
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(ceph_rgw_put_initial_lat_sum[$__rate_interval])) / sum(rate(ceph_rgw_put_initial_lat_count[$__rate_interval]))",
+          "expr": "rate(radosgw_cluster_writes_per_sec{job=\"$job\"}[$__rate_interval])",
           "hide": false,
           "interval": "",
-          "legendFormat": "AVG Put",
+          "legendFormat": "Write OPs",
           "refId": "B"
         }
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Average Cluster Latency",
+      "title": "Cluster Reads/Writes",
       "type": "timeseries"
     },
     {
@@ -355,85 +610,30 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
           },
           "mappings": [],
-          "max": 1,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "red",
-                "value": null
-              },
-              {
-                "color": "yellow",
-                "value": 0.1
-              },
-              {
-                "color": "green",
-                "value": 0.3
-              }
-            ]
-          },
-          "unit": "percentunit"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 5,
-        "w": 3,
-        "x": 2,
-        "y": 6
-      },
-      "id": 49,
-      "options": {
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true,
-        "text": {}
-      },
-      "pluginVersion": "7.5.33",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "(ceph_cluster_total_bytes{} - ceph_cluster_total_used_bytes{}) / ceph_cluster_total_bytes{}",
-          "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Available Cluster Capacity",
-      "type": "gauge"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "blue",
-            "mode": "fixed"
-          },
-          "mappings": [
-            {
-              "from": "",
-              "id": 1,
-              "text": "N/A",
-              "to": "",
-              "type": 1,
-              "value": "null"
-            }
-          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -447,52 +647,95 @@
               }
             ]
           },
-          "unit": "bytes"
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "__systemRef": "hideSeriesFrom",
+            "matcher": {
+              "id": "byNames",
+              "options": {
+                "mode": "exclude",
+                "names": [
+                  "pool id 8"
+                ],
+                "prefix": "All except:",
+                "readOnly": true
+              }
+            },
+            "properties": [
+              {
+                "id": "custom.hideFrom",
+                "value": {
+                  "graph": true,
+                  "legend": false,
+                  "tooltip": false
+                }
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 6,
-        "x": 5,
-        "y": 6
+        "h": 7,
+        "w": 7,
+        "x": 0,
+        "y": 11
       },
-      "id": 51,
+      "id": 71,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
         },
-        "text": {},
-        "textMode": "auto"
+        "tooltipOptions": {
+          "mode": "single"
+        }
       },
       "pluginVersion": "7.5.33",
       "targets": [
         {
           "exemplar": true,
-          "expr": "ceph_cluster_total_bytes{}",
+          "expr": "sum (ceph_pool_objects) by (pool_id)",
           "interval": "",
-          "legendFormat": "{{ cluster }}",
+          "legendFormat": "pool id {{ pool_id }}",
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
-      "title": "Available Cluster Capacity",
-      "type": "stat"
+      "title": "Objects in the Cluster",
+      "type": "timeseries"
     },
     {
       "datasource": "$DS_PROMETHEUS",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
           },
           "mappings": [],
           "thresholds": {
@@ -513,43 +756,214 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 0,
+        "h": 7,
+        "w": 6,
+        "x": 7,
         "y": 11
       },
-      "id": 27,
+      "id": 105,
       "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "percentChangeColorMode": "standard",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
         },
-        "showPercentChange": false,
-        "text": {},
-        "textMode": "auto",
-        "wideLayout": true
+        "tooltipOptions": {
+          "mode": "single"
+        }
       },
       "pluginVersion": "7.5.33",
       "targets": [
         {
           "exemplar": true,
-          "expr": "radosgw_cluster_current_ops{job=\"$job\"}",
+          "expr": "rate(radosgw_cluster_ops_total{job=\"$job\"}[$__rate_interval])",
           "hide": false,
           "interval": "",
-          "legendFormat": "{{instance}} {{store}}",
+          "legendFormat": "{{ rgw_cluster_id }}",
           "refId": "A"
         }
       ],
-      "title": "Current Operations - radosgw_cluster_current_ops",
-      "type": "stat"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Cluster Total OPs",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 13,
+        "y": 15
+      },
+      "id": 20,
+      "options": {
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "11.1.4",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_cluster_ops_per_sec{job=\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{ rgw_cluster_id }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Current Cluster OPs",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "binBps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 13,
+        "x": 0,
+        "y": 18
+      },
+      "id": 115,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_cluster_bytes_sent_per_sec{job=\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Data Sent",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_cluster_bytes_received_per_sec{job=\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Data Received",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Data Sent / Received",
+      "type": "timeseries"
     },
     {
       "datasource": "$DS_PROMETHEUS",
@@ -579,9 +993,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 3,
-        "y": 11
+        "w": 6,
+        "x": 13,
+        "y": 22
       },
       "id": 24,
       "options": {
@@ -645,9 +1059,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 7,
-        "y": 11
+        "w": 5,
+        "x": 19,
+        "y": 22
       },
       "id": 25,
       "options": {
@@ -725,488 +1139,15 @@
               }
             ]
           },
-          "unit": "short"
-        },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "pool id 8"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "graph": true,
-                  "legend": false,
-                  "tooltip": false
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 13,
-        "x": 11,
-        "y": 11
-      },
-      "id": 71,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.33",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "sum (ceph_pool_objects) by (pool_id)",
-          "interval": "",
-          "legendFormat": "pool id {{ pool_id }}",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Objects in the Cluster",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "ops"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 11,
-        "x": 0,
-        "y": 14
-      },
-      "id": 21,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.32",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "label_replace(radosgw_cluster_max_ops{job=\"$job\"}, \"cluster_ref\", \"$1\", \"pod\", \"ceph-objectstore-ec-(.*)-.*-.*-.*-.*\")",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{cluster_ref}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Max Operations - radosgw_cluster_max_ops",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
+          "unit": "Bps"
         },
         "overrides": []
       },
       "gridPos": {
         "h": 9,
         "w": 13,
-        "x": 11,
-        "y": 22
-      },
-      "id": 56,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.32",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "sum(rate(ceph_rgw_get_b[30s]))",
-          "interval": "",
-          "legendFormat": "GET",
-          "queryType": "randomWalk",
-          "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum(rate(ceph_rgw_put_b[30s]))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "PUT",
-          "refId": "B"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Bandwidth Consumed by Type",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "ops"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 11,
         "x": 0,
-        "y": 23
-      },
-      "id": 20,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "11.1.4",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "label_replace(radosgw_cluster_ops_total{job=\"$job\"}, \"cluster_ref\", \"$1\", \"pod\", \"ceph-objectstore-ec-(.*)-.*-.*-.*-.*\")",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{cluster_ref}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Total Operations - radosgw_cluster_ops_total",
-      "type": "timeseries"
-    },
-    {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 31
-      },
-      "id": 73,
-      "panels": [],
-      "title": "Throughput",
-      "type": "row"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "Bps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 0,
-        "y": 32
-      },
-      "id": 17,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.32",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "sum(irate(ceph_osd_op_w_in_bytes{}[$interval]))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Writes",
-          "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum(irate(ceph_osd_op_r_out_bytes{}[$interval]))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Reads",
-          "refId": "B"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum(irate(ceph_osd_op_rw_in_bytes{}[$interval]))",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "Overwrites",
-          "refId": "C"
-        }
-      ],
-      "title": "Cluster Throughput",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "Bps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 32
+        "y": 25
       },
       "id": 75,
       "options": {
@@ -1218,7 +1159,7 @@
             "max"
           ],
           "displayMode": "table",
-          "placement": "right"
+          "placement": "bottom"
         },
         "tooltipOptions": {
           "mode": "single"
@@ -1228,7 +1169,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(irate(ceph_rgw_get_b{}[$interval]))",
+          "expr": "sum(irate(ceph_rgw_get_b{}[$__rate_interval]))",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -1238,7 +1179,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(irate(ceph_rgw_put_b{}[$interval]))",
+          "expr": "sum(irate(ceph_rgw_put_b{}[$__rate_interval]))",
           "hide": false,
           "interval": "",
           "legendFormat": "PUT",
@@ -1251,188 +1192,13 @@
       "type": "timeseries"
     },
     {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "binBps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 9,
-        "w": 24,
-        "x": 0,
-        "y": 42
-      },
-      "id": 19,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.32",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "rate(radosgw_user_throughput_bytes_per_sec{user=~\"$user\", job=~\"$job\"}[$__rate_interval])",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{user}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Throughput By User",
-      "transformations": [],
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "binBps"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 24,
-        "x": 0,
-        "y": 51
-      },
-      "id": 16,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [
-            "lastNotNull",
-            "mean",
-            "max"
-          ],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.32",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "sum(rate(radosgw_bucket_throughput_bytes_total[$__rate_interval])) by (bucket)",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "{{ bucket }}",
-          "refId": "A"
-        }
-      ],
-      "title": "Throughput by Bucket",
-      "type": "timeseries"
-    },
-    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 61
+        "y": 34
       },
       "id": 64,
       "panels": [],
@@ -1481,23 +1247,23 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "s"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 7,
+        "w": 7,
         "x": 0,
-        "y": 62
+        "y": 35
       },
-      "id": 60,
+      "id": 69,
       "options": {
         "graph": {},
         "legend": {
           "calcs": [],
-          "displayMode": "table",
-          "placement": "right"
+          "displayMode": "list",
+          "placement": "bottom"
         },
         "tooltipOptions": {
           "mode": "single"
@@ -1507,7 +1273,93 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum by (rgw_host) (\n  label_replace(\n    rate(ceph_rgw_req[$__rate_interval]),\n    \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n  )\n)",
+          "expr": "avg(rate(ceph_rgw_get_initial_lat_sum[$__rate_interval]) / rate(ceph_rgw_get_initial_lat_count[$__rate_interval]))",
+          "interval": "",
+          "legendFormat": "GET AVG",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "avg(rate(ceph_rgw_put_initial_lat_sum[$__rate_interval]) / rate(ceph_rgw_put_initial_lat_count[$__rate_interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "PUT AVG",
+          "refId": "B"
+        }
+      ],
+      "title": "Average GET/PUT Latencies",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 7,
+        "y": 35
+      },
+      "id": 60,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "label_replace(\n  rate(ceph_rgw_req[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
           "interval": "",
           "legendFormat": "{{ rgw_host }}",
           "queryType": "randomWalk",
@@ -1517,6 +1369,232 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Total Requests/sec by RGW Instance",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 14,
+        "y": 35
+      },
+      "id": 67,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_get_initial_lat_sum[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\") / \nlabel_replace(rate(ceph_rgw_get_initial_lat_count[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "interval": "",
+          "legendFormat": "{{ rgw_host }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "GET Latencies by RGW Instance",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "blue",
+            "mode": "fixed"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 3,
+        "x": 21,
+        "y": 35
+      },
+      "id": 111,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(ceph_rgw_qlen)",
+          "interval": "",
+          "legendFormat": "",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Request Queue Length",
+      "type": "stat"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 7,
+        "x": 0,
+        "y": 42
+      },
+      "id": 62,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(ceph_rgw_get_b[$__rate_interval]))",
+          "interval": "",
+          "legendFormat": "GETs",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(rate(ceph_rgw_put_b[$__rate_interval]))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "PUTs",
+          "refId": "B"
+        }
+      ],
+      "title": "Bandwidth Consumed by Type",
       "type": "timeseries"
     },
     {
@@ -1567,18 +1645,18 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 62
+        "h": 7,
+        "w": 7,
+        "x": 7,
+        "y": 42
       },
-      "id": 62,
+      "id": 110,
       "options": {
         "graph": {},
         "legend": {
           "calcs": [],
-          "displayMode": "table",
-          "placement": "right"
+          "displayMode": "list",
+          "placement": "bottom"
         },
         "tooltipOptions": {
           "mode": "single"
@@ -1624,7 +1702,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true
+            "spanNulls": false
           },
           "mappings": [],
           "thresholds": {
@@ -1645,10 +1723,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 70
+        "h": 7,
+        "w": 7,
+        "x": 14,
+        "y": 42
       },
       "id": 66,
       "options": {
@@ -1674,170 +1752,6 @@
         }
       ],
       "title": "PUT Latencies by RGW Instance",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 70
-      },
-      "id": 67,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.32",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "label_replace(rate(ceph_rgw_get_initial_lat_sum[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\") / \nlabel_replace(rate(ceph_rgw_get_initial_lat_count[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
-          "interval": "",
-          "legendFormat": "{{ rgw_host }}",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "GET Latencies by RGW Instance",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 78
-      },
-      "id": 69,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "right"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.32",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "label_replace(rate(ceph_rgw_get_initial_lat_sum[$__rate_interval]) / rate(ceph_rgw_get_initial_lat_count[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
-          "interval": "",
-          "legendFormat": "GET AVG {{ rgw_host }}",
-          "queryType": "randomWalk",
-          "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "label_replace(rate(ceph_rgw_put_initial_lat_sum[$__rate_interval]) / rate(ceph_rgw_put_initial_lat_count[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
-          "hide": false,
-          "interval": "",
-          "legendFormat": "PUT AVG {{ rgw_host }}",
-          "refId": "B"
-        }
-      ],
-      "title": "Average GET/PUT Latencies by RGW Instance",
       "type": "timeseries"
     },
     {
@@ -1886,10 +1800,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 78
+        "h": 7,
+        "w": 3,
+        "x": 21,
+        "y": 42
       },
       "id": 81,
       "options": {
@@ -1925,6 +1839,179 @@
           "color": {
             "mode": "palette-classic"
           },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 9,
+        "x": 0,
+        "y": 49
+      },
+      "id": 112,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_get_initial_lat_sum[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\") / \nlabel_replace(rate(ceph_rgw_get_initial_lat_count[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "interval": "",
+          "legendFormat": "GET {{ rgw_host }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_put_initial_lat_sum[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\") / \nlabel_replace(rate(ceph_rgw_put_initial_lat_count[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "PUT {{ rgw_host }}",
+          "refId": "B"
+        }
+      ],
+      "title": "All GET/PUT Latencies",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 9,
+        "y": 49
+      },
+      "id": 113,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_get_b[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "interval": "",
+          "legendFormat": "GETs {{ rgw_host }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_put_b[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "PUTs {{ rgw_host }}",
+          "refId": "B"
+        }
+      ],
+      "title": "Bandwidth by HTTP Operation",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -1944,10 +2031,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 9,
         "w": 7,
-        "x": 0,
-        "y": 86
+        "x": 17,
+        "y": 49
       },
       "id": 79,
       "options": {
@@ -2008,18 +2095,534 @@
       "type": "piechart"
     },
     {
+      "datasource": "$DS_PROMETHEUS",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 9,
+        "x": 0,
+        "y": 58
+      },
+      "id": 114,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_failed_req[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "interval": "",
+          "legendFormat": "Requests Failed {{ rgw_host }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_get[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "GETs {{ rgw_host }}",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "label_replace(rate(ceph_rgw_put[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "PUTs {{ rgw_host }}",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "label_replace(\n  rate(ceph_rgw_req[$__rate_interval]) - (rate(ceph_rgw_get[$__rate_interval]) + rate(ceph_rgw_put[$__rate_interval])),\n\"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Other {{ rgw_host }}",
+          "refId": "D"
+        }
+      ],
+      "title": "HTTP Request Breakdown",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 94
+        "y": 67
       },
       "id": 14,
       "panels": [],
       "title": "Bucket Overview",
       "type": "row"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "binBps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 68
+      },
+      "id": 16,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_bucket_throughput_bytes_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{ bucket }}",
+          "refId": "A"
+        }
+      ],
+      "title": "Throughput Per Bucket",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 14,
+        "y": 68
+      },
+      "id": 102,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_bucket_read_ops_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
+          "interval": "",
+          "legendFormat": "{{ bucket }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Read OPs Per Bucket",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 14,
+        "x": 0,
+        "y": 77
+      },
+      "id": 109,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "topk(10, rate(radosgw_bucket_ops_per_sec{job=\"$job\"}[$__rate_interval]) > 0)",
+          "interval": "",
+          "legendFormat": "{{ bucket }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Top 10 - OPs Per Bucket",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 77
+      },
+      "id": 103,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_bucket_write_ops_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
+          "interval": "",
+          "legendFormat": "{{ bucket }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Write OPs Per Bucket",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 14,
+        "x": 0,
+        "y": 85
+      },
+      "id": 99,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_bucket_ops_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
+          "interval": "",
+          "legendFormat": "{{ bucket }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Current OPs Per Bucket",
+      "type": "timeseries"
     },
     {
       "datasource": "$DS_PROMETHEUS",
@@ -2064,10 +2667,10 @@
         ]
       },
       "gridPos": {
-        "h": 12,
-        "w": 12,
-        "x": 0,
-        "y": 95
+        "h": 9,
+        "w": 10,
+        "x": 14,
+        "y": 85
       },
       "id": 97,
       "options": {
@@ -2086,7 +2689,7 @@
           "refId": "A"
         }
       ],
-      "title": "Top 10 - Capacity Consumers",
+      "title": "Top 10 - Capacity Consumers Per Bucket",
       "transformations": [
         {
           "id": "organize",
@@ -2094,13 +2697,18 @@
             "excludeByName": {
               "Time": true,
               "__name__": true,
+              "cluster": true,
+              "cluster_type": true,
               "container": true,
               "endpoint": true,
               "instance": true,
               "job": true,
               "namespace": true,
+              "organization": true,
               "owner": true,
               "pod": true,
+              "prometheus": true,
+              "region": true,
               "rgw_cluster_id": true,
               "zonegroup": true
             },
@@ -2110,6 +2718,115 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "lcd-gauge"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 10,
+        "x": 14,
+        "y": 94
+      },
+      "id": 116,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sort_desc(radosgw_usage_bucket_objects{job=~\"$job\", bucket=~\"$bucket\"} > 0)",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Objects Per Bucket",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "cluster": true,
+              "cluster_type": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "organization": true,
+              "owner": true,
+              "pod": true,
+              "prometheus": true,
+              "region": true,
+              "rgw_cluster_id": true,
+              "zonegroup": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 103
+      },
+      "id": 18,
+      "panels": [],
+      "title": "User Overview",
+      "type": "row"
     },
     {
       "datasource": "$DS_PROMETHEUS",
@@ -2153,17 +2870,106 @@
               }
             ]
           },
-          "unit": "short"
+          "unit": "binBps"
         },
         "overrides": []
       },
       "gridPos": {
-        "h": 12,
-        "w": 12,
-        "x": 12,
-        "y": 95
+        "h": 9,
+        "w": 13,
+        "x": 0,
+        "y": 104
       },
-      "id": 77,
+      "id": 19,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.32",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "rate(radosgw_user_throughput_bytes_per_sec{user=~\"$user\", job=~\"$job\"}[$__rate_interval])",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "{{user}}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Throughput Per User",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 11,
+        "x": 13,
+        "y": 104
+      },
+      "id": 107,
       "options": {
         "graph": {},
         "legend": {
@@ -2179,14 +2985,180 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "radosgw_usage_bucket_objects{job=\"$job\"}",
+          "expr": "radosgw_user_write_ops_per_sec{user=~\"$user\", job=~\"$job\"}",
           "interval": "",
-          "legendFormat": "{{ bucket }}",
+          "legendFormat": "{{ user }}",
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
-      "title": "Objects Per Bucket",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Write OPs Per User",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 13,
+        "x": 0,
+        "y": 113
+      },
+      "id": 95,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "lastNotNull",
+            "mean",
+            "max"
+          ],
+          "displayMode": "table",
+          "placement": "right"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "radosgw_user_ops_per_sec{user=~\"$user\", job=~\"$job\"}",
+          "interval": "",
+          "legendFormat": "{{ user }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Current OPs Per User",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "ops"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 11,
+        "x": 13,
+        "y": 113
+      },
+      "id": 96,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "radosgw_user_read_ops_per_sec{user=~\"$user\", job=~\"$job\"}",
+          "interval": "",
+          "legendFormat": "{{ user }}",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Read OPs Per User",
       "type": "timeseries"
     },
     {
@@ -2197,7 +3169,7 @@
             "mode": "thresholds"
           },
           "custom": {
-            "align": "auto",
+            "align": null,
             "filterable": false
           },
           "mappings": [],
@@ -2214,156 +3186,170 @@
               }
             ]
           },
-          "unit": "decbytes"
+          "unit": "ops"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Data Uploaded"
+              "options": "Value"
             },
             "properties": [
               {
                 "id": "custom.displayMode",
                 "value": "lcd-gauge"
-              },
-              {
-                "id": "unit",
-                "value": "bytes"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Data Downloaded"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
-              },
-              {
-                "id": "unit",
-                "value": "bytes"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "bucket"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 229
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 107
+        "y": 122
       },
-      "id": 88,
+      "id": 108,
       "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "frameIndex": 0,
-        "showHeader": true,
-        "sortBy": []
+        "showHeader": true
       },
       "pluginVersion": "7.5.33",
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(radosgw_bucket_bytes_sent_total) by (bucket)",
+          "expr": "topk(10, radosgw_user_ops_per_sec{job=\"$job\"} > 0)",
           "format": "table",
-          "hide": false,
           "instant": true,
           "interval": "",
           "legendFormat": "",
+          "queryType": "randomWalk",
           "refId": "A"
-        },
-        {
-          "exemplar": true,
-          "expr": "sum(radosgw_bucket_bytes_received_total) by (bucket)",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "refId": "B"
         }
       ],
-      "title": "Total Data Uploaded/Downloaded",
+      "title": "Top 10 - OPs per User",
       "transformations": [
-        {
-          "id": "seriesToColumns",
-          "options": {
-            "byField": "bucket"
-          }
-        },
         {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
-              "Time 1": true,
-              "Time 2": true
+              "__name__": true,
+              "cluster": true,
+              "cluster_type": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "organization": true,
+              "pod": true,
+              "prometheus": true,
+              "region": true,
+              "rgw_cluster_id": true
             },
-            "indexByName": {
-              "Time 1": 1,
-              "Time 2": 4,
-              "Value #A": 3,
-              "Value #B": 2,
-              "bucket": 0
-            },
+            "indexByName": {},
             "renameByName": {
-              "Value #A": "Data Downloaded",
-              "Value #B": "Data Uploaded"
+              "user": ""
             }
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Data Uploaded"
-              }
-            ]
           }
         }
       ],
       "type": "table"
     },
     {
-      "collapsed": false,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 119
+      "datasource": "$DS_PROMETHEUS",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "percentage",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Value"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "lcd-gauge"
+              }
+            ]
+          }
+        ]
       },
-      "id": 18,
-      "panels": [],
-      "title": "User Overview",
-      "type": "row"
+      "gridPos": {
+        "h": 9,
+        "w": 12,
+        "x": 12,
+        "y": 122
+      },
+      "id": 84,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "7.5.33",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "topk(10, radosgw_user_objects_total{job=\"$job\"} > 0)",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "legendFormat": "",
+          "queryType": "randomWalk",
+          "refId": "A"
+        }
+      ],
+      "title": "Top 10 - Amount Of Objects Per User",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "cluster": true,
+              "cluster_type": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "organization": true,
+              "pod": true,
+              "prometheus": true,
+              "region": true,
+              "rgw_cluster_id": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "user": ""
+            }
+          }
+        }
+      ],
+      "type": "table"
     },
     {
       "datasource": "$DS_PROMETHEUS",
@@ -2408,10 +3394,10 @@
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 9,
         "w": 12,
         "x": 0,
-        "y": 120
+        "y": 131
       },
       "id": 83,
       "options": {
@@ -2430,7 +3416,7 @@
           "refId": "A"
         }
       ],
-      "title": "Top 10 - Capacity Consumers",
+      "title": "Top 10 - Capacity Consumers Per User",
       "transformations": [
         {
           "id": "organize",
@@ -2438,16 +3424,23 @@
             "excludeByName": {
               "Time": true,
               "__name__": true,
+              "cluster": true,
+              "cluster_type": true,
               "container": true,
               "endpoint": true,
               "instance": true,
               "job": true,
               "namespace": true,
+              "organization": true,
               "pod": true,
+              "prometheus": true,
+              "region": true,
               "rgw_cluster_id": true
             },
             "indexByName": {},
-            "renameByName": {}
+            "renameByName": {
+              "user": ""
+            }
           }
         }
       ],
@@ -2477,8 +3470,7 @@
                 "value": 80
               }
             ]
-          },
-          "unit": "short"
+          }
         },
         "overrides": [
           {
@@ -2496,97 +3488,10 @@
         ]
       },
       "gridPos": {
-        "h": 12,
-        "w": 6,
+        "h": 9,
+        "w": 12,
         "x": 12,
-        "y": 120
-      },
-      "id": 84,
-      "options": {
-        "showHeader": true
-      },
-      "pluginVersion": "7.5.33",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "topk(10, radosgw_user_objects_total{job=\"$job\"} > 0)",
-          "format": "table",
-          "instant": true,
-          "interval": "",
-          "legendFormat": "",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "title": "Top 10 - Amount Of Objects",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true,
-              "container": true,
-              "endpoint": true,
-              "instance": true,
-              "job": true,
-              "namespace": true,
-              "pod": true,
-              "rgw_cluster_id": true
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": null,
-            "filterable": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "percentage",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 12,
-        "w": 6,
-        "x": 18,
-        "y": 120
+        "y": 131
       },
       "id": 90,
       "options": {
@@ -2596,11 +3501,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "topk(10, radosgw_user_buckets_total{job=\"$job\"} > 0)",
+          "expr": "topk(10, radosgw_user_buckets_total{job=~\"$job\"} > 0)",
           "format": "table",
           "instant": true,
           "interval": "",
-          "legendFormat": "{{ user }}",
+          "legendFormat": "",
           "queryType": "randomWalk",
           "refId": "A"
         }
@@ -2613,180 +3518,27 @@
             "excludeByName": {
               "Time": true,
               "__name__": true,
+              "cluster": true,
+              "cluster_type": true,
               "container": true,
               "endpoint": true,
               "instance": true,
               "job": true,
               "namespace": true,
+              "organization": true,
               "pod": true,
+              "prometheus": true,
+              "region": true,
               "rgw_cluster_id": true
             },
             "indexByName": {},
-            "renameByName": {}
+            "renameByName": {
+              "user": ""
+            }
           }
         }
       ],
       "type": "table"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 0,
-        "y": 132
-      },
-      "id": 95,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.33",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "radosgw_user_ops_per_sec{user=~\"$user\", job=~\"$job\"}",
-          "interval": "",
-          "legendFormat": "{{ user }}",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Current Operations",
-      "type": "timeseries"
-    },
-    {
-      "datasource": "$DS_PROMETHEUS",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 10,
-            "gradientMode": "none",
-            "hideFrom": {
-              "graph": false,
-              "legend": false,
-              "tooltip": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "short"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 12,
-        "y": 132
-      },
-      "id": 96,
-      "options": {
-        "graph": {},
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltipOptions": {
-          "mode": "single"
-        }
-      },
-      "pluginVersion": "7.5.33",
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "radosgw_user_ops_total{user=~\"$user\", job=~\"$job\"}",
-          "interval": "",
-          "legendFormat": "{{ user }}",
-          "queryType": "randomWalk",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Total Operations",
-      "type": "timeseries"
     },
     {
       "datasource": "$DS_PROMETHEUS",
@@ -2824,6 +3576,10 @@
               {
                 "id": "custom.displayMode",
                 "value": "lcd-gauge"
+              },
+              {
+                "id": "custom.width",
+                "value": 175
               }
             ]
           },
@@ -2910,10 +3666,10 @@
         ]
       },
       "gridPos": {
-        "h": 11,
-        "w": 24,
+        "h": 9,
+        "w": 12,
         "x": 0,
-        "y": 143
+        "y": 140
       },
       "id": 87,
       "options": {
@@ -2983,7 +3739,7 @@
           "refId": "C"
         }
       ],
-      "title": "Operations By User",
+      "title": "Total OPs Per User",
       "transformations": [
         {
           "id": "filterFieldsByName",
@@ -3016,7 +3772,8 @@
               "Value #B": "Reads",
               "Value #C": "Error Rate",
               "Value #D": "Total OPs",
-              "Value #E": "OPs Success"
+              "Value #E": "OPs Success",
+              "user": ""
             }
           }
         },
@@ -3034,378 +3791,6 @@
         }
       ],
       "type": "table"
-    },
-    {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 154
-      },
-      "id": 86,
-      "panels": [
-        {
-          "datasource": "$DS_PROMETHEUS",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "graph": false,
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "auto",
-                "spanNulls": false
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 143
-          },
-          "id": 43,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            },
-            "tooltipOptions": {
-              "mode": "single"
-            }
-          },
-          "targets": [
-            {
-              "exemplar": true,
-              "expr": "sum( rate(radosgw_user_latency_seconds_sum{user=~\"$user\"}[$__rate_interval]) ) by (user)\n/ sum( rate(radosgw_user_latency_seconds_count{user=~\"$user\"}[$__rate_interval]) ) by (user)",
-              "hide": false,
-              "interval": "",
-              "legendFormat": "{{ user }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Average latency - radosgw_user_latency_seconds_sum, radosgw_user_latency_seconds_count",
-          "type": "timeseries"
-        },
-        {
-          "datasource": "$DS_PROMETHEUS",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "palette-classic"
-              },
-              "custom": {
-                "axisLabel": "",
-                "axisPlacement": "auto",
-                "barAlignment": 0,
-                "drawStyle": "line",
-                "fillOpacity": 0,
-                "gradientMode": "none",
-                "hideFrom": {
-                  "graph": false,
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": false
-                },
-                "lineInterpolation": "linear",
-                "lineStyle": {
-                  "fill": "solid"
-                },
-                "lineWidth": 1,
-                "pointSize": 5,
-                "scaleDistribution": {
-                  "type": "linear"
-                },
-                "showPoints": "never",
-                "spanNulls": true
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "ms"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 143
-          },
-          "id": 6,
-          "options": {
-            "legend": {
-              "calcs": [],
-              "displayMode": "list",
-              "placement": "bottom",
-              "showLegend": true
-            },
-            "tooltip": {
-              "mode": "single",
-              "sort": "none"
-            },
-            "tooltipOptions": {
-              "mode": "single"
-            }
-          },
-          "targets": [
-            {
-              "exemplar": true,
-              "expr": "sum( rate(radosgw_bucket_latency_seconds_sum[$__rate_interval]) ) by (bucket)\n/ sum( rate(radosgw_bucket_latency_seconds_count[$__rate_interval]) ) by (bucket)",
-              "hide": false,
-              "interval": "$interval",
-              "legendFormat": "{{ bucket }}",
-              "refId": "A"
-            }
-          ],
-          "title": "Average latency - radosgw_bucket_latency_seconds_sum / radosgw_bucket_latency_seconds_count",
-          "type": "timeseries"
-        },
-        {
-          "datasource": "$DS_PROMETHEUS",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "auto",
-                "filterable": false
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "decbytes"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Value"
-                },
-                "properties": [
-                  {
-                    "id": "unit",
-                    "value": "ops"
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "gradient-gauge"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 11,
-            "w": 12,
-            "x": 0,
-            "y": 152
-          },
-          "id": 41,
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": false,
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "frameIndex": 0,
-            "showHeader": true
-          },
-          "pluginVersion": "7.5.33",
-          "targets": [
-            {
-              "exemplar": true,
-              "expr": "sort_desc(sum(radosgw_bucket_current_ops) by (bucket))",
-              "format": "table",
-              "hide": false,
-              "instant": true,
-              "interval": "",
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "title": "Current Operations - radosgw_bucket_current_ops",
-          "transformations": [
-            {
-              "id": "filterFieldsByName",
-              "options": {
-                "include": {
-                  "names": [
-                    "Value",
-                    "bucket"
-                  ]
-                }
-              }
-            }
-          ],
-          "type": "table"
-        },
-        {
-          "datasource": "$DS_PROMETHEUS",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "custom": {
-                "align": "auto",
-                "filterable": false
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "percentage",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
-              },
-              "unit": "decbytes"
-            },
-            "overrides": [
-              {
-                "matcher": {
-                  "id": "byName",
-                  "options": "Value"
-                },
-                "properties": [
-                  {
-                    "id": "unit",
-                    "value": "ops"
-                  },
-                  {
-                    "id": "custom.displayMode",
-                    "value": "gradient-gauge"
-                  }
-                ]
-              }
-            ]
-          },
-          "gridPos": {
-            "h": 11,
-            "w": 12,
-            "x": 12,
-            "y": 152
-          },
-          "id": 40,
-          "options": {
-            "cellHeight": "sm",
-            "footer": {
-              "countRows": false,
-              "fields": "",
-              "reducer": [
-                "sum"
-              ],
-              "show": false
-            },
-            "frameIndex": 0,
-            "showHeader": true
-          },
-          "pluginVersion": "7.5.33",
-          "targets": [
-            {
-              "exemplar": true,
-              "expr": "sort_desc(sum(radosgw_bucket_max_ops) by (bucket) != 0)",
-              "format": "table",
-              "hide": false,
-              "instant": true,
-              "interval": "",
-              "legendFormat": "",
-              "refId": "A"
-            }
-          ],
-          "title": "Max Operations - radosgw_bucket_max_ops",
-          "transformations": [
-            {
-              "id": "filterFieldsByName",
-              "options": {
-                "include": {
-                  "names": [
-                    "Value",
-                    "bucket"
-                  ]
-                }
-              }
-            }
-          ],
-          "type": "table"
-        }
-      ],
-      "title": "WIP",
-      "type": "row"
     }
   ],
   "refresh": "5m",
@@ -3431,103 +3816,46 @@
         "name": "DS_PROMETHEUS",
         "options": [],
         "query": "prometheus",
-        "queryValue": "p",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "type": "datasource"
       },
       {
-        "auto": true,
-        "auto_count": 10,
-        "auto_min": "1m",
+        "allValue": null,
         "current": {
           "selected": false,
-          "text": "1m",
-          "value": "1m"
+          "text": [
+            "ccloud/kube-monitoring-pod-sd-st1-qa-de-1"
+          ],
+          "value": [
+            "ccloud/kube-monitoring-pod-sd-st1-qa-de-1"
+          ]
         },
+        "datasource": "$DS_PROMETHEUS",
+        "definition": "label_values(radosgw_user_metadata, job)",
         "description": null,
         "error": null,
         "hide": 0,
+        "includeAll": true,
         "label": null,
-        "name": "interval",
-        "options": [
-          {
-            "selected": false,
-            "text": "auto",
-            "value": "$__auto_interval_interval"
-          },
-          {
-            "selected": false,
-            "text": "5s",
-            "value": "5s"
-          },
-          {
-            "selected": false,
-            "text": "10s",
-            "value": "10s"
-          },
-          {
-            "selected": false,
-            "text": "30s",
-            "value": "30s"
-          },
-          {
-            "selected": true,
-            "text": "1m",
-            "value": "1m"
-          },
-          {
-            "selected": false,
-            "text": "10m",
-            "value": "10m"
-          },
-          {
-            "selected": false,
-            "text": "30m",
-            "value": "30m"
-          },
-          {
-            "selected": false,
-            "text": "1h",
-            "value": "1h"
-          },
-          {
-            "selected": false,
-            "text": "6h",
-            "value": "6h"
-          },
-          {
-            "selected": false,
-            "text": "12h",
-            "value": "12h"
-          },
-          {
-            "selected": false,
-            "text": "1d",
-            "value": "1d"
-          },
-          {
-            "selected": false,
-            "text": "7d",
-            "value": "7d"
-          },
-          {
-            "selected": false,
-            "text": "14d",
-            "value": "14d"
-          },
-          {
-            "selected": false,
-            "text": "30d",
-            "value": "30d"
-          }
-        ],
-        "query": "5s,10s,30s,1m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
-        "queryValue": "",
-        "refresh": 2,
+        "multi": true,
+        "name": "job",
+        "options": [],
+        "query": {
+          "query": "label_values(radosgw_user_metadata, job)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
         "skipUrlSync": false,
-        "type": "interval"
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       },
       {
         "allValue": null,
@@ -3569,24 +3897,24 @@
         "current": {
           "selected": true,
           "text": [
-            "ccloud/kube-monitoring-pod-sd-st1-qa-de-1"
+            "All"
           ],
           "value": [
-            "ccloud/kube-monitoring-pod-sd-st1-qa-de-1"
+            "$__all"
           ]
         },
         "datasource": "$DS_PROMETHEUS",
-        "definition": "label_values(radosgw_user_metadata, job)",
+        "definition": "label_values(radosgw_bucket_capacity_usage_bytes, bucket)",
         "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": true,
-        "name": "job",
+        "name": "bucket",
         "options": [],
         "query": {
-          "query": "label_values(radosgw_user_metadata, job)",
+          "query": "label_values(radosgw_bucket_capacity_usage_bytes, bucket)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
@@ -3609,5 +3937,5 @@
   "timezone": "browser",
   "title": "ceph rgw overview",
   "uid": "cdvlgooiqk3cwt",
-  "version": 1
+  "version": 2
 }
