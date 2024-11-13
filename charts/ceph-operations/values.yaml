@@ -25,6 +25,7 @@ prometheusRules:
     pgr: true
     pools: true
     rados: true
+    customrules: true
 
   ## Disables specific PrometheusRule alerts
   disabled:
