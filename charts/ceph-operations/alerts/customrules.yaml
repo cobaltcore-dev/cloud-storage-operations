@@ -1,0 +1,19 @@
+{{- if not .Values.prometheusRules.ruleGroups.customrules }}
+groups: []
+{{- else -}}
+groups:
+- name: customrules
+  rules:
+  - record: objectstore_bytes_received_total
+    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_bytes_received_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+  - record: objectstore_bytes_sent_total
+    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_bytes_sent_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+  - record: objectstore_read_ops_total
+    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_read_ops_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+  - record: objectstore_write_operations_total
+    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_write_ops_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+  - record: objectstore_capacity_usage_bytes
+    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_capacity_usage_bytes, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+  - record: objectstore_usage_objects
+    expr: max by(bucket, project_id) (label_replace(radosgw_usage_bucket_objects, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+{{- end }}
