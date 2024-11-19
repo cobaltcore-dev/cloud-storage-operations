@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1729523414133,
+  "iteration": 1731571517256,
   "links": [],
   "panels": [
     {
@@ -3166,15 +3166,32 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "custom": {
-            "align": null,
-            "filterable": false
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
           },
           "mappings": [],
           "thresholds": {
-            "mode": "percentage",
+            "mode": "absolute",
             "steps": [
               {
                 "color": "green",
@@ -3188,20 +3205,7 @@
           },
           "unit": "ops"
         },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 9,
@@ -3209,52 +3213,34 @@
         "x": 0,
         "y": 122
       },
-      "id": 108,
+      "id": 126,
       "options": {
-        "showHeader": true
+        "graph": {},
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
       },
       "pluginVersion": "7.5.33",
       "targets": [
         {
           "exemplar": true,
-          "expr": "topk(10, radosgw_user_ops_per_sec{job=\"$job\"} > 0)",
-          "format": "table",
-          "instant": true,
+          "expr": "topk(10, radosgw_user_ops_per_sec{job=~\"$job\"})",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "{{ user }}",
           "queryType": "randomWalk",
           "refId": "A"
         }
       ],
+      "timeFrom": null,
+      "timeShift": null,
       "title": "Top 10 - OPs per User",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "__name__": true,
-              "cluster": true,
-              "cluster_type": true,
-              "container": true,
-              "endpoint": true,
-              "instance": true,
-              "job": true,
-              "namespace": true,
-              "organization": true,
-              "pod": true,
-              "prometheus": true,
-              "region": true,
-              "rgw_cluster_id": true
-            },
-            "indexByName": {},
-            "renameByName": {
-              "user": ""
-            }
-          }
-        }
-      ],
-      "type": "table"
+      "transformations": [],
+      "type": "timeseries"
     },
     {
       "datasource": "$DS_PROMETHEUS",
@@ -3937,5 +3923,5 @@
   "timezone": "browser",
   "title": "ceph rgw overview",
   "uid": "cdvlgooiqk3cwt",
-  "version": 2
+  "version": 3
 }
