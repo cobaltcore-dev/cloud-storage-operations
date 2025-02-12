@@ -1,0 +1,90 @@
+{{- if not .Values.prometheusRules.ruleGroups.absentMetrics }}
+groups: []
+{{- else -}}
+groups:
+- name: absentMetrics
+  rules:
+{{- if not (.Values.prometheusRules.disabled.AbsentStorageCephObjectstoreBytesReceivedTotal | default false) }}
+  - alert: AbsentStorageCephObjectstoreBytesReceivedTotal
+    expr: absent(objectstore_bytes_received_total)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_bytes_received_total is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_bytes_received_total metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.AbsentStorageCephObjectstoreBytesSentTotal | default false) }}
+  - alert: AbsentStorageCephObjectstoreBytesSentTotal
+    expr: absent(objectstore_bytes_sent_total)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_bytes_sent_total is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_bytes_sent_total metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.AbsentStorageCephObjectstoreCapacityUsageBytes | default false) }}
+  - alert: AbsentStorageCephObjectstoreCapacityUsageBytes
+    expr: absent(objectstore_capacity_usage_bytes)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_capacity_usage_bytes is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_capacity_usage_bytes metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.AbsentStorageCephObjectstoreReadOpsTotal | default false) }}
+  - alert: AbsentStorageCephObjectstoreReadOpsTotal
+    expr: absent(objectstore_read_ops_total)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_read_ops_total is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_read_ops_total metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.AbsentStorageCephObjectstoreWriteOpsTotal | default false) }}
+  - alert: AbsentStorageCephObjectstoreWriteOpsTotal
+    expr: absent(objectstore_write_ops_total)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_write_ops_total is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_write_ops_total metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.AbsentStorageCephObjectstoreUsageObjects | default false) }}
+  - alert: AbsentStorageCephObjectstoreUsageObjects
+    expr: absent(objectstore_usage_objects)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_usage_objects is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_usage_objects metric is missing.
+{{- end }}
+{{- end }}
