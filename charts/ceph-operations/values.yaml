@@ -26,6 +26,7 @@ prometheusRules:
     pools: true
     rados: true
     customrules: true
+    absentMetrics: true
 
   ## Disables specific PrometheusRule alerts
   disabled:
