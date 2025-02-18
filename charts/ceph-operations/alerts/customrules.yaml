@@ -13,7 +13,7 @@ groups:
   - record: objectstore_write_ops_total
     expr: max by(bucket, project_id) (label_replace(radosgw_bucket_write_ops_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
   - record: objectstore_capacity_usage_bytes
-    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_capacity_usage_bytes, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+    expr: max by(bucket, project_id) (label_replace(radosgw_usage_bucket_size, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
   - record: objectstore_usage_objects
     expr: max by(bucket, project_id) (label_replace(radosgw_usage_bucket_objects, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
 {{- end }}
