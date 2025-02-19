@@ -4,7 +4,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: PrometheusRule
 metadata:
-  name: {{ printf "%s-%s-alerts" $.Release.Name $path | replace "/" "-" | replace ".yaml" "" | replace "-alerts-" "-" | trunc 63 }}
+  name: {{ printf "%s-%s-alerts" $.Release.Name $path | replace "/" "-" | replace ".yaml" "" | replace "-alerts-" "-" | trunc 63 | lower }}
   labels:
 {{- include "cloud-storage-operations.ruleSelectorLabels" (list $path $root) | indent 4 }} 
 {{ include "cloud-storage-operations.labels" (list $path $root) | indent 4 }}
