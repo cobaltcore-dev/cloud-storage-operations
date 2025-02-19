@@ -2,7 +2,7 @@
 groups: []
 {{- else -}}
 groups:
-- name: absentMetrics
+- name: absent-metrics
   rules:
 {{- if not (.Values.prometheusRules.disabled.AbsentStorageCephObjectstoreBytesReceivedTotal | default false) }}
   - alert: AbsentStorageCephObjectstoreBytesReceivedTotal
