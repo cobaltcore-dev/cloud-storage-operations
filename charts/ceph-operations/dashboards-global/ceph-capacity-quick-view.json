@@ -1,0 +1,444 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Plutono --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "description": "",
+  "links": [],
+  "panels": [
+    {
+      "datasource": "${DS_THANOS}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/%/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0.7
+                    },
+                    {
+                      "color": "red",
+                      "value": 0.9
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Region"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "7.5.34",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "ceph_cluster_total_bytes",
+          "format": "table",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "ceph_cluster_total_used_bytes",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "1 - (ceph_cluster_total_bytes - ceph_cluster_total_used_bytes) / ceph_cluster_total_bytes",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "C"
+        }
+      ],
+      "title": "Ceph Capacity",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "region"
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "cluster": true,
+              "cluster_type": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "organization": true,
+              "pod": true,
+              "prometheus": true,
+              "service": true
+            },
+            "indexByName": {
+              "Value #A": 1,
+              "Value #B": 3,
+              "Value #C": 4,
+              "Value #D": 2,
+              "region": 0
+            },
+            "renameByName": {
+              "Value #A": "Cluster Capacity",
+              "Value #B": "Resource Usage",
+              "Value #C": "Resource Usage (%)",
+              "Value #D": "Quota Size",
+              "region": "Region"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "field": "Resource Usage (%)"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": "${DS_THANOS}",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": null,
+            "filterable": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/%/"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Quota Usage %"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0.5
+                    },
+                    {
+                      "color": "red",
+                      "value": 0.7
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Resource Usage %"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "gradient-gauge"
+              },
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "yellow",
+                      "value": 0.4
+                    },
+                    {
+                      "color": "red",
+                      "value": 0.5
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Region"
+            },
+            "properties": [
+              {
+                "id": "custom.filterable",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 15,
+        "x": 9,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "showHeader": true
+      },
+      "pluginVersion": "7.5.34",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "(max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region))",
+          "format": "table",
+          "interval": "",
+          "legendFormat": "",
+          "queryType": "randomWalk",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region))",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "(max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)) -\n(sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region))",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region))",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "D"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)) / (max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region))",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "E"
+        },
+        {
+          "exemplar": true,
+          "expr": "(sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)) / (max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\n max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region))",
+          "format": "table",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "",
+          "refId": "F"
+        }
+      ],
+      "title": "Ceph Quota",
+      "transformations": [
+        {
+          "id": "seriesToColumns",
+          "options": {
+            "byField": "region"
+          }
+        },
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Time 1": true,
+              "Time 2": true,
+              "Time 3": true,
+              "Time 4": true,
+              "Time 5": true,
+              "Time 6": true,
+              "Value #A": false
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Time 1": "",
+              "Value #A": "Capacity",
+              "Value #B": "Quota Usage",
+              "Value #C": "Unassigned Quota",
+              "Value #D": "Resource Usage",
+              "Value #E": "Quota Usage %",
+              "Value #F": "Resource Usage %",
+              "region": "Region"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [
+    "ceph"
+  ],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "ceph capacity quick view",
+  "uid": "gvafGBWNz",
+  "version": 2
+}
