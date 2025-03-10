@@ -222,24 +222,24 @@ groups:
       summary: "Device read errors detected"
 {{- end }}
 
-#{{- if not (.Values.prometheusRules.disabled.CephOSDWriteErrors | default false) }}
-#  - alert: CephAPodNodePGImbalance
-#    expr: |
-#      abs(
-#       1 -
-#       ceph_osd_numpg * on(ceph_daemon) group_left(hostname) ceph_osd_metadata{hostname=~"node[0-9]+-ap.*"} / on (job) group_left()
-#       avg by (job) (ceph_osd_numpg * on(ceph_daemon) group_left() ceph_osd_metadata{hostname=~"node[0-9]+-ap.*"})
-#      ) > 0.30
-#    for: 5m
-#    labels:
-#      oid: "1.3.6.1.4.1.50495.1.2.1.4.5"
-#      severity: warning
-#      type: ceph_default
-#      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-#    annotations:
-#      description: "OSD `{{`{{ $labels.ceph_daemon }}`}}` on apod node `{{`{{ $labels.hostname }}`}}` deviates by more than 30% from average PG count."
-#      summary: "PGs are not balanced across OSDs"
-#{{- end }}
+{{- if not (.Values.prometheusRules.disabled.CephOSDWriteErrors | default false) }}
+  - alert: CephAPodNodePGImbalance
+    expr: |
+      abs(
+       1 -
+       ceph_osd_numpg * on(ceph_daemon) group_left(hostname) ceph_osd_metadata{hostname=~"node[0-9]+-ap.*"} / on (job) group_left()
+       avg by (job) (ceph_osd_numpg * on(ceph_daemon) group_left() ceph_osd_metadata{hostname=~"node[0-9]+-ap.*"})
+      ) > 0.30
+    for: 5m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.4.5"
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "OSD `{{`{{ $labels.ceph_daemon }}`}}` on apod node `{{`{{ $labels.hostname }}`}}` deviates by more than 30% from average PG count."
+      summary: "PGs are not balanced across OSDs"
+{{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDWriteErrors | default false) }}
   - alert: CephStorageNodePGImbalance
