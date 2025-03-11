@@ -222,7 +222,7 @@ groups:
       summary: "Device read errors detected"
 {{- end }}
 
-{{- if not (.Values.prometheusRules.disabled.CephOSDPGImbalance | default false) }}
+{{- if not (.Values.prometheusRules.disabled.CephAPodNodePGImbalance | default false) }}
   - alert: CephAPodNodePGImbalance
     expr: |
       abs(
@@ -241,7 +241,7 @@ groups:
       summary: "PGs are not balanced across OSDs"
 {{- end }}
 
-{{- if not (.Values.prometheusRules.disabled.CephOSDPGImbalance | default false) }}
+{{- if not (.Values.prometheusRules.disabled.CephStorageNodePGImbalance | default false) }}
   - alert: CephStorageNodePGImbalance
     expr: |
       abs(
