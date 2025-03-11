@@ -31,8 +31,8 @@ prometheusRules:
   ## Disables specific PrometheusRule alerts
   disabled:
     CephNodeInconsistentMTU: true
-    CephAPodNodePGImbalance: true
-    CephStorageNodePGImbalance: true
+    CephOSDPGImbalance: true
+
 
   ## Label selectors for the Prometheus rules to be picked up by Prometheus.
   ruleSelectors:
