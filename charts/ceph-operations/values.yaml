@@ -3,14 +3,13 @@
 
 global:
   ## Common labels to add to all resources
-  ## 
+  ##
   commonLabels: {}
 
 ## Default rules for monitoring the cloud storage clusters
 ##
 prometheusRules:
-  
-  ## Enables PrometheusRule resources to be created 
+  ## Enables PrometheusRule resources to be created
   create: true
 
   ## PrometheusRule groups to be created
@@ -59,7 +58,6 @@ prometheusRules:
 ## Create default plutono dashboards for monitoring the cluster
 ##
 dashboards:
-
   ## Enables ConfigMap resources with dashboards to be created
   create: true
   ## Label selectors for the Plutono dashboards to be picked up by Plutono.
@@ -72,3 +70,7 @@ dashboards:
 persesDashboards:
   ## Enables ConfigMap resources with perses dashboards to be created
   create: true
+  ## Label selectors for the Plutono dashboards to be picked up by Plutono.
+  dashboardSelectors:
+    - name: perses.dev/resource
+      value: '"true"'
