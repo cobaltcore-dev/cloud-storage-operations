@@ -56,14 +56,19 @@ prometheusRules:
   ## Additional annotations for PrometheusRule alerts
   additionalRuleAnnotations: {}
 
-## Create default dashboards for monitoring the cluster
+## Create default plutono dashboards for monitoring the cluster
 ##
 dashboards:
 
   ## Enables ConfigMap resources with dashboards to be created
   create: true
-
   ## Label selectors for the Plutono dashboards to be picked up by Plutono.
   dashboardSelectors:
     - name: plutono-dashboard
       value: '"true"'
+
+## Create default perses dashboards for monitoring the cluster
+##
+persesDashboards:
+  ## Enables ConfigMap resources with perses dashboards to be created
+  create: true

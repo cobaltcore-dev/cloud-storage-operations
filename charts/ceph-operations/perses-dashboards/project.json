@@ -1,0 +1,7 @@
+{
+  "kind": "Project",
+  "metadata": {
+    "name": "ceph-storage"
+  },
+  "spec": { "display": { "name": "Ceph Storage" } }
+}

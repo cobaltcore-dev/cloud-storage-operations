@@ -27,6 +27,8 @@ cloud-storage-operations
               │
               ├── dashboards/               Plutono dashboards for visualizing key metrics.
               │
+              ├── perses-dashboards/        Perses dashboards for visualizing key metrics.
+              │
               ├── playbooks/                Step-by-step instructions for troubleshooting.        
               │
               ├── Chart.yaml                Helm chart manifest.
