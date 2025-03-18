@@ -37,3 +37,14 @@ app.cloud-storage.io/part-of: {{ $root.Release.Name }}
 {{- end }}
 {{- end }}
 {{- end }}
+
+
+{{- define "cloud-storage-operations.persesDashboardSelectorLabels" }}
+{{- $path := index . 0 -}}
+{{- $root := index . 1 -}}
+{{- if $root.Values.persesDashboards.dashboardSelectors }}
+{{- range $i, $target := $root.Values.persesDashboards.dashboardSelectors }}
+{{ $target.name | required (printf "$.Values.persesDashboardSelectorLabels.dashboardSelectors.[%v].name missing" $i) }}: {{ tpl ($target.value | required (printf "$.Values.persesDashboardSelectorLabels.dashboardSelectors.[%v].value missing" $i)) $ }}
+{{- end }}
+{{- end }}
+{{- end }}
