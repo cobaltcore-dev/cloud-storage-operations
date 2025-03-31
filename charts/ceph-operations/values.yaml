@@ -10,7 +10,7 @@ global:
 ##
 prometheusRules:
   ## Enables PrometheusRule resources to be created
-  create: true
+  create: true 
 
   ## PrometheusRule groups to be created
   ruleGroups:
@@ -64,6 +64,15 @@ dashboards:
   dashboardSelectors:
     - name: plutono-dashboard
       value: '"true"'
+
+  global:
+    ## Enables ConfigMap resources with global dashboards to be created
+    create: false
+
+    ## Label selectors for the global Plutono dashboards to be picked up by the global Plutono.
+    dashboardSelectors:
+      - name: plutono-global
+        value: '"true"'
 
 ## Create default perses dashboards for monitoring the cluster
 ##
