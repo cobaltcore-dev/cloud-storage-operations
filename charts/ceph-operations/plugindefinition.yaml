@@ -6,7 +6,7 @@ kind: PluginDefinition
 metadata:
   name: ceph-operations
 spec:
-  version: 1.5.1
+  version: 1.5.2
   displayName: Ceph operations bundle
   description: Operations bundle for the Ceph storage backend
   docMarkDownUrl: https://raw.githubusercontent.com/cobaltcore-dev/cloud-storage-operations/main/ceph-operations/README.md
@@ -14,7 +14,7 @@ spec:
   helmChart:
     name: ceph-operations
     repository: oci://ghcr.io/cobaltcore-dev/cloud-storage-operations/charts
-    version: 1.5.1
+    version: 1.5.2
   options:
     - name: prometheusRules.create
       description: Create Prometheus rules
@@ -33,6 +33,11 @@ spec:
       description: Create Plutono dashboards
       required: false
       default: true
+      type: bool
+    - name: dashboards.global.create
+      description: Create global Plutono dashboards
+      required: false
+      default: false
       type: bool
     - name: dashboards.dashboardSelector
       description: Selector for dashboards to be picked up by the Plutono. List of key-value pairs.

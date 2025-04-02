@@ -12,14 +12,14 @@
       }
     ]
   },
+  "description": "",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "description": "",
   "links": [],
   "panels": [
     {
-      "datasource": "${DS_THANOS}",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -228,7 +228,7 @@
         ]
       },
       "gridPos": {
-        "h": 6,
+        "h": 18,
         "w": 24,
         "x": 0,
         "y": 0
@@ -239,7 +239,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "7.5.34",
+      "pluginVersion": "7.5.37",
       "targets": [
         {
           "exemplar": true,
@@ -394,7 +394,28 @@
     "ceph"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "thanos-global-st1-eu-de-1-query",
+          "value": "thanos-global-st1-eu-de-1-query"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      }
+    ]
   },
   "time": {
     "from": "now-1h",
@@ -403,6 +424,6 @@
   "timepicker": {},
   "timezone": "",
   "title": "ceph health quick view",
-  "uid": "HoRrQJWHk",
+  "uid": "ceph-health-quick-view",
   "version": 1
 }

@@ -12,14 +12,15 @@
       }
     ]
   },
+  "description": "",
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "description": "",
+  "id": 4,
   "links": [],
   "panels": [
     {
-      "datasource": "${DS_THANOS}",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -97,16 +98,22 @@
         ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 9,
+        "h": 13,
+        "w": 24,
         "x": 0,
         "y": 0
       },
       "id": 2,
       "options": {
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Region"
+          }
+        ]
       },
-      "pluginVersion": "7.5.34",
+      "pluginVersion": "7.5.37",
       "targets": [
         {
           "exemplar": true,
@@ -198,7 +205,7 @@
       "type": "table"
     },
     {
-      "datasource": "${DS_THANOS}",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -316,16 +323,22 @@
         ]
       },
       "gridPos": {
-        "h": 5,
-        "w": 15,
-        "x": 9,
-        "y": 0
+        "h": 16,
+        "w": 24,
+        "x": 0,
+        "y": 13
       },
       "id": 4,
       "options": {
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": [
+          {
+            "desc": false,
+            "displayName": "Region"
+          }
+        ]
       },
-      "pluginVersion": "7.5.34",
+      "pluginVersion": "7.5.37",
       "targets": [
         {
           "exemplar": true,
@@ -430,7 +443,28 @@
     "ceph"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "thanos-global-query",
+          "value": "thanos-global-query"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      }
+    ]
   },
   "time": {
     "from": "now-1h",
@@ -438,7 +472,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "ceph capacity quick view",
-  "uid": "gvafGBWNz",
+  "title": "ceph capacity quick view-test",
+  "uid": "ceph-capacity-quick-view",
   "version": 2
 }
