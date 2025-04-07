@@ -10,7 +10,7 @@ global:
 ##
 prometheusRules:
   ## Enables PrometheusRule resources to be created
-  create: true 
+  create: true
 
   ## PrometheusRule groups to be created
   ruleGroups:
@@ -72,6 +72,11 @@ dashboards:
     ## Label selectors for the global Plutono dashboards to be picked up by the global Plutono.
     dashboardSelectors:
       - name: plutono-global
+        value: '"true"'
+
+    ## Label selectors for the global Perses dashboards to be picked up by the global Perses.
+    persesDashboardSelectors:
+      - name: perses.dev/global-resource
         value: '"true"'
 
 ## Create default perses dashboards for monitoring the cluster
