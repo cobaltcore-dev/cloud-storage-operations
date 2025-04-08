@@ -1,0 +1,311 @@
+{
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "ceph-health-quick-view",
+    "project": "ceph_global"
+  },
+  "spec": {
+    "display": {
+      "name": "ceph health quick view"
+    },
+    "panels": {
+      "0": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Ceph Health"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [
+                {
+                  "condition": {
+                    "kind": "Misc",
+                    "spec": {
+                      "value": "null"
+                    }
+                  },
+                  "text": "0"
+                }
+              ],
+              "columnSettings": [
+                {
+                  "header": "Region",
+                  "hide": false,
+                  "name": "region"
+                },
+                {
+                  "header": "Health Status",
+                  "name": "value #1"
+                },
+                {
+                  "header": "Ceph Alerts",
+                  "name": "value #2"
+                },
+                {
+                  "header": "Write Throughput",
+                  "name": "value #3"
+                },
+                {
+                  "header": "Read Throughput",
+                  "name": "value #4"
+                },
+                {
+                  "header": "Write IOPs",
+                  "name": "value #5"
+                },
+                {
+                  "header": "Read IOPs",
+                  "name": "value #6"
+                },
+                {
+                  "header": "OSDs OUT",
+                  "name": "value #7"
+                },
+                {
+                  "header": "OSDs DOWN",
+                  "name": "value #8"
+                },
+                {
+                  "header": "OSDs UP",
+                  "name": "value #9"
+                },
+                {
+                  "header": "OSDs IN",
+                  "name": "value #10"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "organization"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "rgw_cluster_id"
+                },
+                {
+                  "header": "user",
+                  "name": "user"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                }
+              ],
+              "density": "standard",
+              "transforms": [
+                {
+                  "kind": "MergeSeries",
+                  "spec": {}
+                },
+                {
+                  "kind": "JoinByColumnValue",
+                  "spec": {
+                    "columns": ["region"]
+                  }
+                }
+              ]
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "ceph_health_status",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "count(ALERTS{alertstate=\"firing\",alertname=~\"^Ceph.+\"}) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(irate(ceph_osd_op_w_in_bytes{}[$__rate_interval])) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(irate(ceph_osd_op_r_out_bytes{}[$__rate_interval])) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(irate(ceph_osd_op_w{}[$__rate_interval])) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(irate(ceph_osd_op_r{}[$__rate_interval])) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(ceph_osd_in == bool 0) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(ceph_osd_up == bool 0) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(ceph_osd_up) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "sum(ceph_osd_in) by (region)",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "layouts": [
+      {
+        "kind": "Grid",
+        "spec": {
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 24,
+              "height": 18,
+              "content": {
+                "$ref": "#/spec/panels/0"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "variables": [],
+    "duration": "1h",
+    "refreshInterval": "0s"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "kind": "Project",
+  "metadata": {
+    "name": "ceph-global"
+  },
+  "spec": { "display": { "name": "Ceph Global" } }
+}
