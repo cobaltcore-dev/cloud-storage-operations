@@ -2,7 +2,7 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "ceph-capacity-quick-view",
-    "project": "ceph_global"
+    "project": "ceph-global"
   },
   "spec": {
     "display": {
