@@ -13,23 +13,17 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "RGW Status"
+            "name": "RGW Status UP"
           },
           "plugin": {
             "kind": "StatChart",
             "spec": {
               "calculation": "last-number",
+              "format": {
+                "unit": "decimal"
+              },
               "thresholds": {
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": 0
-                  },
-                  {
-                    "color": "red",
-                    "value": 80
-                  }
-                ]
+                "steps": []
               }
             }
           },
@@ -45,11 +39,38 @@
                     },
                     "minStep": "",
                     "query": "count(ceph_rgw_metadata{})",
-                    "seriesNameFormat": "Up"
+                    "seriesNameFormat": ""
                   }
                 }
               }
-            },
+            }
+          ]
+        }
+      },
+      "0_0-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "RGW Status DOWN"
+          },
+          "plugin": {
+            "kind": "StatChart",
+            "spec": {
+              "calculation": "last-number",
+              "format": {
+                "unit": "decimal"
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "color": "#EE6C6C",
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "queries": [
             {
               "kind": "TimeSeriesQuery",
               "spec": {
@@ -69,7 +90,7 @@
           ]
         }
       },
-      "0_1": {
+      "0_1-1": {
         "kind": "Panel",
         "spec": {
           "display": {
@@ -79,19 +100,21 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "list",
                 "position": "bottom"
               },
               "visual": {
                 "areaOpacity": 0.15,
                 "connectNulls": false,
-                "display": "line",
-                "lineWidth": 1
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
               },
               "yAxis": {
                 "format": {
+                  "shortValues": true,
                   "unit": "bytes"
-                }
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -106,7 +129,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_used_bytes{}",
+                    "query": "ceph_cluster_total_used_bytes",
                     "seriesNameFormat": ""
                   }
                 }
@@ -125,15 +148,27 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "list",
+                "mode": "table",
                 "position": "bottom",
-                "values": []
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -148,7 +183,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_cluster_bytes_sent_per_sec{job=\"$job\"}[$__rate_interval])",
+                    "query": "sum by (cluster) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
                     "seriesNameFormat": "Data Sent"
                   }
                 }
@@ -164,7 +199,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_cluster_bytes_received_per_sec{job=\"$job\"}[$__rate_interval])",
+                    "query": "sum by (cluster) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
                     "seriesNameFormat": "Data Received"
                   }
                 }
@@ -177,86 +212,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Total Data Downloaded"
-          },
-          "plugin": {
-            "kind": "StatChart",
-            "spec": {
-              "calculation": "last-number",
-              "format": {
-                "unit": "bytes"
-              },
-              "sparkline": {},
-              "thresholds": {
-                "steps": []
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "radosgw_cluster_bytes_sent_total{job=~\"$job\"} - (radosgw_cluster_bytes_sent_total{job=~\"$job\"} offset $__range_s )",
-                    "seriesNameFormat": ""
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "0_12": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Total Data Uploaded"
-          },
-          "plugin": {
-            "kind": "StatChart",
-            "spec": {
-              "calculation": "last-number",
-              "format": {
-                "unit": "bytes"
-              },
-              "sparkline": {},
-              "thresholds": {
-                "defaultColor": "#2FBF71",
-                "steps": []
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "radosgw_cluster_bytes_received_total{job=~\"$job\"} - (radosgw_cluster_bytes_received_total{job=~\"$job\"} offset ${__range_s})",
-                    "seriesNameFormat": ""
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "0_13": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "RGW Throughput"
+            "name": "Total Data Uploaded/Downloaded"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -264,18 +220,25 @@
               "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["last-number", "mean", "max"]
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
-                "areaOpacity": 0.15,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
               },
               "yAxis": {
                 "format": {
                   "unit": "bytes/sec"
-                }
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -290,8 +253,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(irate(ceph_rgw_get_b{}[$__rate_interval]))",
-                    "seriesNameFormat": "GET"
+                    "query": "sum by (cluster) (increase(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__range]))",
+                    "seriesNameFormat": "Uploaded"
                   }
                 }
               }
@@ -302,12 +265,116 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
+                    "query": "sum by (cluster) (increase(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__range]))",
+                    "seriesNameFormat": "Downloaded"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "0_13-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "RGW OPs By Status"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(irate(ceph_rgw_put_b{}[$__rate_interval]))",
-                    "seriesNameFormat": "PUT"
+                    "query": "rate(radosgw_requests_by_status[$__rate_interval])",
+                    "seriesNameFormat": "{{status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "0_13-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "RGW OPs By Method"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "sum by (method) (rate(radosgw_requests_by_method[$__rate_interval]))",
+                    "seriesNameFormat": "{{method}}"
                   }
                 }
               }
@@ -358,8 +425,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_used_bytes{} / ceph_cluster_total_bytes{}",
-                    "seriesNameFormat": ""
+                    "query": "ceph_cluster_total_used_bytes / ceph_cluster_total_bytes",
+                    "seriesNameFormat": " "
                   }
                 }
               }
@@ -379,7 +446,12 @@
               "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["last-number", "mean", "max"]
+                "size": "small",
+                "values": [
+                  "last",
+                  "mean",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
@@ -390,7 +462,8 @@
               "yAxis": {
                 "format": {
                   "unit": "bytes/sec"
-                }
+                },
+                "show": true
               }
             }
           },
@@ -405,8 +478,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "irate(radosgw_cluster_throughput_bytes_per_sec{job=\"$job\"}[$__rate_interval])",
-                    "seriesNameFormat": ""
+                    "query": "sum by (cluster) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval])) +\nsum by (cluster) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
+                    "seriesNameFormat": "{{ cluster }}"
                   }
                 }
               }
@@ -424,20 +497,20 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "list",
-                "position": "bottom",
-                "values": []
+                "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0.15,
                 "connectNulls": false,
-                "display": "line",
-                "lineWidth": 1
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
               },
               "yAxis": {
                 "format": {
                   "unit": "bytes"
-                }
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -452,7 +525,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_bytes{}",
+                    "query": "ceph_cluster_total_bytes",
                     "seriesNameFormat": ""
                   }
                 }
@@ -504,8 +577,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(ceph_cluster_total_bytes{} - ceph_cluster_total_used_bytes{}) / ceph_cluster_total_bytes{}",
-                    "seriesNameFormat": ""
+                    "query": "(ceph_cluster_total_bytes - ceph_cluster_total_used_bytes) / ceph_cluster_total_bytes",
+                    "seriesNameFormat": " "
                   }
                 }
               }
@@ -523,15 +596,42 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "list",
+                "mode": "table",
                 "position": "bottom",
-                "values": []
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "querySettings": [
+                {
+                  "colorMode": "fixed",
+                  "colorValue": "#59CC8D",
+                  "queryIndex": 0
+                },
+                {
+                  "colorMode": "fixed",
+                  "colorValue": "#FFB249",
+                  "queryIndex": 1
+                }
+              ],
+              "thresholds": {
+                "steps": []
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -546,7 +646,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_cluster_reads_per_sec{job=\"$job\"}[$__rate_interval])",
+                    "query": "sum (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "Read OPs"
                   }
                 }
@@ -562,7 +662,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_cluster_writes_per_sec{job=\"$job\"}[$__rate_interval])",
+                    "query": "sum (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "Write OPs"
                   }
                 }
@@ -620,7 +720,7 @@
           ]
         }
       },
-      "0_8": {
+      "0_8-1": {
         "kind": "Panel",
         "spec": {
           "display": {
@@ -630,57 +730,27 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "list",
-                "position": "bottom",
-                "values": []
-              },
-              "visual": {
-                "areaOpacity": 0.15,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "rate(radosgw_cluster_ops_total{job=\"$job\"}[$__rate_interval])",
-                    "seriesNameFormat": ""
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "0_9": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Current Cluster OPs"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["last-number", "mean", "max"]
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "display": "line",
-                "lineWidth": 1
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -695,8 +765,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_cluster_ops_per_sec{job=\"$job\"}[$__rate_interval])",
-                    "seriesNameFormat": ""
+                    "query": "sum by (cluster) (rate(radosgw_total_requests{tenant=\"all\", user=\"all\", method=\"all\", http_status=\"all\"}[$__rate_interval]))",
+                    "seriesNameFormat": "{{ cluster }}"
                   }
                 }
               }
@@ -809,200 +879,6 @@
                     "minStep": "",
                     "query": "label_replace(\n  rate(ceph_rgw_req[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
                     "seriesNameFormat": "{{ rgw_host }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "1_10": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Workload Breakdown Failures"
-          },
-          "plugin": {
-            "kind": "PieChart",
-            "spec": {
-              "calculation": "last",
-              "format": {
-                "shortValues": true,
-                "unit": "decimal"
-              },
-              "legend": {
-                "position": "right"
-              },
-              "mode": "value",
-              "radius": 50,
-              "sort": "desc",
-              "visual": {
-                "areaOpacity": 0,
-                "connectNulls": false,
-                "lineWidth": 1.25,
-                "pointRadius": 2.75
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  rate(ceph_rgw_failed_req[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
-                    "seriesNameFormat": "Failures {{ rgw_host }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "1_10-2": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Workload Breakdown Get"
-          },
-          "plugin": {
-            "kind": "PieChart",
-            "spec": {
-              "calculation": "last",
-              "format": {
-                "shortValues": true,
-                "unit": "decimal"
-              },
-              "legend": {
-                "position": "right"
-              },
-              "mode": "value",
-              "radius": 50,
-              "sort": "desc",
-              "visual": {
-                "areaOpacity": 0,
-                "connectNulls": false,
-                "lineWidth": 1.25,
-                "pointRadius": 2.75
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  rate(ceph_rgw_get[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
-                    "seriesNameFormat": "GET {{ rgw_host }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "1_10-3": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Workload Breakdown Put"
-          },
-          "plugin": {
-            "kind": "PieChart",
-            "spec": {
-              "calculation": "last",
-              "format": {
-                "shortValues": true,
-                "unit": "decimal"
-              },
-              "legend": {
-                "mode": "list",
-                "position": "right"
-              },
-              "mode": "value",
-              "radius": 50,
-              "sort": "desc",
-              "visual": {
-                "areaOpacity": 0,
-                "connectNulls": false,
-                "lineWidth": 1.25,
-                "pointRadius": 2.75
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  rate(ceph_rgw_put[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
-                    "seriesNameFormat": "PUT {{ rgw_host }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "1_10-4": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Workload Breakdown other (DELETE,LIST)"
-          },
-          "plugin": {
-            "kind": "PieChart",
-            "spec": {
-              "calculation": "last",
-              "format": {
-                "shortValues": true,
-                "unit": "decimal"
-              },
-              "legend": {
-                "mode": "list",
-                "position": "right"
-              },
-              "mode": "value",
-              "radius": 50,
-              "sort": "desc",
-              "visual": {
-                "areaOpacity": 0,
-                "connectNulls": false,
-                "lineWidth": 1.25,
-                "pointRadius": 2.75
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  rate(ceph_rgw_req[$__rate_interval]) -\n    (rate(ceph_rgw_get[$__rate_interval]) + rate(ceph_rgw_put[$__rate_interval])),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
-                    "seriesNameFormat": "Other (DELETE,LIST) {{ rgw_host}}"
                   }
                 }
               }
@@ -1527,14 +1403,27 @@
             "spec": {
               "legend": {
                 "mode": "table",
-                "position": "right",
-                "values": ["last-number", "mean", "max"]
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
+              "querySettings": [],
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -1549,7 +1438,115 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_bucket_throughput_bytes_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
+                    "query": "(\n  sum by (bucket) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval])) +\n  sum by (bucket) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))\n) or\n(\n  sum by (bucket) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval])) or \n  sum by (bucket) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))\n)\n",
+                    "seriesNameFormat": "{{ bucket }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "2_0-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Data Sent Per Bucket"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "sum by (bucket) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
+                    "seriesNameFormat": "{{ bucket }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "2_0-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Data Received Per Bucket"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "sum by (bucket) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1569,14 +1566,26 @@
             "spec": {
               "legend": {
                 "mode": "table",
-                "position": "right",
-                "values": ["last-number", "max"]
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -1591,7 +1600,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_bucket_read_ops_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
+                    "query": "sum by (bucket) (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1611,14 +1620,28 @@
             "spec": {
               "legend": {
                 "mode": "table",
-                "position": "right",
-                "values": ["last-number", "mean", "max"]
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
+              "querySettings": [],
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
+                "connectNulls": false,
                 "display": "line",
-                "lineWidth": 1
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -1633,7 +1656,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, rate(radosgw_bucket_ops_per_sec{job=~\"$job\"}[$__rate_interval]) > 0)",
+                    "query": "topk(10,\n  sum by (bucket) (\n    rate(radosgw_total_requests{tenant=\"all\", user=\"all\", method=\"all\", http_status=\"all\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1653,14 +1676,26 @@
             "spec": {
               "legend": {
                 "mode": "table",
-                "position": "right",
-                "values": ["last-number", "max"]
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -1675,49 +1710,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_bucket_write_ops_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
-                    "seriesNameFormat": "{{ bucket }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "2_4": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Current OPs Per Bucket"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "mode": "table",
-                "position": "right",
-                "values": ["last-number", "mean", "max"]
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "rate(radosgw_bucket_ops_per_sec{job=~\"$job\", bucket=~\"$bucket\"}[$__rate_interval])",
+                    "query": "sum by (bucket) (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1814,7 +1807,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_usage_bucket_bytes{job=~\"$job\"} > 0)",
+                    "query": "topk(10, radosgw_usage_bucket_bytes)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1832,6 +1825,7 @@
           "plugin": {
             "kind": "Table",
             "spec": {
+              "cellSettings": [],
               "columnSettings": [
                 {
                   "hide": true,
@@ -1896,8 +1890,20 @@
                 {
                   "hide": true,
                   "name": "zonegroup"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "name": "bucket"
+                },
+                {
+                  "align": "center",
+                  "name": "value"
                 }
-              ]
+              ],
+              "transforms": []
             }
           },
           "queries": [
@@ -1911,7 +1917,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sort_desc(radosgw_usage_bucket_objects{job=~\"$job\", bucket=~\"$bucket\"} > 0)",
+                    "query": "sort_desc(radosgw_usage_bucket_objects)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1931,14 +1937,26 @@
             "spec": {
               "legend": {
                 "mode": "table",
-                "position": "right",
-                "values": ["last-number", "mean", "max"]
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -1953,7 +1971,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "rate(radosgw_user_throughput_bytes_per_sec{user=~\"$user\", job=~\"$job\"}[$__rate_interval])",
+                    "query": "(\n  sum by (user) (rate(radosgw_bytes_sent{user!=\"all\"}[$__rate_interval])) +\n  sum by (user) (rate(radosgw_bytes_received{user!=\"all\"}[$__rate_interval]))\n) or\n(\n  sum by (user) (rate(radosgw_bytes_sent{user!=\"all\"}[$__rate_interval])) or \n  sum by (user) (rate(radosgw_bytes_received{user!=\"all\"}[$__rate_interval]))\n)",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -1962,67 +1980,37 @@
           ]
         }
       },
-      "3_1": {
+      "3_0-1": {
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Write OPs Per User"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "mode": "list",
-                "position": "bottom",
-                "values": []
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "radosgw_user_write_ops_per_sec{user=~\"$user\", job=~\"$job\"}",
-                    "seriesNameFormat": "{{ user }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "3_2": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Current OPs Per User"
+            "name": "Data Sent Per User"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
                 "mode": "table",
-                "position": "right",
-                "values": ["last-number", "mean", "max"]
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -2037,8 +2025,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "radosgw_user_ops_per_sec{user=~\"$user\", job=~\"$job\"}",
-                    "seriesNameFormat": "{{ user }}"
+                    "query": "sum by (user) (rate(radosgw_bytes_sent{user!=\"all\"}[$__rate_interval]))",
+                    "seriesNameFormat": "{{user}}"
                   }
                 }
               }
@@ -2046,25 +2034,37 @@
           ]
         }
       },
-      "3_3": {
+      "3_0-2": {
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Read OPs Per User"
+            "name": "Data Received Per User"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "list",
+                "mode": "table",
                 "position": "bottom",
-                "values": []
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -2079,8 +2079,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "radosgw_user_read_ops_per_sec{user=~\"$user\", job=~\"$job\"}",
-                    "seriesNameFormat": "{{ user }}"
+                    "query": "sum by (user) (rate(radosgw_bytes_received{user!=\"all\"}[$__rate_interval]))",
+                    "seriesNameFormat": "{{user}}"
                   }
                 }
               }
@@ -2098,15 +2098,27 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "list",
+                "mode": "table",
                 "position": "bottom",
-                "values": []
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -2121,7 +2133,115 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_user_ops_per_sec{job=~\"$job\"})",
+                    "query": "topk(10,\n  sum by (user) (\n    rate(radosgw_total_requests{user!=\"all\", method!=\"all\"}[$__rate_interval])\n  )\n)",
+                    "seriesNameFormat": "{{ user }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "3_4-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Read OPs Per User"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\", user!=\"all\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ user }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "3_4-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Write OPs Per User"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\", user!=\"all\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ user }}"
                   }
                 }
@@ -2212,6 +2332,14 @@
                 {
                   "header": "user",
                   "name": "user"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "align": "center",
+                  "name": "value"
                 }
               ]
             }
@@ -2227,7 +2355,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_user_objects_total{job=~\"$job\"} > 0)",
+                    "query": "topk(10, radosgw_user_objects_total)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -2320,7 +2448,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_user_capacity_usage_bytes{job=\"$job\"} > 0)",
+                    "query": "topk(10, radosgw_user_capacity_usage_bytes)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -2398,6 +2526,14 @@
                 {
                   "header": "user",
                   "name": "user"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "align": "center",
+                  "name": "value"
                 }
               ],
               "defaultColumnWidth": "auto",
@@ -2415,7 +2551,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_user_buckets_total{job=~\"$job\"} > 0)",
+                    "query": "topk(10, radosgw_user_buckets_total)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -2439,127 +2575,127 @@
             {
               "x": 0,
               "y": 0,
-              "width": 9,
-              "height": 6,
+              "width": 4,
+              "height": 4,
               "content": {
                 "$ref": "#/spec/panels/0_0"
               }
             },
             {
               "x": 0,
-              "y": 6,
-              "width": 13,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/0_1"
-              }
-            },
-            {
-              "x": 14,
-              "y": 0,
+              "y": 4,
               "width": 4,
-              "height": 6,
+              "height": 4,
               "content": {
-                "$ref": "#/spec/panels/0_2"
-              }
-            },
-            {
-              "x": 13,
-              "y": 6,
-              "width": 11,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/0_3"
+                "$ref": "#/spec/panels/0_0-1"
               }
             },
             {
               "x": 0,
-              "y": 15,
-              "width": 13,
-              "height": 9,
+              "y": 8,
+              "width": 8,
+              "height": 8,
               "content": {
-                "$ref": "#/spec/panels/0_4"
+                "$ref": "#/spec/panels/0_11"
               }
             },
             {
-              "x": 20,
+              "x": 4,
               "y": 0,
-              "width": 4,
-              "height": 6,
+              "width": 3,
+              "height": 8,
               "content": {
                 "$ref": "#/spec/panels/0_5"
               }
             },
             {
-              "x": 13,
-              "y": 15,
-              "width": 11,
-              "height": 9,
+              "x": 7,
+              "y": 0,
+              "width": 5,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/0_4"
+              }
+            },
+            {
+              "x": 8,
+              "y": 8,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/0_3"
+              }
+            },
+            {
+              "x": 16,
+              "y": 8,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/0_8-1"
+              }
+            },
+            {
+              "x": 12,
+              "y": 0,
+              "width": 3,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/0_2"
+              }
+            },
+            {
+              "x": 15,
+              "y": 0,
+              "width": 5,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/0_1-1"
+              }
+            },
+            {
+              "x": 16,
+              "y": 16,
+              "width": 8,
+              "height": 8,
               "content": {
                 "$ref": "#/spec/panels/0_6"
               }
             },
             {
-              "x": 0,
-              "y": 24,
-              "width": 13,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/0_7"
-              }
-            },
-            {
-              "x": 0,
-              "y": 33,
-              "width": 13,
-              "height": 8,
-              "content": {
-                "$ref": "#/spec/panels/0_8"
-              }
-            },
-            {
-              "x": 13,
-              "y": 24,
-              "width": 11,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/0_9"
-              }
-            },
-            {
-              "x": 13,
-              "y": 33,
-              "width": 11,
+              "x": 8,
+              "y": 16,
+              "width": 8,
               "height": 8,
               "content": {
                 "$ref": "#/spec/panels/0_10"
               }
             },
             {
-              "x": 13,
-              "y": 41,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/0_11"
-              }
-            },
-            {
-              "x": 19,
-              "y": 41,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/0_12"
-              }
-            },
-            {
               "x": 0,
-              "y": 41,
-              "width": 13,
-              "height": 9,
+              "y": 16,
+              "width": 8,
+              "height": 8,
               "content": {
-                "$ref": "#/spec/panels/0_13"
+                "$ref": "#/spec/panels/0_7"
+              }
+            },
+            {
+              "x": 16,
+              "y": 24,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/0_13-1"
+              }
+            },
+            {
+              "x": 8,
+              "y": 24,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/0_13-2"
               }
             }
           ]
@@ -2603,15 +2739,6 @@
               }
             },
             {
-              "x": 13,
-              "y": 24,
-              "width": 5,
-              "height": 6,
-              "content": {
-                "$ref": "#/spec/panels/1_3"
-              }
-            },
-            {
               "x": 0,
               "y": 7,
               "width": 8,
@@ -2636,6 +2763,15 @@
               "height": 7,
               "content": {
                 "$ref": "#/spec/panels/1_6"
+              }
+            },
+            {
+              "x": 8,
+              "y": 24,
+              "width": 4,
+              "height": 3,
+              "content": {
+                "$ref": "#/spec/panels/1_3"
               }
             },
             {
@@ -2666,61 +2802,12 @@
               }
             },
             {
-              "x": 1,
+              "x": 0,
               "y": 24,
-              "width": 10,
-              "height": 11,
+              "width": 8,
+              "height": 9,
               "content": {
                 "$ref": "#/spec/panels/1_11"
-              }
-            }
-          ]
-        }
-      },
-      {
-        "kind": "Grid",
-        "spec": {
-          "display": {
-            "title": "Workload Breakdown",
-            "collapse": {
-              "open": true
-            }
-          },
-          "items": [
-            {
-              "x": 12,
-              "y": 0,
-              "width": 12,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/1_10-3"
-              }
-            },
-            {
-              "x": 12,
-              "y": 10,
-              "width": 12,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/1_10"
-              }
-            },
-            {
-              "x": 0,
-              "y": 0,
-              "width": 11,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/1_10-2"
-              }
-            },
-            {
-              "x": 0,
-              "y": 10,
-              "width": 11,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/1_10-4"
               }
             }
           ]
@@ -2739,64 +2826,73 @@
             {
               "x": 0,
               "y": 0,
-              "width": 14,
-              "height": 9,
+              "width": 8,
+              "height": 10,
               "content": {
                 "$ref": "#/spec/panels/2_0"
               }
             },
             {
-              "x": 14,
-              "y": 0,
-              "width": 10,
-              "height": 9,
+              "x": 8,
+              "y": 10,
+              "width": 8,
+              "height": 10,
               "content": {
                 "$ref": "#/spec/panels/2_1"
               }
             },
             {
-              "x": 0,
-              "y": 9,
-              "width": 14,
-              "height": 8,
-              "content": {
-                "$ref": "#/spec/panels/2_2"
-              }
-            },
-            {
-              "x": 14,
-              "y": 9,
-              "width": 10,
-              "height": 8,
+              "x": 16,
+              "y": 10,
+              "width": 8,
+              "height": 10,
               "content": {
                 "$ref": "#/spec/panels/2_3"
               }
             },
             {
-              "x": 0,
-              "y": 17,
-              "width": 14,
-              "height": 9,
+              "x": 8,
+              "y": 0,
+              "width": 8,
+              "height": 10,
               "content": {
-                "$ref": "#/spec/panels/2_4"
+                "$ref": "#/spec/panels/2_0-1"
               }
             },
             {
-              "x": 14,
-              "y": 17,
-              "width": 10,
+              "x": 16,
+              "y": 0,
+              "width": 8,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/2_0-2"
+              }
+            },
+            {
+              "x": 8,
+              "y": 20,
+              "width": 8,
+              "height": 9,
+              "content": {
+                "$ref": "#/spec/panels/2_6"
+              }
+            },
+            {
+              "x": 0,
+              "y": 20,
+              "width": 8,
               "height": 9,
               "content": {
                 "$ref": "#/spec/panels/2_5"
               }
             },
             {
-              "x": 14,
-              "y": 26,
-              "width": 10,
-              "height": 9,
+              "x": 0,
+              "y": 10,
+              "width": 8,
+              "height": 10,
               "content": {
-                "$ref": "#/spec/panels/2_6"
+                "$ref": "#/spec/panels/2_2"
               }
             }
           ]
@@ -2815,52 +2911,61 @@
             {
               "x": 0,
               "y": 0,
-              "width": 13,
-              "height": 9,
+              "width": 8,
+              "height": 10,
               "content": {
                 "$ref": "#/spec/panels/3_0"
               }
             },
             {
-              "x": 13,
+              "x": 8,
               "y": 0,
-              "width": 11,
-              "height": 9,
+              "width": 8,
+              "height": 10,
               "content": {
-                "$ref": "#/spec/panels/3_1"
+                "$ref": "#/spec/panels/3_0-1"
+              }
+            },
+            {
+              "x": 16,
+              "y": 0,
+              "width": 8,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/3_0-2"
               }
             },
             {
               "x": 0,
-              "y": 9,
-              "width": 13,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/3_2"
-              }
-            },
-            {
-              "x": 13,
-              "y": 9,
-              "width": 11,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/3_3"
-              }
-            },
-            {
-              "x": 0,
-              "y": 18,
-              "width": 12,
-              "height": 9,
+              "y": 10,
+              "width": 8,
+              "height": 10,
               "content": {
                 "$ref": "#/spec/panels/3_4"
               }
             },
             {
-              "x": 12,
-              "y": 18,
-              "width": 12,
+              "x": 8,
+              "y": 10,
+              "width": 8,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/3_4-1"
+              }
+            },
+            {
+              "x": 16,
+              "y": 10,
+              "width": 8,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/3_4-2"
+              }
+            },
+            {
+              "x": 8,
+              "y": 20,
+              "width": 8,
               "height": 9,
               "content": {
                 "$ref": "#/spec/panels/3_5"
@@ -2868,17 +2973,17 @@
             },
             {
               "x": 0,
-              "y": 27,
-              "width": 12,
+              "y": 20,
+              "width": 8,
               "height": 9,
               "content": {
                 "$ref": "#/spec/panels/3_6"
               }
             },
             {
-              "x": 12,
-              "y": 27,
-              "width": 12,
+              "x": 16,
+              "y": 20,
+              "width": 8,
               "height": 9,
               "content": {
                 "$ref": "#/spec/panels/3_7"
@@ -2903,61 +3008,12 @@
             "kind": "PrometheusLabelValuesVariable",
             "spec": {
               "labelName": "job",
-              "matchers": ["prometheus_build_info"]
+              "matchers": [
+                "prometheus_build_info"
+              ]
             }
           },
           "name": "datasource"
-        }
-      },
-      {
-        "kind": "ListVariable",
-        "spec": {
-          "defaultValue": "$__all",
-          "allowAllValue": true,
-          "allowMultiple": true,
-          "sort": "alphabetical-asc",
-          "plugin": {
-            "kind": "PrometheusLabelValuesVariable",
-            "spec": {
-              "labelName": "job",
-              "matchers": ["radosgw_user_metadata"]
-            }
-          },
-          "name": "job"
-        }
-      },
-      {
-        "kind": "ListVariable",
-        "spec": {
-          "defaultValue": "$__all",
-          "allowAllValue": true,
-          "allowMultiple": true,
-          "sort": "alphabetical-asc",
-          "plugin": {
-            "kind": "PrometheusLabelValuesVariable",
-            "spec": {
-              "labelName": "user",
-              "matchers": ["radosgw_user_metadata"]
-            }
-          },
-          "name": "user"
-        }
-      },
-      {
-        "kind": "ListVariable",
-        "spec": {
-          "defaultValue": "$__all",
-          "allowAllValue": true,
-          "allowMultiple": true,
-          "sort": "alphabetical-asc",
-          "plugin": {
-            "kind": "PrometheusLabelValuesVariable",
-            "spec": {
-              "labelName": "bucket",
-              "matchers": ["radosgw_bucket_capacity_usage_bytes"]
-            }
-          },
-          "name": "bucket"
         }
       }
     ],
