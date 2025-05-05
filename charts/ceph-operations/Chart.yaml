@@ -2,4 +2,4 @@ apiVersion: v2
 name: ceph-operations
 description: Ceph operations bundle
 type: application
-version: 1.5.4
+version: 1.5.5
