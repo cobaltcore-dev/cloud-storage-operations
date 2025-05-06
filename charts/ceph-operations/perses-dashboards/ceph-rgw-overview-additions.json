@@ -1,0 +1,815 @@
+{
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "ceph-rgw-overview-additions",
+    "project": "ceph-storage"
+  },
+  "spec": {
+    "display": {
+      "name": "ceph rgw overview additions"
+    },
+    "panels": {
+      "4erErrors": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "4er Errors"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_total{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "4erErrors-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "4er Errors By Bucket"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_total{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{bucket}} - {{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "4erErrors-3": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "5er Errors By Bucket"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_total{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{bucket}} - {{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "4erErrors-4": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "5er Errors"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_total{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "BucketRequestsDELETE": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Bucket Requests DELETE"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "size": "small",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (ip) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"DELETE\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "BucketRequestsGET": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Bucket Requests GET"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "size": "small",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (ip) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"GET\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "BucketRequestsPUT": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Bucket Requests PUT"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "size": "small",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (ip) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"PUT\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "BucketRequestsperClientIP": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Bucket Requests per Client IP"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "right",
+                "size": "small",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (ip, bucket, method) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}} - {{bucket}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DataReadperClientIP": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Data Read per Client IP"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "size": "small",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (ip) (\n  rate(radosgw_bytes_sent_by_ip{ip=~\"$ip\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}} "
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DataWriteperClientIP": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Data Write per Client IP"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "size": "small",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "bytes/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (ip) (\n  rate(radosgw_bytes_received_by_ip{ip=~\"$ip\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}} "
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "HTTPErrorperClientIP": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "HTTP Error per Client IP"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (ip, http_status) (\n  rate(radosgw_http_errors_by_ip{http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}} - {{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "RequestsperUserandIP": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Requests per User and IP"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "position": "right"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "requests/sec"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (user, ip) (\n  rate(radosgw_requests_by_ip{ip=~\"$ip\", user=~\"$user\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ip}} - {{user}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "layouts": [
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "Error Overview",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors"
+              }
+            },
+            {
+              "x": 12,
+              "y": 10,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors-3"
+              }
+            },
+            {
+              "x": 12,
+              "y": 0,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors-4"
+              }
+            },
+            {
+              "x": 0,
+              "y": 10,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors-2"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "Client IP Overview",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/DataReadperClientIP"
+              }
+            },
+            {
+              "x": 8,
+              "y": 0,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteperClientIP"
+              }
+            },
+            {
+              "x": 16,
+              "y": 0,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/HTTPErrorperClientIP"
+              }
+            },
+            {
+              "x": 0,
+              "y": 8,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/BucketRequestsperClientIP"
+              }
+            },
+            {
+              "x": 12,
+              "y": 8,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/RequestsperUserandIP"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "Client IP Overview Per Method",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/BucketRequestsPUT"
+              }
+            },
+            {
+              "x": 8,
+              "y": 0,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/BucketRequestsGET"
+              }
+            },
+            {
+              "x": 16,
+              "y": 0,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/BucketRequestsDELETE"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "variables": [
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "Error Codes",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "capturingRegexp": "(4[0-9][0-9])|(5[0-9][0-9])",
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "status"
+            }
+          },
+          "name": "errors"
+        }
+      },
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "IP",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "ip",
+              "matchers": [
+                "radosgw_requests_by_ip"
+              ]
+            }
+          },
+          "name": "ip"
+        }
+      },
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "Bucket",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "bucket",
+              "matchers": [
+                "radosgw_requests_by_ip_bucket_method_tenant"
+              ]
+            }
+          },
+          "name": "bucket"
+        }
+      },
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "User",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "user",
+              "matchers": [
+                "radosgw_requests_by_ip"
+              ]
+            }
+          },
+          "name": "user"
+        }
+      }
+    ],
+    "duration": "1h",
+    "refreshInterval": "0s"
+  }
+}
