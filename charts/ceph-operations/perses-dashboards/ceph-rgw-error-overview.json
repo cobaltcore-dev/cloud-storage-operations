@@ -1,0 +1,289 @@
+{
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "ceph-rgw-error-overview",
+    "project": "ceph-storage"
+  },
+  "spec": {
+    "display": {
+      "name": "ceph rgw error overview"
+    },
+    "panels": {
+      "4erErrors": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "4er Errors"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              },
+              "visual": {
+                "lineWidth": 1.25,
+                "areaOpacity": 0.1,
+                "pointRadius": 2.75,
+                "connectNulls": false
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_total{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "4erErrors-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "4er Errors By Bucket"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              },
+              "visual": {
+                "lineWidth": 1.25,
+                "areaOpacity": 0.1,
+                "pointRadius": 2.75,
+                "connectNulls": false
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_total{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{bucket}} - {{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "4erErrors-3": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "5er Errors By Bucket"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              },
+              "visual": {
+                "lineWidth": 1.25,
+                "areaOpacity": 0.1,
+                "pointRadius": 2.75,
+                "connectNulls": false
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_total{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{bucket}} - {{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "4erErrors-4": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "5er Errors"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "bottom",
+                "size": "small",
+                "values": [
+                  "mean",
+                  "last",
+                  "max"
+                ]
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "events/sec"
+                },
+                "label": "",
+                "show": true
+              },
+              "visual": {
+                "lineWidth": 1.25,
+                "areaOpacity": 0.1,
+                "pointRadius": 2.75,
+                "connectNulls": false
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_total{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{http_status}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "layouts": [
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "Panel Group",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors"
+              }
+            },
+            {
+              "x": 12,
+              "y": 10,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors-3"
+              }
+            },
+            {
+              "x": 12,
+              "y": 0,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors-4"
+              }
+            },
+            {
+              "x": 0,
+              "y": 10,
+              "width": 12,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/4erErrors-2"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "variables": [
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "Error Codes",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "capturingRegexp": "(4[0-9][0-9])|(5[0-9][0-9])",
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "status"
+            }
+          },
+          "name": "errors"
+        }
+      }
+    ],
+    "duration": "1h",
+    "refreshInterval": "0s"
+  }
+}
