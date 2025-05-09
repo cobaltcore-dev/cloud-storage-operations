@@ -26,8 +26,12 @@ cloud-storage-operations
               ├── alerts/                   Prometheus alerts for kubernetes.
               │
               ├── dashboards/               Plutono dashboards for visualizing key metrics.
+              |
+              ├── dashboards-global/        Plutono dashboards for visualizing global metrics.
               │
               ├── perses-dashboards/        Perses dashboards for visualizing key metrics.
+              │
+              ├── perses-dashboards-global/ Perses dashboards for visualizing global metrics.
               │
               ├── playbooks/                Step-by-step instructions for troubleshooting.        
               │
