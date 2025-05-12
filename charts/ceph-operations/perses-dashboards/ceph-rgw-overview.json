@@ -1726,88 +1726,14 @@
             "name": "Top 10 - Capacity Consumers Per Bucket In Bytes"
           },
           "plugin": {
-            "kind": "Table",
+            "kind": "BarChart",
             "spec": {
-              "columnSettings": [
-                {
-                  "hide": true,
-                  "name": "timestamp"
-                },
-                {
-                  "hide": true,
-                  "name": "__name__"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster_type"
-                },
-                {
-                  "hide": true,
-                  "name": "container"
-                },
-                {
-                  "hide": true,
-                  "name": "endpoint"
-                },
-                {
-                  "hide": true,
-                  "name": "instance"
-                },
-                {
-                  "hide": true,
-                  "name": "job"
-                },
-                {
-                  "hide": true,
-                  "name": "namespace"
-                },
-                {
-                  "hide": true,
-                  "name": "organization"
-                },
-                {
-                  "hide": true,
-                  "name": "owner"
-                },
-                {
-                  "hide": true,
-                  "name": "pod"
-                },
-                {
-                  "hide": true,
-                  "name": "prometheus"
-                },
-                {
-                  "hide": true,
-                  "name": "region"
-                },
-                {
-                  "hide": true,
-                  "name": "rgw_cluster_id"
-                },
-                {
-                  "hide": true,
-                  "name": "zonegroup"
-                },
-                {
-                  "name": "service",
-                  "hide": true
-                },
-                {
-                  "name": "bucket"
-                },
-                {
-                  "name": "value",
-                  "align": "center"
-                }
-              ],
-              "cellSettings": [],
-              "transforms": [],
-              "density": "standard"
+              "calculation": "last",
+              "format": {
+                "unit": "bytes"
+              },
+              "sort": "desc",
+              "mode": "value"
             }
           },
           "queries": [
@@ -1822,7 +1748,7 @@
                     },
                     "minStep": "",
                     "query": "topk(10, radosgw_usage_bucket_size)",
-                    "seriesNameFormat": ""
+                    "seriesNameFormat": "{{bucket}}"
                   }
                 }
               }
@@ -1837,87 +1763,15 @@
             "name": "Objects Per Bucket"
           },
           "plugin": {
-            "kind": "Table",
+            "kind": "BarChart",
             "spec": {
-              "cellSettings": [],
-              "columnSettings": [
-                {
-                  "hide": true,
-                  "name": "timestamp"
-                },
-                {
-                  "hide": true,
-                  "name": "__name__"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster_type"
-                },
-                {
-                  "hide": true,
-                  "name": "container"
-                },
-                {
-                  "hide": true,
-                  "name": "endpoint"
-                },
-                {
-                  "hide": true,
-                  "name": "instance"
-                },
-                {
-                  "hide": true,
-                  "name": "job"
-                },
-                {
-                  "hide": true,
-                  "name": "namespace"
-                },
-                {
-                  "hide": true,
-                  "name": "organization"
-                },
-                {
-                  "hide": true,
-                  "name": "owner"
-                },
-                {
-                  "hide": true,
-                  "name": "pod"
-                },
-                {
-                  "hide": true,
-                  "name": "prometheus"
-                },
-                {
-                  "hide": true,
-                  "name": "region"
-                },
-                {
-                  "hide": true,
-                  "name": "rgw_cluster_id"
-                },
-                {
-                  "hide": true,
-                  "name": "zonegroup"
-                },
-                {
-                  "hide": true,
-                  "name": "service"
-                },
-                {
-                  "name": "bucket"
-                },
-                {
-                  "align": "center",
-                  "name": "value"
-                }
-              ],
-              "transforms": []
+              "calculation": "last",
+              "format": {
+                "unit": "decimal",
+                "shortValues": true
+              },
+              "sort": "desc",
+              "mode": "value"
             }
           },
           "queries": [
@@ -1932,7 +1786,7 @@
                     },
                     "minStep": "",
                     "query": "sort_desc(radosgw_usage_bucket_objects)",
-                    "seriesNameFormat": ""
+                    "seriesNameFormat": "{{bucket}}"
                   }
                 }
               }
@@ -2271,91 +2125,15 @@
             "name": "Top 10 - Amount Of Objects Per User"
           },
           "plugin": {
-            "kind": "Table",
+            "kind": "BarChart",
             "spec": {
-              "cellSettings": [
-                {
-                  "backgroundColor": "#2FBF71",
-                  "condition": {
-                    "kind": "Value",
-                    "spec": {
-                      "value": "service"
-                    }
-                  },
-                  "text": "Akshay",
-                  "textColor": "#000"
-                }
-              ],
-              "columnSettings": [
-                {
-                  "hide": true,
-                  "name": "timestamp"
-                },
-                {
-                  "hide": true,
-                  "name": "__name__"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster_type"
-                },
-                {
-                  "hide": true,
-                  "name": "container"
-                },
-                {
-                  "hide": true,
-                  "name": "endpoint"
-                },
-                {
-                  "hide": true,
-                  "name": "instance"
-                },
-                {
-                  "hide": true,
-                  "name": "job"
-                },
-                {
-                  "hide": true,
-                  "name": "namespace"
-                },
-                {
-                  "hide": true,
-                  "name": "organization"
-                },
-                {
-                  "hide": true,
-                  "name": "pod"
-                },
-                {
-                  "hide": true,
-                  "name": "prometheus"
-                },
-                {
-                  "hide": true,
-                  "name": "region"
-                },
-                {
-                  "hide": true,
-                  "name": "rgw_cluster_id"
-                },
-                {
-                  "header": "user",
-                  "name": "user"
-                },
-                {
-                  "hide": true,
-                  "name": "service"
-                },
-                {
-                  "align": "center",
-                  "name": "value"
-                }
-              ]
+              "calculation": "last",
+              "format": {
+                "unit": "decimal",
+                "shortValues": true
+              },
+              "sort": "desc",
+              "mode": "value"
             }
           },
           "queries": [
@@ -2370,108 +2148,7 @@
                     },
                     "minStep": "",
                     "query": "topk(10, radosgw_user_objects_total)",
-                    "seriesNameFormat": ""
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "3_6": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Top 10 - Capacity Consumers Per User In Bytes"
-          },
-          "plugin": {
-            "kind": "Table",
-            "spec": {
-              "columnSettings": [
-                {
-                  "hide": true,
-                  "name": "timestamp"
-                },
-                {
-                  "hide": true,
-                  "name": "__name__"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster_type"
-                },
-                {
-                  "hide": true,
-                  "name": "container"
-                },
-                {
-                  "hide": true,
-                  "name": "endpoint"
-                },
-                {
-                  "hide": true,
-                  "name": "instance"
-                },
-                {
-                  "hide": true,
-                  "name": "job"
-                },
-                {
-                  "hide": true,
-                  "name": "namespace"
-                },
-                {
-                  "hide": true,
-                  "name": "organization"
-                },
-                {
-                  "hide": true,
-                  "name": "pod"
-                },
-                {
-                  "hide": true,
-                  "name": "prometheus"
-                },
-                {
-                  "hide": true,
-                  "name": "region"
-                },
-                {
-                  "hide": true,
-                  "name": "rgw_cluster_id"
-                },
-                {
-                  "header": "user",
-                  "name": "user"
-                },
-                {
-                  "name": "service",
-                  "hide": true
-                },
-                {
-                  "name": "value",
-                  "align": "center"
-                }
-              ]
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "topk(10, radosgw_user_data_size_bytes)",
-                    "seriesNameFormat": ""
+                    "seriesNameFormat": "{{user}}"
                   }
                 }
               }
@@ -2486,80 +2163,15 @@
             "name": "Top 10 - Buckets Per User"
           },
           "plugin": {
-            "kind": "Table",
+            "kind": "BarChart",
             "spec": {
-              "columnSettings": [
-                {
-                  "hide": true,
-                  "name": "timestamp"
-                },
-                {
-                  "hide": true,
-                  "name": "__name__"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster"
-                },
-                {
-                  "hide": true,
-                  "name": "cluster_type"
-                },
-                {
-                  "hide": true,
-                  "name": "container"
-                },
-                {
-                  "hide": true,
-                  "name": "endpoint"
-                },
-                {
-                  "hide": true,
-                  "name": "instance"
-                },
-                {
-                  "hide": true,
-                  "name": "job"
-                },
-                {
-                  "hide": true,
-                  "name": "namespace"
-                },
-                {
-                  "hide": true,
-                  "name": "organization"
-                },
-                {
-                  "hide": true,
-                  "name": "pod"
-                },
-                {
-                  "hide": true,
-                  "name": "prometheus"
-                },
-                {
-                  "hide": true,
-                  "name": "region"
-                },
-                {
-                  "hide": true,
-                  "name": "rgw_cluster_id"
-                },
-                {
-                  "header": "user",
-                  "name": "user"
-                },
-                {
-                  "hide": true,
-                  "name": "service"
-                },
-                {
-                  "align": "center",
-                  "name": "value"
-                }
-              ],
-              "defaultColumnWidth": "auto",
-              "density": "standard"
+              "calculation": "last",
+              "format": {
+                "unit": "decimal",
+                "shortValues": true
+              },
+              "sort": "desc",
+              "mode": "value"
             }
           },
           "queries": [
@@ -2574,7 +2186,7 @@
                     },
                     "minStep": "",
                     "query": "topk(10, radosgw_user_buckets_total)",
-                    "seriesNameFormat": ""
+                    "seriesNameFormat": "{{user}}"
                   }
                 }
               }
@@ -2586,27 +2198,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Cluster IO Latency GET PUT",
-            "description": ""
+            "name": "Cluster IO Latency GET PUT"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
-              },
-              "legend": {
-                "position": "bottom"
               }
             }
           },
@@ -2630,27 +2241,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Cluster Upload Object Latency PUT POST",
-            "description": ""
+            "name": "Cluster Upload Object Latency PUT POST"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "legend": {
-                "position": "bottom"
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
               }
             }
           },
@@ -2674,27 +2284,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Cluster Delete Object Latency DELETE",
-            "description": ""
+            "name": "Cluster Delete Object Latency DELETE"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
-              },
-              "legend": {
-                "position": "bottom"
               }
             }
           },
@@ -2718,27 +2327,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Cluster Download Object Latency GET",
-            "description": ""
+            "name": "Cluster Download Object Latency GET"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "legend": {
-                "position": "bottom"
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
               }
             }
           },
@@ -2762,27 +2370,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket IO Latency GET PUT",
-            "description": ""
+            "name": "Bucket IO Latency GET PUT"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
-              },
-              "legend": {
-                "position": "bottom"
               }
             }
           },
@@ -2806,27 +2413,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Upload Object Latency PUT POST",
-            "description": ""
+            "name": "Bucket Upload Object Latency PUT POST"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "legend": {
-                "position": "bottom"
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
               }
             }
           },
@@ -2850,27 +2456,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Delete Object Latency DELETE",
-            "description": ""
+            "name": "Bucket Delete Object Latency DELETE"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
-              },
-              "legend": {
-                "position": "bottom"
               }
             }
           },
@@ -2894,27 +2499,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Download Object Latency GET",
-            "description": ""
+            "name": "Bucket Download Object Latency GET"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "legend": {
-                "position": "bottom"
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
               }
             }
           },
@@ -2938,27 +2542,26 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "User Latency",
-            "description": ""
+            "name": "User Latency"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
+              "legend": {
+                "position": "bottom"
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
+              },
               "yAxis": {
                 "format": {
                   "unit": "seconds"
                 },
                 "label": "",
                 "show": true
-              },
-              "visual": {
-                "lineWidth": 1.25,
-                "areaOpacity": 0.1,
-                "pointRadius": 2.75,
-                "connectNulls": false
-              },
-              "legend": {
-                "position": "bottom"
               }
             }
           },
@@ -2976,6 +2579,45 @@
               }
             }
           ]
+        }
+      },
+      "3_6-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Top 10 - Capacity Consumers Per User In Bytes"
+          },
+          "plugin": {
+            "kind": "BarChart",
+            "spec": {
+              "calculation": "last",
+              "format": {
+                "unit": "bytes",
+                "shortValues": true
+              },
+              "sort": "desc",
+              "mode": "value"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "topk(10, radosgw_user_data_size_bytes)",
+                    "seriesNameFormat": "{{user}}"
+                  }
+                }
+              }
+            }
+          ],
+          "links": []
         }
       }
     },
@@ -3463,15 +3105,6 @@
             },
             {
               "x": 16,
-              "y": 29,
-              "width": 8,
-              "height": 8,
-              "content": {
-                "$ref": "#/spec/panels/3_6"
-              }
-            },
-            {
-              "x": 16,
               "y": 20,
               "width": 8,
               "height": 9,
@@ -3486,6 +3119,15 @@
               "height": 9,
               "content": {
                 "$ref": "#/spec/panels/ClusterIOLatencyGETPUT-9"
+              }
+            },
+            {
+              "x": 16,
+              "y": 29,
+              "width": 8,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/3_6-1"
               }
             }
           ]
