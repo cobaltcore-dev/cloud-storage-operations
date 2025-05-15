@@ -5,15 +5,57 @@ groups:
 - name: customrules
   rules:
   - record: objectstore_bytes_received_total
-    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_bytes_received_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+    expr: |
+      sum by (bucket,project_id) (
+        label_replace(
+          radosgw_bytes_received,
+          "project_id", "$1",
+          "tenant", "(.*)"
+        )
+      )
   - record: objectstore_bytes_sent_total
-    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_bytes_sent_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+    expr: |
+      sum by (bucket,project_id) (
+        label_replace(
+          radosgw_bytes_sent,
+          "project_id", "$1",
+          "tenant", "(.*)"
+        )
+      )
   - record: objectstore_read_ops_total
-    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_read_ops_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+    expr: |
+      sum by (bucket,project_id) (
+        label_replace(
+          radosgw_total_requests{method="GET"},
+          "project_id", "$1",
+          "tenant", "(.*)"
+        )
+      )
   - record: objectstore_write_ops_total
-    expr: max by(bucket, project_id) (label_replace(radosgw_bucket_write_ops_total, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+    expr: |
+      sum by (bucket,project_id) (
+        label_replace(
+          radosgw_total_requests{method=~"PUT|POST"},
+          "project_id", "$1",
+          "tenant", "(.*)"
+        )
+      )
   - record: objectstore_capacity_usage_bytes
-    expr: max by(bucket, project_id) (label_replace(radosgw_usage_bucket_size, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+    expr: |
+      max by (bucket,project_id) (
+        label_replace(
+          radosgw_usage_bucket_size, 
+          "project_id", "$1", 
+          "tenant", "(.*)"
+        )
+      )
   - record: objectstore_usage_objects
-    expr: max by(bucket, project_id) (label_replace(radosgw_usage_bucket_objects, "project_id", "$1", "owner", "([a-f0-9]{32}).*"))
+    expr: |
+      max by(bucket,project_id) (
+        label_replace(
+          radosgw_usage_bucket_objects, 
+          "project_id", "$1", 
+          "tenant", "(.*)"
+        )
+      )
 {{- end }}
