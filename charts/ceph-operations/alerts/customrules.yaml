@@ -46,7 +46,7 @@ groups:
         label_replace(
           radosgw_usage_bucket_size, 
           "project_id", "$1", 
-          "tenant", "(.*)"
+          "owner", "([a-f0-9]{32}).*"
         )
       )
   - record: objectstore_usage_objects
@@ -55,7 +55,7 @@ groups:
         label_replace(
           radosgw_usage_bucket_objects, 
           "project_id", "$1", 
-          "tenant", "(.*)"
+          "owner", "([a-f0-9]{32}).*"
         )
       )
 {{- end }}
