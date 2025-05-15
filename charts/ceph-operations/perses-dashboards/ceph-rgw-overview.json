@@ -103,9 +103,9 @@
                 "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.15,
+                "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -160,7 +160,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -230,7 +230,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -296,7 +296,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -350,7 +350,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -500,9 +500,9 @@
                 "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.15,
+                "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -623,7 +623,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -742,7 +742,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -789,7 +789,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0.15,
+                "areaOpacity": 0.1,
                 "connectNulls": true,
                 "display": "line",
                 "lineWidth": 1
@@ -1239,7 +1239,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0,
+                "areaOpacity": 0.1,
                 "connectNulls": false,
                 "display": "line",
                 "lineWidth": 1
@@ -1415,7 +1415,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1469,7 +1469,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1523,7 +1523,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1577,7 +1577,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1633,7 +1633,7 @@
                 "areaOpacity": 0.1,
                 "connectNulls": false,
                 "display": "line",
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1687,7 +1687,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1732,8 +1732,8 @@
               "format": {
                 "unit": "bytes"
               },
-              "sort": "desc",
-              "mode": "value"
+              "mode": "value",
+              "sort": "desc"
             }
           },
           "queries": [
@@ -1767,11 +1767,11 @@
             "spec": {
               "calculation": "last",
               "format": {
-                "unit": "decimal",
-                "shortValues": true
+                "shortValues": true,
+                "unit": "decimal"
               },
-              "sort": "desc",
-              "mode": "value"
+              "mode": "value",
+              "sort": "desc"
             }
           },
           "queries": [
@@ -1816,7 +1816,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1870,7 +1870,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1924,7 +1924,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -1978,7 +1978,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2032,7 +2032,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2086,7 +2086,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2129,11 +2129,11 @@
             "spec": {
               "calculation": "last",
               "format": {
-                "unit": "decimal",
-                "shortValues": true
+                "shortValues": true,
+                "unit": "decimal"
               },
-              "sort": "desc",
-              "mode": "value"
+              "mode": "value",
+              "sort": "desc"
             }
           },
           "queries": [
@@ -2156,6 +2156,44 @@
           ]
         }
       },
+      "3_6-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Top 10 - Capacity Consumers Per User In Bytes"
+          },
+          "plugin": {
+            "kind": "BarChart",
+            "spec": {
+              "calculation": "last",
+              "format": {
+                "shortValues": true,
+                "unit": "bytes"
+              },
+              "mode": "value",
+              "sort": "desc"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "topk(10, radosgw_user_data_size_bytes)",
+                    "seriesNameFormat": "{{user}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
       "3_7": {
         "kind": "Panel",
         "spec": {
@@ -2167,11 +2205,11 @@
             "spec": {
               "calculation": "last",
               "format": {
-                "unit": "decimal",
-                "shortValues": true
+                "shortValues": true,
+                "unit": "decimal"
               },
-              "sort": "desc",
-              "mode": "value"
+              "mode": "value",
+              "sort": "desc"
             }
           },
           "queries": [
@@ -2209,7 +2247,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2252,7 +2290,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2295,7 +2333,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2338,7 +2376,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2381,7 +2419,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2424,7 +2462,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2467,7 +2505,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2510,7 +2548,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2553,7 +2591,7 @@
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
-                "lineWidth": 1.25,
+                "lineWidth": 1,
                 "pointRadius": 2.75
               },
               "yAxis": {
@@ -2579,45 +2617,6 @@
               }
             }
           ]
-        }
-      },
-      "3_6-1": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Top 10 - Capacity Consumers Per User In Bytes"
-          },
-          "plugin": {
-            "kind": "BarChart",
-            "spec": {
-              "calculation": "last",
-              "format": {
-                "unit": "bytes",
-                "shortValues": true
-              },
-              "sort": "desc",
-              "mode": "value"
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "topk(10, radosgw_user_data_size_bytes)",
-                    "seriesNameFormat": "{{user}}"
-                  }
-                }
-              }
-            }
-          ],
-          "links": []
         }
       }
     },
