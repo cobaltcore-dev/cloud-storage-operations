@@ -44,18 +44,30 @@
                   "name": "value #2"
                 },
                 {
+                  "format": {
+                    "unit": "bytes/sec"
+                  },
                   "header": "Write Throughput",
                   "name": "value #3"
                 },
                 {
+                  "format": {
+                    "unit": "bytes/sec"
+                  },
                   "header": "Read Throughput",
                   "name": "value #4"
                 },
                 {
+                  "format": {
+                    "unit": "ops/sec"
+                  },
                   "header": "Write IOPs",
                   "name": "value #5"
                 },
                 {
+                  "format": {
+                    "unit": "ops/sec"
+                  },
                   "header": "Read IOPs",
                   "name": "value #6"
                 },
@@ -125,14 +137,6 @@
                 },
                 {
                   "hide": true,
-                  "name": "rgw_cluster_id"
-                },
-                {
-                  "header": "user",
-                  "name": "user"
-                },
-                {
-                  "hide": true,
                   "name": "service"
                 }
               ],
@@ -145,7 +149,9 @@
                 {
                   "kind": "JoinByColumnValue",
                   "spec": {
-                    "columns": ["region"]
+                    "columns": [
+                      "region"
+                    ]
                   }
                 }
               ]
@@ -295,7 +301,7 @@
               "x": 0,
               "y": 0,
               "width": 24,
-              "height": 18,
+              "height": 14,
               "content": {
                 "$ref": "#/spec/panels/0"
               }
