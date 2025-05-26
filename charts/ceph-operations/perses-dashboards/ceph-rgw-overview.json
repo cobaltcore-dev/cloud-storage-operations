@@ -235,7 +235,7 @@
               },
               "yAxis": {
                 "format": {
-                  "unit": "bytes/sec"
+                  "unit": "bytes"
                 },
                 "label": "",
                 "show": true
@@ -774,69 +774,6 @@
           ]
         }
       },
-      "1_0": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Average GET/PUT Latencies"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "mode": "list",
-                "position": "bottom",
-                "values": []
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": true,
-                "display": "line",
-                "lineWidth": 1
-              },
-              "yAxis": {
-                "format": {
-                  "unit": "seconds"
-                }
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "avg(\n  rate(radosgw_requests_duration_sum{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval]) /\n  rate(radosgw_requests_duration_count{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "GET AVG"
-                  }
-                }
-              }
-            },
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "avg(\n  rate(radosgw_requests_duration_sum{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval]) /\n  rate(radosgw_requests_duration_count{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "PUT AVG"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
       "1_1": {
         "kind": "Panel",
         "spec": {
@@ -987,7 +924,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "GET Latencies by RGW Instance"
+            "name": "RGW Instance Latency GET"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -1021,7 +958,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval]) /\n    rate(radosgw_requests_duration_count{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1140,7 +1077,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "RGW Instance Throughput",
+            "name": "RGW Instance Throughput (GET/PUT)",
             "description": "Total bytes transferred in/out through get/put operations, by radosgw instance"
           },
           "plugin": {
@@ -1188,7 +1125,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "PUT Latencies by RGW Instance"
+            "name": "RGW Instance Latency PUT"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -1222,7 +1159,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval]) /\n    rate(radosgw_requests_duration_count{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1273,69 +1210,6 @@
                     "minStep": "",
                     "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_total{user=\"all\", tenant=\"all\", bucket=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "1_8": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "All GET/PUT Latencies"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "mode": "list",
-                "position": "bottom",
-                "values": []
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": false,
-                "display": "line",
-                "lineWidth": 1
-              },
-              "yAxis": {
-                "format": {
-                  "unit": "seconds"
-                }
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval]) /\n    rate(radosgw_requests_duration_count{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
-                    "seriesNameFormat": "GET {{ pod_id }}"
-                  }
-                }
-              }
-            },
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval]) /\n    rate(radosgw_requests_duration_count{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
-                    "seriesNameFormat": "PUT {{ pod_id }}"
                   }
                 }
               }
@@ -1737,7 +1611,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Top 10 - Capacity Consumers Per Bucket In Bytes"
+            "name": "Top 10 - Capacity Consumers Per Bucket"
           },
           "plugin": {
             "kind": "BarChart",
@@ -2174,7 +2048,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Top 10 - Capacity Consumers Per User In Bytes"
+            "name": "Top 10 - Capacity Consumers Per User"
           },
           "plugin": {
             "kind": "BarChart",
@@ -2250,7 +2124,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Cluster IO Latency GET PUT"
+            "name": "Cluster Latencies"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -2270,136 +2144,29 @@
                 },
                 "label": "",
                 "show": true
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=~\"GET|PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=~\"GET|PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{cluster}}"
-                  }
+              },
+              "querySettings": [
+                {
+                  "queryIndex": 0,
+                  "colorMode": "fixed",
+                  "colorValue": "#FFB249"
+                },
+                {
+                  "queryIndex": 1,
+                  "colorMode": "fixed",
+                  "colorValue": "#59CC8D"
+                },
+                {
+                  "queryIndex": 2,
+                  "colorMode": "fixed",
+                  "colorValue": "#4677f3"
+                },
+                {
+                  "queryIndex": 3,
+                  "colorMode": "fixed",
+                  "colorValue": "#EE6C6C"
                 }
-              }
-            }
-          ]
-        }
-      },
-      "ClusterIOLatencyGETPUT-1": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Cluster Upload Object Latency PUT POST"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "position": "bottom"
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": false,
-                "lineWidth": 1,
-                "pointRadius": 2.75
-              },
-              "yAxis": {
-                "format": {
-                  "unit": "seconds"
-                },
-                "label": "",
-                "show": true
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=~\"PUT|POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=~\"PUT|POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{cluster}}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "ClusterIOLatencyGETPUT-2": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Cluster Delete Object Latency DELETE"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "position": "bottom"
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": false,
-                "lineWidth": 1,
-                "pointRadius": 2.75
-              },
-              "yAxis": {
-                "format": {
-                  "unit": "seconds"
-                },
-                "label": "",
-                "show": true
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"DELETE\",tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{cluster}}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "ClusterIOLatencyGETPUT-3": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Cluster Download Object Latency GET"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "position": "bottom"
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": false,
-                "lineWidth": 1,
-                "pointRadius": 2.75
-              },
-              "yAxis": {
-                "format": {
-                  "unit": "seconds"
-                },
-                "label": "",
-                "show": true
-              }
+              ]
             }
           },
           "queries": [
@@ -2410,7 +2177,43 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{cluster}}"
+                    "seriesNameFormat": "GET {{cluster}}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "PUT {{cluster}}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "POST {{cluster}}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "DELETE {{cluster}}"
                   }
                 }
               }
@@ -2422,7 +2225,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket IO Latency GET PUT"
+            "name": "Bucket Latency GET"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -2452,7 +2255,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=~\"GET|PUT\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=~\"GET|PUT\"}[$__rate_interval])\n)",
+                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{bucket}} "
                   }
                 }
@@ -2465,7 +2268,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Upload Object Latency PUT POST"
+            "name": "Bucket Latency PUT"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -2495,7 +2298,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=~\"PUT|POST\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=~\"PUT|POST\"}[$__rate_interval])\n)",
+                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{bucket}}"
                   }
                 }
@@ -2508,7 +2311,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Delete Object Latency DELETE"
+            "name": "Bucket Latency DELETE"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -2551,7 +2354,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Download Object Latency GET"
+            "name": "Bucket Latency POST"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -2581,7 +2384,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n)",
+                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{bucket}} "
                   }
                 }
@@ -2626,6 +2429,100 @@
                   "spec": {
                     "query": "sum by (user, tenant) (\n  rate(radosgw_requests_duration_sum{tenant!=\"all\", user!=\"all\"}[$__rate_interval])\n) /\nsum by (user, tenant) (\n  rate(radosgw_requests_duration_count{tenant!=\"all\", user!=\"all\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{user}} - {{tenant}} "
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "1_6-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "RGW Instance Latency DELETE"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "display": "line",
+                "lineWidth": 1
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "seconds"
+                }
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "seriesNameFormat": "{{ pod_id }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "1_6-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "RGW Instance Latency POST"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "display": "line",
+                "lineWidth": 1
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "seconds"
+                }
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
               }
@@ -2727,15 +2624,6 @@
               }
             },
             {
-              "x": 0,
-              "y": 16,
-              "width": 8,
-              "height": 8,
-              "content": {
-                "$ref": "#/spec/panels/ClusterIOLatencyGETPUT-1"
-              }
-            },
-            {
               "x": 8,
               "y": 16,
               "width": 8,
@@ -2751,15 +2639,6 @@
               "height": 8,
               "content": {
                 "$ref": "#/spec/panels/0_6"
-              }
-            },
-            {
-              "x": 0,
-              "y": 24,
-              "width": 8,
-              "height": 8,
-              "content": {
-                "$ref": "#/spec/panels/ClusterIOLatencyGETPUT-2"
               }
             },
             {
@@ -2782,16 +2661,7 @@
             },
             {
               "x": 0,
-              "y": 32,
-              "width": 8,
-              "height": 8,
-              "content": {
-                "$ref": "#/spec/panels/ClusterIOLatencyGETPUT-3"
-              }
-            },
-            {
-              "x": 8,
-              "y": 32,
+              "y": 24,
               "width": 8,
               "height": 8,
               "content": {
@@ -2799,8 +2669,8 @@
               }
             },
             {
-              "x": 16,
-              "y": 32,
+              "x": 0,
+              "y": 16,
               "width": 8,
               "height": 8,
               "content": {
@@ -2821,17 +2691,8 @@
           },
           "items": [
             {
-              "x": 0,
-              "y": 0,
-              "width": 8,
-              "height": 7,
-              "content": {
-                "$ref": "#/spec/panels/1_0"
-              }
-            },
-            {
               "x": 8,
-              "y": 0,
+              "y": 14,
               "width": 8,
               "height": 7,
               "content": {
@@ -2839,7 +2700,7 @@
               }
             },
             {
-              "x": 16,
+              "x": 8,
               "y": 0,
               "width": 8,
               "height": 7,
@@ -2849,7 +2710,7 @@
             },
             {
               "x": 0,
-              "y": 7,
+              "y": 0,
               "width": 8,
               "height": 7,
               "content": {
@@ -2857,7 +2718,7 @@
               }
             },
             {
-              "x": 8,
+              "x": 0,
               "y": 7,
               "width": 8,
               "height": 7,
@@ -2867,7 +2728,7 @@
             },
             {
               "x": 16,
-              "y": 7,
+              "y": 0,
               "width": 8,
               "height": 7,
               "content": {
@@ -2876,6 +2737,42 @@
             },
             {
               "x": 8,
+              "y": 21,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/1_11"
+              }
+            },
+            {
+              "x": 0,
+              "y": 14,
+              "width": 8,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/1_9"
+              }
+            },
+            {
+              "x": 16,
+              "y": 7,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/1_6-1"
+              }
+            },
+            {
+              "x": 8,
+              "y": 7,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/1_6-2"
+              }
+            },
+            {
+              "x": 4,
               "y": 24,
               "width": 4,
               "height": 3,
@@ -2890,33 +2787,6 @@
               "height": 10,
               "content": {
                 "$ref": "#/spec/panels/1_7"
-              }
-            },
-            {
-              "x": 8,
-              "y": 14,
-              "width": 8,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/1_9"
-              }
-            },
-            {
-              "x": 0,
-              "y": 14,
-              "width": 8,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/1_8"
-              }
-            },
-            {
-              "x": 0,
-              "y": 24,
-              "width": 8,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/1_11"
               }
             }
           ]
