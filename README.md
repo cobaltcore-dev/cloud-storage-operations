@@ -33,13 +33,45 @@ cloud-storage-operations
               │
               ├── perses-dashboards-global/ Perses dashboards for visualizing global metrics.
               │
-              ├── playbooks/                Step-by-step instructions for troubleshooting.        
+              ├── playbooks/                Step-by-step instructions for troubleshooting.       
               │
               ├── Chart.yaml                Helm chart manifest.
               │
-              └── plugindefintion.yaml      Links the Helm chart to the Greenhouse platform. 
+              └── plugindefintion.yaml      Links the Helm chart to the Greenhouse platform.
 
 ```
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| dashboards.create | bool | `true` | Enables ConfigMap resources with dashboards to be created |
+| dashboards.dashboardSelectors | list | `[{"name":"plutono-dashboard","value":"\"true\""}]` | Label selectors for the Plutono dashboards to be picked up by Plutono. |
+| dashboards.global.create | bool | `false` | Enables ConfigMap resources with global dashboards to be created |
+| dashboards.global.dashboardSelectors | list | `[{"name":"plutono-global","value":"\"true\""}]` | Label selectors for the global Plutono dashboards to be picked up by the global Plutono. |
+| dashboards.global.persesDashboardSelectors | list | `[{"name":"perses.dev/global-resource","value":"\"true\""}]` | Label selectors for the global Perses dashboards to be picked up by the global Perses. |
+| global.commonLabels | object | `{}` | Common labels to add to all resources # |
+| persesDashboards.create | bool | `true` | Enables ConfigMap resources with perses dashboards to be created |
+| persesDashboards.dashboardSelectors | list | `[{"name":"perses.dev/resource","value":"\"true\""}]` | Label selectors for the Plutono dashboards to be picked up by Plutono. |
+| prometheusRules.additionalRuleAnnotations | object | `{}` | Additional annotations for PrometheusRule alerts |
+| prometheusRules.additionalRuleLabels | string | `nil` | Additional labels for PrometheusRule alerts # This is useful for adding additional labels such as "support_group" or "service" for the routing of alerts to each rule |
+| prometheusRules.annotations | object | `{}` | Annotations for PrometheusRules |
+| prometheusRules.create | bool | `true` | Enables PrometheusRule resources to be created |
+| prometheusRules.disabled | object | `{"CephAPodNodePGImbalance":true,"CephNodeInconsistentMTU":true,"CephStorageNodePGImbalance":true}` | Disables specific PrometheusRule alerts |
+| prometheusRules.labels | object | `{}` | Labels for PrometheusRules |
+| prometheusRules.ruleGroups.absentMetrics | bool | `true` |  |
+| prometheusRules.ruleGroups.clusterHealth | bool | `true` |  |
+| prometheusRules.ruleGroups.customrules | bool | `true` |  |
+| prometheusRules.ruleGroups.generic | bool | `true` |  |
+| prometheusRules.ruleGroups.healthChecks | bool | `true` |  |
+| prometheusRules.ruleGroups.manager | bool | `false` |  |
+| prometheusRules.ruleGroups.mon | bool | `true` |  |
+| prometheusRules.ruleGroups.nodes | bool | `true` |  |
+| prometheusRules.ruleGroups.osd | bool | `true` |  |
+| prometheusRules.ruleGroups.pgr | bool | `true` |  |
+| prometheusRules.ruleGroups.pools | bool | `true` |  |
+| prometheusRules.ruleGroups.rados | bool | `true` |  |
+| prometheusRules.ruleSelectors | string | `nil` |  |
 
 ## Support, Feedback, Contributing
 
