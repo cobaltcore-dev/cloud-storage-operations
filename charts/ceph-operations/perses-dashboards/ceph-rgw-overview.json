@@ -1168,6 +1168,100 @@
           ]
         }
       },
+      "1_6-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "RGW Instance Latency DELETE"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "display": "line",
+                "lineWidth": 1
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "seconds"
+                }
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "seriesNameFormat": "{{ pod_id }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "1_6-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "RGW Instance Latency POST"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "list",
+                "position": "bottom",
+                "values": []
+              },
+              "visual": {
+                "areaOpacity": 0.1,
+                "connectNulls": false,
+                "display": "line",
+                "lineWidth": 1
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "seconds"
+                }
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "datasource": {
+                      "kind": "PrometheusDatasource"
+                    },
+                    "minStep": "",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "seriesNameFormat": "{{ pod_id }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
       "1_7": {
         "kind": "Panel",
         "spec": {
@@ -2132,6 +2226,28 @@
               "legend": {
                 "position": "bottom"
               },
+              "querySettings": [
+                {
+                  "colorMode": "fixed",
+                  "colorValue": "#FFB249",
+                  "queryIndex": 0
+                },
+                {
+                  "colorMode": "fixed",
+                  "colorValue": "#59CC8D",
+                  "queryIndex": 1
+                },
+                {
+                  "colorMode": "fixed",
+                  "colorValue": "#4677f3",
+                  "queryIndex": 2
+                },
+                {
+                  "colorMode": "fixed",
+                  "colorValue": "#EE6C6C",
+                  "queryIndex": 3
+                }
+              ],
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
@@ -2144,29 +2260,7 @@
                 },
                 "label": "",
                 "show": true
-              },
-              "querySettings": [
-                {
-                  "queryIndex": 0,
-                  "colorMode": "fixed",
-                  "colorValue": "#FFB249"
-                },
-                {
-                  "queryIndex": 1,
-                  "colorMode": "fixed",
-                  "colorValue": "#59CC8D"
-                },
-                {
-                  "queryIndex": 2,
-                  "colorMode": "fixed",
-                  "colorValue": "#4677f3"
-                },
-                {
-                  "queryIndex": 3,
-                  "colorMode": "fixed",
-                  "colorValue": "#EE6C6C"
-                }
-              ]
+              }
             }
           },
           "queries": [
@@ -2245,6 +2339,13 @@
                 },
                 "label": "",
                 "show": true
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
               }
             }
           },
@@ -2288,6 +2389,13 @@
                 },
                 "label": "",
                 "show": true
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
               }
             }
           },
@@ -2331,6 +2439,13 @@
                 },
                 "label": "",
                 "show": true
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
               }
             }
           },
@@ -2374,6 +2489,13 @@
                 },
                 "label": "",
                 "show": true
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
               }
             }
           },
@@ -2417,6 +2539,13 @@
                 },
                 "label": "",
                 "show": true
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
               }
             }
           },
@@ -2429,100 +2558,6 @@
                   "spec": {
                     "query": "sum by (user, tenant) (\n  rate(radosgw_requests_duration_sum{tenant!=\"all\", user!=\"all\"}[$__rate_interval])\n) /\nsum by (user, tenant) (\n  rate(radosgw_requests_duration_count{tenant!=\"all\", user!=\"all\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{user}} - {{tenant}} "
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "1_6-1": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "RGW Instance Latency DELETE"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "mode": "list",
-                "position": "bottom",
-                "values": []
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": false,
-                "display": "line",
-                "lineWidth": 1
-              },
-              "yAxis": {
-                "format": {
-                  "unit": "seconds"
-                }
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
-                    "seriesNameFormat": "{{ pod_id }}"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "1_6-2": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "RGW Instance Latency POST"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "legend": {
-                "mode": "list",
-                "position": "bottom",
-                "values": []
-              },
-              "visual": {
-                "areaOpacity": 0.1,
-                "connectNulls": false,
-                "display": "line",
-                "lineWidth": 1
-              },
-              "yAxis": {
-                "format": {
-                  "unit": "seconds"
-                }
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "datasource": {
-                      "kind": "PrometheusDatasource"
-                    },
-                    "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
-                    "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
               }
