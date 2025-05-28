@@ -58,4 +58,92 @@ groups:
           "owner", "([a-f0-9]{32}).*"
         )
       )
+  # Client I/O Latency (GET+PUT) – avg over 5 m, in seconds
+  - record: objectstore_client_io_latency_seconds_avg
+    expr: |
+      sum by (bucket,project_id) (
+        label_replace(
+          rate(radosgw_requests_duration_sum{method=~"GET|PUT"}[5m]),
+          "project_id", "$1", "tenant", "([a-f0-9]{32})"
+        )
+      )
+      /
+      sum by (bucket,project_id) (
+        label_replace(
+          rate(radosgw_requests_duration_count{method=~"GET|PUT"}[5m]),
+          "project_id", "$1", "tenant", "([a-f0-9]{32})"
+        )
+      )
+  # Upload Object Latency (PUT+POST) – avg over 5 m, in ms
+  - record: objectstore_upload_latency_milliseconds_avg
+    expr: |
+      (
+        sum by (bucket,project_id) (
+          label_replace(
+            rate(radosgw_requests_duration_sum{method=~"PUT|POST"}[5m]),
+            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          )
+        )
+        /
+        sum by (bucket,project_id) (
+          label_replace(
+            rate(radosgw_requests_duration_count{method=~"PUT|POST"}[5m]),
+            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          )
+        )
+      ) * 1000
+  # Download Object Latency (GET) – avg over 5 m, in ms
+  - record: objectstore_download_latency_milliseconds_avg
+    expr: |
+      (
+        sum by (bucket,project_id) (
+          label_replace(
+            rate(radosgw_requests_duration_sum{method="GET"}[5m]),
+            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          )
+        )
+        /
+        sum by (bucket,project_id) (
+          label_replace(
+            rate(radosgw_requests_duration_count{method="GET"}[5m]),
+            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          )
+        )
+      ) * 1000
+  # Delete Object Latency (DELETE) – avg over 5 m, in ms
+  - record: objectstore_delete_latency_milliseconds_avg
+    expr: |
+      (
+        sum by (bucket,project_id) (
+          label_replace(
+            rate(radosgw_requests_duration_sum{method="DELETE"}[5m]),
+            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          )
+        )
+        /
+        sum by (bucket,project_id) (
+          label_replace(
+            rate(radosgw_requests_duration_count{method="DELETE"}[5m]),
+            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          )
+        )
+      ) * 1000
+  # Client Error Rate (4xx) – per second, per bucket & error
+  - record: objectstore_client_error_rate
+    expr: |
+      sum by (bucket,project_id,http_status) (
+        label_replace(
+          rate(radosgw_errors_total{http_status=~"4.."}[5m]),
+          "project_id", "$1", "tenant", "([a-f0-9]{32})"
+        )
+      )
+  # Server / Service Error Rate (5xx) – per second, per bucket & error
+  - record: objectstore_server_error_rate
+    expr: |
+      sum by (bucket,project_id,http_status) (
+        label_replace(
+          rate(radosgw_errors_total{http_status=~"5.."}[5m]),
+          "project_id", "$1", "tenant", "([a-f0-9]{32})"
+        )
+      )
 {{- end }}
