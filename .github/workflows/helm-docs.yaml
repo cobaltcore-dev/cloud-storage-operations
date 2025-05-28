@@ -1,0 +1,42 @@
+name: "Helm Docs Check"
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "charts/ceph-operations/values.yaml"
+
+jobs:
+  helm-docs-check:
+    runs-on: [default]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up go environment
+        uses: actions/setup-go@0aaccfd150d50ccaeb58ebd88d36e91967a5f35b # v5
+        with:
+          go-version: "stable"
+
+      - name: Generate README.md using Helm Docs
+        id: generate-readme
+        run: |
+          echo "Generating README.md for charts/ceph-operations..."
+          make generate-readme
+
+          if git diff --quiet -- README.md; then
+            echo "README.md is already up-to-date."
+            echo "outdated=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "README.md has changed."
+            echo "outdated=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Helm-Docs Check
+        if: steps.generate-readme.outputs.outdated == 'true'
+        run: |
+          echo "::error file=README.md::README.md is outdated. Please run 'make generate-readme' and update the PR."
+          exit 1

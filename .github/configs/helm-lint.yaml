@@ -1,0 +1,10 @@
+# SPDX-FileCopyrightText: 2025 SAP SE or an SAP affiliate company and Greenhouse contributors
+# SPDX-License-Identifier: Apache-2.0
+
+# See https://github.com/helm/chart-testing#configuration
+remote: origin
+target-branch: main
+validate-maintainers: true
+check-version-increment: true
+chart-dirs:
+  - charts
