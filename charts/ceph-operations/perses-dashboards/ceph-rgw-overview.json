@@ -1742,7 +1742,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Objects Per Bucket"
+            "name": "Top 10 - Objects Per Bucket"
           },
           "plugin": {
             "kind": "BarChart",
@@ -1767,8 +1767,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sort_desc(radosgw_usage_bucket_objects)",
-                    "seriesNameFormat": "{{bucket}}"
+                    "query": "topk(10, radosgw_usage_bucket_objects)",
+                    "seriesNameFormat": "{{bucket}} - {{owner}}"
                   }
                 }
               }
@@ -2327,6 +2327,13 @@
               "legend": {
                 "position": "bottom"
               },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
+              },
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
@@ -2339,13 +2346,6 @@
                 },
                 "label": "",
                 "show": true
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "value": 0.15
-                  }
-                ]
               }
             }
           },
@@ -2377,6 +2377,13 @@
               "legend": {
                 "position": "bottom"
               },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
+              },
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
@@ -2389,13 +2396,6 @@
                 },
                 "label": "",
                 "show": true
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "value": 0.15
-                  }
-                ]
               }
             }
           },
@@ -2427,6 +2427,13 @@
               "legend": {
                 "position": "bottom"
               },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
+              },
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
@@ -2439,13 +2446,6 @@
                 },
                 "label": "",
                 "show": true
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "value": 0.15
-                  }
-                ]
               }
             }
           },
@@ -2477,6 +2477,13 @@
               "legend": {
                 "position": "bottom"
               },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
+              },
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
@@ -2489,13 +2496,6 @@
                 },
                 "label": "",
                 "show": true
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "value": 0.15
-                  }
-                ]
               }
             }
           },
@@ -2527,6 +2527,13 @@
               "legend": {
                 "position": "bottom"
               },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 0.15
+                  }
+                ]
+              },
               "visual": {
                 "areaOpacity": 0.1,
                 "connectNulls": false,
@@ -2539,13 +2546,6 @@
                 },
                 "label": "",
                 "show": true
-              },
-              "thresholds": {
-                "steps": [
-                  {
-                    "value": 0.15
-                  }
-                ]
               }
             }
           },
