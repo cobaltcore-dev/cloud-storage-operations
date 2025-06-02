@@ -95,8 +95,8 @@
                   "name": "prometheus"
                 },
                 {
-                  "name": "service",
-                  "hide": true
+                  "hide": true,
+                  "name": "service"
                 }
               ],
               "density": "compact",
@@ -171,74 +171,68 @@
           ]
         }
       },
-      "1": {
+      "0-2": {
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Ceph Quota"
+            "name": "Ceph Capacity Per Resource"
           },
           "plugin": {
             "kind": "Table",
             "spec": {
+              "cellSettings": [],
               "columnSettings": [
                 {
+                  "enableSorting": true,
                   "header": "Region",
+                  "hide": false,
                   "name": "region",
-                  "hide": false
+                  "sort": "asc",
+                  "width": 75
                 },
                 {
-                  "header": "Capacity",
-                  "name": "value #1",
+                  "header": "Name",
+                  "name": "region_name"
+                },
+                {
                   "format": {
                     "unit": "bytes"
-                  }
+                  },
+                  "header": "Resource Capacity",
+                  "name": "value #1"
                 },
                 {
-                  "header": "Quota Usage",
-                  "name": "value #2",
                   "format": {
                     "unit": "bytes"
-                  }
-                },
-                {
-                  "header": "Unassigned Quota",
-                  "name": "value #3",
-                  "format": {
-                    "unit": "bytes"
-                  }
-                },
-                {
+                  },
                   "header": "Resource Usage",
-                  "name": "value #4",
-                  "format": {
-                    "unit": "bytes"
-                  }
+                  "name": "value #2"
                 },
                 {
-                  "header": "Quota Usage %",
-                  "name": "value #5",
-                  "align": "left",
                   "format": {
                     "unit": "percent-decimal"
-                  }
+                  },
+                  "header": "Resource Usage (%)",
+                  "hide": false,
+                  "name": "value #3"
                 },
                 {
-                  "header": "Resource Usage %",
-                  "name": "value #6",
-                  "format": {
-                    "unit": "percent-decimal"
-                  }
+                  "header": "Name",
+                  "hide": true,
+                  "name": "name"
                 },
                 {
-                  "name": "timestamp",
-                  "hide": true
+                  "hide": true,
+                  "name": "timestamp"
                 }
               ],
               "density": "compact",
               "transforms": [
                 {
                   "kind": "MergeSeries",
-                  "spec": {}
+                  "spec": {
+                    "disabled": false
+                  }
                 }
               ]
             }
@@ -254,7 +248,128 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)",
+                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_max_avail\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_bytes_used\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "label_replace(\n  1 - (\n    sum by (region, name) (\n      ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_max_avail\n    ) -\n    sum by (region, name) (\n      ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_bytes_used\n    )\n  ) / \n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_max_avail\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "1-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Ceph Quota by Resource"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "header": "Region",
+                  "hide": false,
+                  "name": "region",
+                  "sort": "asc",
+                  "width": 75
+                },
+                {
+                  "header": "Resource",
+                  "name": "full_resource"
+                },
+                {
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "header": "Capacity",
+                  "name": "value #1"
+                },
+                {
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "header": "Quota Usage",
+                  "name": "value #2"
+                },
+                {
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "header": "Unassigned Quota",
+                  "name": "value #3"
+                },
+                {
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "header": "Resource Usage",
+                  "name": "value #4"
+                },
+                {
+                  "align": "left",
+                  "format": {
+                    "unit": "percent-decimal"
+                  },
+                  "header": "Quota Usage %",
+                  "name": "value #5"
+                },
+                {
+                  "format": {
+                    "unit": "percent-decimal"
+                  },
+                  "header": "Resource Usage %",
+                  "name": "value #6"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                }
+              ],
+              "density": "compact",
+              "transforms": [
+                {
+                  "kind": "MergeSeries",
+                  "spec": {
+                    "disabled": false
+                  }
+                }
+              ]
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "minStep": "",
+                    "query": "max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -270,7 +385,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)",
+                    "query": "sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -286,7 +401,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)\n) - (\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)\n)",
+                    "query": "(\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) - (\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -302,7 +417,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)",
+                    "query": "sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -318,7 +433,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)\n)",
+                    "query": "(\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -334,7 +449,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region)\n)",
+                    "query": "(\n  sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -352,19 +467,28 @@
             {
               "x": 0,
               "y": 0,
-              "width": 9,
+              "width": 10,
               "height": 14,
               "content": {
                 "$ref": "#/spec/panels/0"
               }
             },
             {
-              "x": 9,
+              "x": 0,
+              "y": 14,
+              "width": 24,
+              "height": 24,
+              "content": {
+                "$ref": "#/spec/panels/1-1"
+              }
+            },
+            {
+              "x": 10,
               "y": 0,
-              "width": 15,
+              "width": 14,
               "height": 14,
               "content": {
-                "$ref": "#/spec/panels/1"
+                "$ref": "#/spec/panels/0-2"
               }
             }
           ]
