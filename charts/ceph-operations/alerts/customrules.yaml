@@ -64,14 +64,14 @@ groups:
       sum by (bucket,project_id) (
         label_replace(
           rate(radosgw_requests_duration_sum{method=~"GET|PUT"}[5m]),
-          "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          "project_id", "$1", "tenant", "(.*)"
         )
       )
       /
       sum by (bucket,project_id) (
         label_replace(
           rate(radosgw_requests_duration_count{method=~"GET|PUT"}[5m]),
-          "project_id", "$1", "tenant", "([a-f0-9]{32})"
+          "project_id", "$1", "tenant", "(.*)"
         )
       )
   # Upload Object Latency (PUT+POST) – avg over 5 m, in ms
@@ -81,14 +81,14 @@ groups:
         sum by (bucket,project_id) (
           label_replace(
             rate(radosgw_requests_duration_sum{method=~"PUT|POST"}[5m]),
-            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+            "project_id", "$1", "tenant", "(.*)"
           )
         )
         /
         sum by (bucket,project_id) (
           label_replace(
             rate(radosgw_requests_duration_count{method=~"PUT|POST"}[5m]),
-            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+            "project_id", "$1", "tenant", "(.*)"
           )
         )
       ) * 1000
@@ -99,14 +99,14 @@ groups:
         sum by (bucket,project_id) (
           label_replace(
             rate(radosgw_requests_duration_sum{method="GET"}[5m]),
-            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+            "project_id", "$1", "tenant", "(.*)"
           )
         )
         /
         sum by (bucket,project_id) (
           label_replace(
             rate(radosgw_requests_duration_count{method="GET"}[5m]),
-            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+            "project_id", "$1", "tenant", "(.*)"
           )
         )
       ) * 1000
@@ -117,14 +117,14 @@ groups:
         sum by (bucket,project_id) (
           label_replace(
             rate(radosgw_requests_duration_sum{method="DELETE"}[5m]),
-            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+            "project_id", "$1", "tenant", "(.*)"
           )
         )
         /
         sum by (bucket,project_id) (
           label_replace(
             rate(radosgw_requests_duration_count{method="DELETE"}[5m]),
-            "project_id", "$1", "tenant", "([a-f0-9]{32})"
+            "project_id", "$1", "tenant", "(.*)"
           )
         )
       ) * 1000
@@ -133,7 +133,7 @@ groups:
     expr: |
       sum by (bucket,project_id,http_status) (
         label_replace(
-          rate(radosgw_errors_total{http_status=~"4.."}[5m]),
+          rate(radosgw_http_errors_by_user{http_status=~"4.."}[5m]),
           "project_id", "$1", "tenant", "([a-f0-9]{32})"
         )
       )
@@ -142,7 +142,7 @@ groups:
     expr: |
       sum by (bucket,project_id,http_status) (
         label_replace(
-          rate(radosgw_errors_total{http_status=~"5.."}[5m]),
+          rate(radosgw_http_errors_by_user{http_status=~"5.."}[5m]),
           "project_id", "$1", "tenant", "([a-f0-9]{32})"
         )
       )

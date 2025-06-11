@@ -87,4 +87,88 @@ groups:
       description: Metric objectstore_usage_objects is missing for more than 5 minutes. Please check exporter status.
       summary: objectstore_usage_objects metric is missing.
 {{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.Absentobjectstore_client_io_latency_seconds_avg | default false) }}
+  - alert: Absentobjectstore_client_io_latency_seconds_avg
+    expr: absent(objectstore_client_io_latency_seconds_avg)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_client_io_latency_seconds_avg is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_client_io_latency_seconds_avg metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.Absentobjectstore_upload_latency_milliseconds_avg | default false) }}
+  - alert: Absentobjectstore_upload_latency_milliseconds_avg
+    expr: absent(objectstore_upload_latency_milliseconds_avg)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_upload_latency_milliseconds_avg is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_upload_latency_milliseconds_avg metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.Absentobjectstore_download_latency_milliseconds_avg | default false) }}
+  - alert: Absentobjectstore_download_latency_milliseconds_avg
+    expr: absent(objectstore_download_latency_milliseconds_avg)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_download_latency_milliseconds_avg is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_download_latency_milliseconds_avg metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.Absentobjectstore_delete_latency_milliseconds_avg | default false) }}
+  - alert: Absentobjectstore_delete_latency_milliseconds_avg
+    expr: absent(objectstore_delete_latency_milliseconds_avg)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_delete_latency_milliseconds_avg is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_delete_latency_milliseconds_avg metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.Absentobjectstore_client_error_rate | default false) }}
+  - alert: Absentobjectstore_client_error_rate
+    expr: absent(objectstore_client_error_rate)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_client_error_rate is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_client_error_rate metric is missing.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.Absentobjectstore_server_error_rate | default false) }}
+  - alert: Absentobjectstore_server_error_rate
+    expr: absent(objectstore_server_error_rate)
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      inhibited_by: cluster-maintenance
+    annotations:
+      description: Metric objectstore_server_error_rate is missing for more than 5 minutes. Please check exporter status.
+      summary: objectstore_server_error_rate metric is missing.
+{{- end }}
 {{- end }}
