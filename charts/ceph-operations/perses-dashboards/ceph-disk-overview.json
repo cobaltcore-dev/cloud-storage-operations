@@ -1,0 +1,1941 @@
+{
+  "kind": "Dashboard",
+  "metadata": {
+    "name": "ceph-disk-overview",
+    "project": "ceph-storage"
+  },
+  "spec": {
+    "display": {
+      "name": "ceph disk overview"
+    },
+    "panels": {
+      "DataWriteProcessed": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Data Write Processed"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [],
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "enableSorting": true,
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "hide": false,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"write_gigabytes_processed\", node=~\"$node\"} * 1073741824"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DataWriteProcessed-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Data Read Processed"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [],
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "enableSorting": true,
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "hide": false,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"read_gigabytes_processed\", node=~\"$node\"} * 1073741824"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DiskCapacity": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Capacity"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "density": "compact",
+              "columnSettings": [
+                {
+                  "name": "node",
+                  "enableSorting": true
+                },
+                {
+                  "name": "disk",
+                  "enableSorting": true
+                },
+                {
+                  "name": "value",
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "enableSorting": true,
+                  "sort": "desc"
+                },
+                {
+                  "name": "cluster",
+                  "hide": true
+                },
+                {
+                  "name": "cluster_type",
+                  "hide": true
+                },
+                {
+                  "name": "container",
+                  "hide": true
+                },
+                {
+                  "name": "endpoint",
+                  "hide": true
+                },
+                {
+                  "name": "instance",
+                  "hide": true
+                },
+                {
+                  "name": "job",
+                  "hide": true
+                },
+                {
+                  "name": "namespace",
+                  "hide": true
+                },
+                {
+                  "name": "pod",
+                  "hide": true
+                },
+                {
+                  "name": "prometheus",
+                  "hide": true
+                },
+                {
+                  "name": "region",
+                  "hide": true
+                },
+                {
+                  "name": "service",
+                  "hide": true
+                },
+                {
+                  "name": "timestamp",
+                  "hide": true
+                }
+              ]
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_capacity_gb{node=~\"$node\"} * 1073741824",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DiskTemperatureHistory": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Temperature"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "legend": {
+                "mode": "table",
+                "position": "right",
+                "size": "small",
+                "values": [
+                  "last"
+                ]
+              },
+              "visual": {
+                "areaOpacity": 0.05,
+                "connectNulls": false,
+                "lineWidth": 1,
+                "pointRadius": 2.5
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "label_replace(\n  label_replace(\n    disk_temperature_celsius{node=~\"$node\"},\n    \"disk_short\", \"$1\", \"disk\", \"/dev/(.*)\"\n  ),\n  \"node_short\", \"$1\", \"node\", \"node(.*)\"\n)",
+                    "seriesNameFormat": "{{ node_short }}/{{ disk_short }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "ErrorCount": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Error Count"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "density": "compact",
+              "columnSettings": [
+                {
+                  "name": "node",
+                  "enableSorting": true
+                },
+                {
+                  "name": "disk",
+                  "enableSorting": true
+                },
+                {
+                  "name": "error_type"
+                },
+                {
+                  "name": "value",
+                  "enableSorting": true,
+                  "sort": "desc"
+                },
+                {
+                  "name": "__name__",
+                  "hide": true
+                },
+                {
+                  "name": "cluster",
+                  "hide": true
+                },
+                {
+                  "name": "cluster_type",
+                  "hide": true
+                },
+                {
+                  "name": "container",
+                  "hide": true
+                },
+                {
+                  "name": "endpoint",
+                  "hide": true
+                },
+                {
+                  "name": "instance",
+                  "hide": true
+                },
+                {
+                  "name": "job",
+                  "hide": true
+                },
+                {
+                  "name": "namespace",
+                  "hide": true
+                },
+                {
+                  "name": "pod",
+                  "hide": true
+                },
+                {
+                  "name": "prometheus",
+                  "hide": true
+                },
+                {
+                  "name": "region",
+                  "hide": true
+                },
+                {
+                  "name": "service",
+                  "hide": true
+                },
+                {
+                  "name": "timestamp",
+                  "hide": true
+                }
+              ]
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_error_counts{node=~\"$node\"} > 0",
+                    "seriesNameFormat": "{{node_short}}/{{disk_short}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "GrownDefectsCount": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Grown Defects Count"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\"} > 0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "GrownDefectsCount-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Verify Errors Corrected"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"verify_errors_corrected\", node=~\"$node\"} > 0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "GrownDefectsCount-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Write Errors Uncorrected"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"total_uncorrected_write_errors\", node=~\"$node\"} > 0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "GrownDefectsCount-3": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Read Errors Corrected"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact",
+              "transforms": []
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"read_errors_corrected\", node=~\"$node\"} > 0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "GrownDefectsCount-4": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Read Errors Uncorrected"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"total_uncorrected_read_errors\", node=~\"$node\"} > 0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "GrownDefectsCount-5": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Write Errors Corrected"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"write_errors_corrected\", node=~\"$node\"} > 0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "GrownDefectsCount-6": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Verify Errors Uncorrected"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"total_uncorrected_verify_errors\", node=~\"$node\"} > 0"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DataWriteProcessed-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Power Cycle Count"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [],
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "enableSorting": true,
+                  "format": {
+                    "unit": "decimal"
+                  },
+                  "hide": false,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                },
+                {
+                  "name": "__name__",
+                  "hide": true
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"power_cycle_count\", node=~\"$node\"}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DataWriteProcessed-3": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Power On Hours"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [],
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "enableSorting": true,
+                  "format": {
+                    "unit": "hours"
+                  },
+                  "hide": false,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                },
+                {
+                  "name": "__name__",
+                  "hide": true
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"power_on_hours\", node=~\"$node\"}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DiskTemperatureHistory-2": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Reallocated Sectors"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_reallocated_sectors{node=~\"$node\"} > 0",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "DataWriteProcessed-4": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "SSD Life Used"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [],
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk"
+                },
+                {
+                  "enableSorting": true,
+                  "format": {
+                    "unit": "percent"
+                  },
+                  "hide": false,
+                  "name": "value",
+                  "sort": "desc"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                },
+                {
+                  "name": "__name__",
+                  "hide": true
+                }
+              ],
+              "density": "compact"
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "ssd_life_used_percentage{node=~\"$node\"}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "UniqueDevices": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Active Device"
+          },
+          "plugin": {
+            "kind": "StatChart",
+            "spec": {
+              "calculation": "last-number",
+              "format": {
+                "unit": "decimal"
+              },
+              "mappings": []
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "count(disk_capacity_gb{node=~\"$node\"})",
+                    "seriesNameFormat": "Total"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "count(disk_capacity_gb{disk=~\"/dev/nvme(.*)\", node=~\"$node\"})",
+                    "seriesNameFormat": "SSDs"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "count(disk_capacity_gb{disk=~\"/dev/sd(.*)\", node=~\"$node\"})",
+                    "seriesNameFormat": "HDDs"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "Errors": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Error Count"
+          },
+          "plugin": {
+            "kind": "StatChart",
+            "spec": {
+              "calculation": "last-number",
+              "format": {
+                "unit": "decimal"
+              },
+              "mappings": []
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(disk_error_counts{node=~\"$node\"})",
+                    "seriesNameFormat": "Total"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(disk_error_counts{node=~\"$node\", disk=~\"/dev/nvme(.*)\"})",
+                    "seriesNameFormat": "SSDs"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(disk_error_counts{node=~\"$node\", disk=~\"/dev/sd(.*)\"})",
+                    "seriesNameFormat": "HDDs"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "Errors-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Grown Defects"
+          },
+          "plugin": {
+            "kind": "StatChart",
+            "spec": {
+              "calculation": "last-number",
+              "format": {
+                "unit": "decimal"
+              },
+              "mappings": []
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\"})",
+                    "seriesNameFormat": "Total"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/nvme(.*)\"})",
+                    "seriesNameFormat": "SSDs"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/sd(.*)\"})",
+                    "seriesNameFormat": "HDDs"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "layouts": [
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "Overview",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 6,
+              "height": 5,
+              "content": {
+                "$ref": "#/spec/panels/UniqueDevices"
+              }
+            },
+            {
+              "x": 6,
+              "y": 0,
+              "width": 6,
+              "height": 5,
+              "content": {
+                "$ref": "#/spec/panels/Errors"
+              }
+            },
+            {
+              "x": 12,
+              "y": 0,
+              "width": 6,
+              "height": 5,
+              "content": {
+                "$ref": "#/spec/panels/Errors-1"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "General",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 7,
+              "y": 0,
+              "width": 7,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed-1"
+              }
+            },
+            {
+              "x": 14,
+              "y": 0,
+              "width": 7,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed"
+              }
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 7,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/DiskCapacity"
+              }
+            },
+            {
+              "x": 0,
+              "y": 8,
+              "width": 10,
+              "height": 12,
+              "content": {
+                "$ref": "#/spec/panels/DiskTemperatureHistory"
+              }
+            },
+            {
+              "x": 17,
+              "y": 14,
+              "width": 7,
+              "height": 6,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed-2"
+              }
+            },
+            {
+              "x": 17,
+              "y": 8,
+              "width": 7,
+              "height": 6,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed-3"
+              }
+            },
+            {
+              "x": 10,
+              "y": 8,
+              "width": 7,
+              "height": 12,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed-4"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "Error Overview",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/GrownDefectsCount-3"
+              }
+            },
+            {
+              "x": 8,
+              "y": 0,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/GrownDefectsCount-5"
+              }
+            },
+            {
+              "x": 16,
+              "y": 0,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/GrownDefectsCount-1"
+              }
+            },
+            {
+              "x": 0,
+              "y": 7,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/GrownDefectsCount-4"
+              }
+            },
+            {
+              "x": 8,
+              "y": 7,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/GrownDefectsCount-2"
+              }
+            },
+            {
+              "x": 16,
+              "y": 7,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/GrownDefectsCount-6"
+              }
+            },
+            {
+              "x": 0,
+              "y": 14,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/ErrorCount"
+              }
+            },
+            {
+              "x": 8,
+              "y": 14,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/GrownDefectsCount"
+              }
+            },
+            {
+              "x": 16,
+              "y": 14,
+              "width": 8,
+              "height": 7,
+              "content": {
+                "$ref": "#/spec/panels/DiskTemperatureHistory-2"
+              }
+            }
+          ]
+        }
+      }
+    ],
+    "variables": [
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "Node",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "node",
+              "matchers": [
+                "disk_capacity_gb"
+              ]
+            }
+          },
+          "name": "node"
+        }
+      }
+    ],
+    "duration": "1h",
+    "refreshInterval": "0s"
+  }
+}
