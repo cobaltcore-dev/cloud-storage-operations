@@ -133,7 +133,7 @@ groups:
     expr: |
       sum by (bucket,project_id,http_status) (
         label_replace(
-          rate(radosgw_http_errors_by_user{http_status=~"4.."}[5m]),
+          rate(radosgw_errors_detailed{http_status=~"4.."}[5m]),
           "project_id", "$1", "tenant", "([a-f0-9]{32})"
         )
       )
@@ -142,7 +142,7 @@ groups:
     expr: |
       sum by (bucket,project_id,http_status) (
         label_replace(
-          rate(radosgw_http_errors_by_user{http_status=~"5.."}[5m]),
+          rate(radosgw_errors_detailed{http_status=~"5.."}[5m]),
           "project_id", "$1", "tenant", "([a-f0-9]{32})"
         )
       )
