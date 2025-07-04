@@ -1420,8 +1420,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum by (bucket) (rate(radosgw_bytes_sent[$__rate_interval])) +\n  sum by (bucket) (rate(radosgw_bytes_received[$__rate_interval]))\n) or\n(\n  sum by (bucket) (rate(radosgw_bytes_sent[$__rate_interval])) or \n  sum by (bucket) (rate(radosgw_bytes_received[$__rate_interval]))\n)\n",
-                    "seriesNameFormat": "{{ bucket }}"
+                    "query": "(\n  sum by (bucket, user) (rate(radosgw_bytes_sent[$__rate_interval])) +\n  sum by (bucket, user) (rate(radosgw_bytes_received[$__rate_interval]))\n) or\n(\n  sum by (bucket, user) (rate(radosgw_bytes_sent[$__rate_interval])) or \n  sum by (bucket, user) (rate(radosgw_bytes_received[$__rate_interval]))\n)\n",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -1474,8 +1474,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (bucket) (rate(radosgw_bytes_sent[$__rate_interval]))",
-                    "seriesNameFormat": "{{ bucket }}"
+                    "query": "sum by (bucket, user) (rate(radosgw_bytes_sent[$__rate_interval]))",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -1528,8 +1528,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (bucket) (rate(radosgw_bytes_received[$__rate_interval]))",
-                    "seriesNameFormat": "{{ bucket }}"
+                    "query": "sum by (bucket, user) (rate(radosgw_bytes_received[$__rate_interval]))",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -1582,8 +1582,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{ bucket }}"
+                    "query": "sum by (bucket, user) (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -1638,8 +1638,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10,\n  sum by (bucket) (\n    rate(radosgw_total_requests[$__rate_interval])\n  )\n)",
-                    "seriesNameFormat": "{{ bucket }}"
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_total_requests[$__rate_interval])\n  )\n)",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -1692,8 +1692,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{ bucket }}"
+                    "query": "sum by (bucket, user) (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -1705,7 +1705,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Top 10 - Capacity Consumers Per Bucket"
+            "name": "Top 10 - Capacity Consumed Per Bucket"
           },
           "plugin": {
             "kind": "BarChart",
@@ -1730,7 +1730,7 @@
                     },
                     "minStep": "",
                     "query": "topk(10, radosgw_usage_bucket_size)",
-                    "seriesNameFormat": "{{bucket}}"
+                    "seriesNameFormat": "{{owner}} - {{bucket}}"
                   }
                 }
               }
@@ -1768,7 +1768,7 @@
                     },
                     "minStep": "",
                     "query": "topk(10, radosgw_usage_bucket_objects)",
-                    "seriesNameFormat": "{{bucket}} - {{owner}}"
+                    "seriesNameFormat": " {{owner}} - {{bucket}}"
                   }
                 }
               }
@@ -2356,8 +2356,8 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{bucket}} "
+                    "query": "sum by (bucket, user) (\n  rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n) /\nsum by (bucket, user) (\n  rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -2406,8 +2406,8 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{bucket}}"
+                    "query": "sum by (bucket, user) (\n  rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n) /\nsum by (bucket, user) (\n  rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -2456,8 +2456,8 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"DELETE\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"DELETE\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{bucket}}"
+                    "query": "sum by (bucket, user) (\n  rate(radosgw_requests_duration_sum{method=\"DELETE\"}[$__rate_interval])\n) /\nsum by (bucket, user) (\n  rate(radosgw_requests_duration_count{method=\"DELETE\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
               }
@@ -2506,8 +2506,8 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket) (\n  rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n) /\nsum by (bucket) (\n  rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n)",
-                    "seriesNameFormat": "{{bucket}} "
+                    "query": "sum by (bucket, user) (\n  rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n) /\nsum by (bucket, user) (\n  rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "{{ user }} - {{ bucket }} "
                   }
                 }
               }
