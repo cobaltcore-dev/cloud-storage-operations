@@ -38,7 +38,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "count(ceph_rgw_metadata{})",
+                    "query": "count(ceph_rgw_metadata)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -81,7 +81,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "count(ceph_rgw_metadata{}) - sum(ceph_rgw_metadata{})",
+                    "query": "count(ceph_rgw_metadata) - sum(ceph_rgw_metadata)",
                     "seriesNameFormat": "Down"
                   }
                 }
@@ -183,7 +183,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
+                    "query": "sum by (cluster) (rate(radosgw_bytes_sent[$__rate_interval]))",
                     "seriesNameFormat": "Data Sent"
                   }
                 }
@@ -199,7 +199,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
+                    "query": "sum by (cluster) (rate(radosgw_bytes_received[$__rate_interval]))",
                     "seriesNameFormat": "Data Received"
                   }
                 }
@@ -253,7 +253,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (increase(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__range]))",
+                    "query": "sum by (cluster) (increase(radosgw_bytes_received[$__range]))",
                     "seriesNameFormat": "Uploaded"
                   }
                 }
@@ -265,7 +265,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (increase(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__range]))",
+                    "query": "sum by (cluster) (increase(radosgw_bytes_sent[$__range]))",
                     "seriesNameFormat": "Downloaded"
                   }
                 }
@@ -319,7 +319,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (status) (rate(radosgw_requests_by_status[$__rate_interval]))",
+                    "query": "sum by (status) (rate(radosgw_requests_by_status_detailed[$__rate_interval]))",
                     "seriesNameFormat": "{{status}}"
                   }
                 }
@@ -478,7 +478,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (\n  (\n    rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval]) +\n    rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) or (\n    rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval]) or\n    rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) \n)",
+                    "query": "sum by (cluster) (\n  (\n    rate(radosgw_bytes_sent[$__rate_interval]) +\n    rate(radosgw_bytes_received[$__rate_interval])\n  ) or (\n    rate(radosgw_bytes_sent[$__rate_interval]) or\n    rate(radosgw_bytes_received[$__rate_interval])\n  ) \n)",
                     "seriesNameFormat": "{{ cluster }}"
                   }
                 }
@@ -765,7 +765,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (rate(radosgw_total_requests{tenant=\"all\", user=\"all\", method=\"all\", http_status=\"all\"}[$__rate_interval]))",
+                    "query": "sum by (cluster) (rate(radosgw_total_requests[$__rate_interval]))",
                     "seriesNameFormat": "{{ cluster }}"
                   }
                 }
@@ -814,7 +814,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests{user=\"all\", tenant=\"all\", method=\"all\", http_status=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -863,7 +863,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_total{user=\"all\", tenant=\"all\", bucket=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_detailed[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "Requests Failed {{ pod_id }}"
                   }
                 }
@@ -879,7 +879,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_by_method{method=\"GET\", user!=\"all\", tenant!=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_by_method{method=\"GET\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "GETs {{ pod_id }}"
                   }
                 }
@@ -895,7 +895,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (pod) (\n  rate(radosgw_requests_by_method{method=\"PUT\", user!=\"all\", tenant!=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (pod) (\n  rate(radosgw_requests_by_method{method=\"PUT\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "PUTs {{ pod }}"
                   }
                 }
@@ -911,7 +911,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests{user=\"all\", tenant=\"all\"}[$__rate_interval])\n  ) -\n  sum by (pod) (\n    rate(radosgw_total_requests{method=~\"GET|PUT\", user=\"all\", tenant=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests[$__rate_interval])\n  ) -\n  sum by (pod) (\n    rate(radosgw_total_requests{method=~\"GET|PUT\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "Other {{ pod_id }}"
                   }
                 }
@@ -958,7 +958,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1112,7 +1112,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    (\n      rate(radosgw_bytes_sent{user=\"all\", tenant=\"all\"}[$__rate_interval]) +\n      rate(radosgw_bytes_received{user=\"all\", tenant=\"all\"}[$__rate_interval])\n    )\n    or (\n      rate(radosgw_bytes_sent{user=\"all\", tenant=\"all\"}[$__rate_interval]) or\n      rate(radosgw_bytes_received{user=\"all\", tenant=\"all\"}[$__rate_interval])\n    )\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    (\n      rate(radosgw_bytes_sent[$__rate_interval]) +\n      rate(radosgw_bytes_received[$__rate_interval])\n    )\n    or (\n      rate(radosgw_bytes_sent[$__rate_interval]) or\n      rate(radosgw_bytes_received[$__rate_interval])\n    )\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1159,7 +1159,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1206,7 +1206,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"DELETE\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"DELETE\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1253,7 +1253,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1302,7 +1302,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_total{user=\"all\", tenant=\"all\", bucket=\"all\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_detailed[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1420,7 +1420,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum by (bucket) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval])) +\n  sum by (bucket) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))\n) or\n(\n  sum by (bucket) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval])) or \n  sum by (bucket) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))\n)\n",
+                    "query": "(\n  sum by (bucket) (rate(radosgw_bytes_sent[$__rate_interval])) +\n  sum by (bucket) (rate(radosgw_bytes_received[$__rate_interval]))\n) or\n(\n  sum by (bucket) (rate(radosgw_bytes_sent[$__rate_interval])) or \n  sum by (bucket) (rate(radosgw_bytes_received[$__rate_interval]))\n)\n",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1474,7 +1474,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (bucket) (rate(radosgw_bytes_sent{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
+                    "query": "sum by (bucket) (rate(radosgw_bytes_sent[$__rate_interval]))",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1528,7 +1528,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (bucket) (rate(radosgw_bytes_received{tenant=\"all\", user=\"all\"}[$__rate_interval]))",
+                    "query": "sum by (bucket) (rate(radosgw_bytes_received[$__rate_interval]))",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1638,7 +1638,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10,\n  sum by (bucket) (\n    rate(radosgw_total_requests{tenant=\"all\", user=\"all\", method=\"all\", http_status=\"all\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket) (\n    rate(radosgw_total_requests[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ bucket }}"
                   }
                 }
@@ -1821,7 +1821,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum by (user) (rate(radosgw_bytes_sent{user!=\"all\"}[$__rate_interval])) +\n  sum by (user) (rate(radosgw_bytes_received{user!=\"all\"}[$__rate_interval]))\n) or\n(\n  sum by (user) (rate(radosgw_bytes_sent{user!=\"all\"}[$__rate_interval])) or \n  sum by (user) (rate(radosgw_bytes_received{user!=\"all\"}[$__rate_interval]))\n)",
+                    "query": "(\n  sum by (user) (rate(radosgw_bytes_sent[$__rate_interval])) +\n  sum by (user) (rate(radosgw_bytes_received[$__rate_interval]))\n) or\n(\n  sum by (user) (rate(radosgw_bytes_sent[$__rate_interval])) or \n  sum by (user) (rate(radosgw_bytes_received[$__rate_interval]))\n)",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -1875,7 +1875,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (rate(radosgw_bytes_sent{user!=\"all\"}[$__rate_interval]))",
+                    "query": "sum by (user) (rate(radosgw_bytes_sent[$__rate_interval]))",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -1929,7 +1929,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (rate(radosgw_bytes_received{user!=\"all\"}[$__rate_interval]))",
+                    "query": "sum by (user) (rate(radosgw_bytes_received[$__rate_interval]))",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -1983,7 +1983,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10,\n  sum by (user) (\n    rate(radosgw_total_requests{user!=\"all\", method!=\"all\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (user) (\n    rate(radosgw_total_requests[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }}"
                   }
                 }
@@ -2037,7 +2037,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\", user!=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ user }}"
                   }
                 }
@@ -2091,7 +2091,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\", user!=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ user }}"
                   }
                 }
@@ -2270,7 +2270,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"GET\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "GET {{cluster}}"
                   }
                 }
@@ -2282,7 +2282,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"PUT\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "PUT {{cluster}}"
                   }
                 }
@@ -2294,7 +2294,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"POST\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "POST {{cluster}}"
                   }
                 }
@@ -2306,7 +2306,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"DELETE\", tenant=\"all\", user=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"DELETE\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"DELETE\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "DELETE {{cluster}}"
                   }
                 }
@@ -2556,7 +2556,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (user, tenant) (\n  rate(radosgw_requests_duration_sum{tenant!=\"all\", user!=\"all\"}[$__rate_interval])\n) /\nsum by (user, tenant) (\n  rate(radosgw_requests_duration_count{tenant!=\"all\", user!=\"all\"}[$__rate_interval])\n)",
+                    "query": "sum by (user, tenant) (\n  rate(radosgw_requests_duration_sum[$__rate_interval])\n) /\nsum by (user, tenant) (\n  rate(radosgw_requests_duration_count[$__rate_interval])\n)",
                     "seriesNameFormat": "{{user}} - {{tenant}} "
                   }
                 }
