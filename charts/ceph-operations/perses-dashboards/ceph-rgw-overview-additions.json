@@ -50,7 +50,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (http_status) (\n  rate(radosgw_errors_total{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{http_status}}"
                   }
                 }
@@ -100,7 +100,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_total{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{bucket}} - {{http_status}}"
                   }
                 }
@@ -150,7 +150,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_total{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{bucket}} - {{http_status}}"
                   }
                 }
@@ -200,7 +200,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (http_status) (\n  rate(radosgw_errors_total{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{http_status}}"
                   }
                 }
@@ -519,7 +519,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip, http_status) (\n  rate(radosgw_http_errors_by_ip{http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "query": "sum by (ip, http_status) (\n  rate(radosgw_errors_per_ip{http_status=~\"$errors\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ip}} - {{http_status}}"
                   }
                 }
