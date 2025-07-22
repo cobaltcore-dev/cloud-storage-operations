@@ -123,6 +123,7 @@ groups:
       oid: "1.3.6.1.4.1.50495.1.2.1.8.4"
       severity: warning
       type: ceph_default
+      inhibited_by: node-maintenance
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Mountpoint `{{`{{ $labels.mountpoint }}`}}` on `{{`{{ $labels.nodename }}`}}` will be full in less than 5 days based on the 48 hour trailing fill rate."
