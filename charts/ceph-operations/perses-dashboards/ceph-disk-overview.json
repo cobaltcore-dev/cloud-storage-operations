@@ -699,6 +699,13 @@
             "spec": {
               "legend": {
                 "position": "bottom"
+              },
+              "yAxis": {
+                "show": true,
+                "label": "",
+                "format": {
+                  "unit": "events/sec"
+                }
               }
             }
           },
@@ -709,7 +716,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "disk_error_counts_total{node=~\"$node\"}",
+                    "query": "rate(disk_error_counts_total{node=~\"$node\"}[$__rate_interval])",
                     "seriesNameFormat": "{{node}} - {{disk}} - {{osd_id}}"
                   }
                 }
