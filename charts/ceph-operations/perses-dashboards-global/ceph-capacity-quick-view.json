@@ -171,7 +171,7 @@
           ]
         }
       },
-      "0-2": {
+      "0-3": {
         "kind": "Panel",
         "spec": {
           "display": {
@@ -198,21 +198,21 @@
                   "format": {
                     "unit": "bytes"
                   },
-                  "header": "Resource Capacity",
+                  "header": "Available Capacity",
                   "name": "value #1"
                 },
                 {
                   "format": {
                     "unit": "bytes"
                   },
-                  "header": "Resource Usage",
+                  "header": "Used",
                   "name": "value #2"
                 },
                 {
                   "format": {
                     "unit": "percent-decimal"
                   },
-                  "header": "Resource Usage (%)",
+                  "header": "Used (%)",
                   "hide": false,
                   "name": "value #3"
                 },
@@ -260,7 +260,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_bytes_used\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")"
+                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_stored\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")"
                   }
                 }
               }
@@ -271,7 +271,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "label_replace(\n  1 - (\n    sum by (region, name) (\n      ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_max_avail\n    ) -\n    sum by (region, name) (\n      ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_bytes_used\n    )\n  ) / \n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_max_avail\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
+                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_percent_used\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
                     "seriesNameFormat": ""
                   }
                 }
@@ -284,7 +284,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Ceph Quota by Resource"
+            "name": "Ceph Quota Per Resource"
           },
           "plugin": {
             "kind": "Table",
@@ -300,6 +300,7 @@
                 },
                 {
                   "header": "Resource",
+                  "hide": false,
                   "name": "full_resource"
                 },
                 {
@@ -313,22 +314,22 @@
                   "format": {
                     "unit": "bytes"
                   },
-                  "header": "Quota Usage",
-                  "name": "value #2"
-                },
-                {
-                  "format": {
-                    "unit": "bytes"
-                  },
-                  "header": "Unassigned Quota",
-                  "name": "value #3"
-                },
-                {
-                  "format": {
-                    "unit": "bytes"
-                  },
                   "header": "Resource Usage",
                   "name": "value #4"
+                },
+                {
+                  "format": {
+                    "unit": "percent-decimal"
+                  },
+                  "header": "Resource Usage %",
+                  "name": "value #6"
+                },
+                {
+                  "format": {
+                    "unit": "bytes"
+                  },
+                  "header": "Quota Usage",
+                  "name": "value #2"
                 },
                 {
                   "align": "left",
@@ -340,10 +341,11 @@
                 },
                 {
                   "format": {
-                    "unit": "percent-decimal"
+                    "unit": "bytes"
                   },
-                  "header": "Resource Usage %",
-                  "name": "value #6"
+                  "header": "Unassigned Quota",
+                  "hide": false,
+                  "name": "value #3"
                 },
                 {
                   "hide": true,
@@ -467,28 +469,28 @@
             {
               "x": 0,
               "y": 0,
-              "width": 10,
+              "width": 8,
               "height": 14,
               "content": {
                 "$ref": "#/spec/panels/0"
               }
             },
             {
-              "x": 0,
-              "y": 14,
-              "width": 24,
-              "height": 24,
+              "x": 8,
+              "y": 0,
+              "width": 10,
+              "height": 14,
               "content": {
-                "$ref": "#/spec/panels/1-1"
+                "$ref": "#/spec/panels/0-3"
               }
             },
             {
-              "x": 10,
-              "y": 0,
-              "width": 14,
-              "height": 14,
+              "x": 0,
+              "y": 14,
+              "width": 18,
+              "height": 21,
               "content": {
-                "$ref": "#/spec/panels/0-2"
+                "$ref": "#/spec/panels/1-1"
               }
             }
           ]
