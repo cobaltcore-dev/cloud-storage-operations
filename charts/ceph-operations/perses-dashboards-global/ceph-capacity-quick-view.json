@@ -371,7 +371,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
+                    "query": "max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -387,7 +387,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
+                    "query": "sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -403,7 +403,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) - (\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
+                    "query": "(\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) - (\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -419,7 +419,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\nmax(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
+                    "query": "sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -435,7 +435,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
+                    "query": "(\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -451,7 +451,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource) *\n  max(global:limes_consolidated_unit_multiplier{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
+                    "query": "(\n  sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
