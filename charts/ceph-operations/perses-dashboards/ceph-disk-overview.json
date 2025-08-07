@@ -194,7 +194,8 @@
                   "name": "region"
                 }
               ],
-              "density": "compact"
+              "density": "compact",
+              "pagination": false
             }
           },
           "queries": [
@@ -204,7 +205,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(\n  10,\n  smart_attributes{attribute=\"write_gigabytes_processed\", node=~\"$node\"} * 1073741824\n)"
+                    "query": "topk(\n  10,\n  smart_attributes{attribute=\"write_gigabytes_processed\", node=~\"$node\", disk=~\"$disk\"} * 1073741824\n)"
                   }
                 }
               }
@@ -308,7 +309,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(\n  10,\n  smart_attributes{attribute=\"read_gigabytes_processed\", node=~\"$node\"} * 1073741824\n)"
+                    "query": "topk(\n  10,\n  smart_attributes{attribute=\"read_gigabytes_processed\", node=~\"$node\", disk=~\"$disk\"} * 1073741824\n)"
                   }
                 }
               }
@@ -422,6 +423,7 @@
                 }
               ],
               "density": "compact",
+              "pagination": true,
               "transforms": [
                 {
                   "kind": "MergeSeries",
@@ -485,10 +487,10 @@
                 ]
               },
               "visual": {
-                "areaOpacity": 0.05,
+                "areaOpacity": 0,
                 "connectNulls": false,
-                "lineWidth": 1,
-                "pointRadius": 2.5
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
               }
             }
           },
@@ -701,11 +703,11 @@
                 "position": "bottom"
               },
               "yAxis": {
-                "show": true,
-                "label": "",
                 "format": {
                   "unit": "events/sec"
-                }
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -817,7 +819,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/nvme(.*)\"})",
-                    "seriesNameFormat": "NVMes"
+                    "seriesNameFormat": "NVME"
                   }
                 }
               }
@@ -829,7 +831,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/sd(.*)\"})",
-                    "seriesNameFormat": "HDDs"
+                    "seriesNameFormat": "SAS/SCSI"
                   }
                 }
               }
@@ -982,6 +984,345 @@
           ]
         }
       },
+      "Inventory": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Inventory NVME"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [],
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node",
+                  "width": 100
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk",
+                  "width": 81
+                },
+                {
+                  "align": "left",
+                  "enableSorting": true,
+                  "name": "osd_id",
+                  "width": 73
+                },
+                {
+                  "enableSorting": true,
+                  "name": "vendor",
+                  "width": "auto"
+                },
+                {
+                  "enableSorting": true,
+                  "hide": true,
+                  "name": "model"
+                },
+                {
+                  "enableSorting": true,
+                  "hide": true,
+                  "name": "product"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "serial_number"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "error count",
+                  "name": "value #2"
+                },
+                {
+                  "hide": true,
+                  "name": "value #1"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "dwpd"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                },
+                {
+                  "hide": true,
+                  "name": "rpm"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "capacity_gb"
+                },
+                {
+                  "hide": true,
+                  "name": "form_factor"
+                },
+                {
+                  "hide": true,
+                  "name": "media_type"
+                },
+                {
+                  "enableSorting": false,
+                  "hide": true,
+                  "name": "firmware_version"
+                }
+              ],
+              "defaultColumnWidth": "auto",
+              "density": "compact",
+              "pagination": true,
+              "transforms": [
+                {
+                  "kind": "MergeSeries",
+                  "spec": {}
+                }
+              ]
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_info{node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_error_counts_total{node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "Inventory-1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Inventory SAS/SCSI"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "cellSettings": [],
+              "columnSettings": [
+                {
+                  "enableSorting": true,
+                  "name": "node",
+                  "width": 100
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk",
+                  "width": 81
+                },
+                {
+                  "align": "left",
+                  "enableSorting": true,
+                  "name": "osd_id",
+                  "width": 73
+                },
+                {
+                  "enableSorting": true,
+                  "name": "vendor",
+                  "width": 100
+                },
+                {
+                  "enableSorting": true,
+                  "name": "model"
+                },
+                {
+                  "enableSorting": true,
+                  "hide": true,
+                  "name": "product"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "serial_number"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "error count",
+                  "name": "value #2"
+                },
+                {
+                  "hide": true,
+                  "name": "value #1"
+                },
+                {
+                  "hide": true,
+                  "name": "__name__"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster"
+                },
+                {
+                  "hide": true,
+                  "name": "cluster_type"
+                },
+                {
+                  "hide": true,
+                  "name": "container"
+                },
+                {
+                  "hide": true,
+                  "name": "dwpd"
+                },
+                {
+                  "hide": true,
+                  "name": "endpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "instance"
+                },
+                {
+                  "hide": true,
+                  "name": "job"
+                },
+                {
+                  "hide": true,
+                  "name": "namespace"
+                },
+                {
+                  "hide": true,
+                  "name": "pod"
+                },
+                {
+                  "hide": true,
+                  "name": "prometheus"
+                },
+                {
+                  "hide": true,
+                  "name": "region"
+                },
+                {
+                  "hide": true,
+                  "name": "rpm"
+                },
+                {
+                  "hide": true,
+                  "name": "service"
+                },
+                {
+                  "hide": true,
+                  "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "capacity_gb"
+                },
+                {
+                  "hide": true,
+                  "name": "form_factor"
+                },
+                {
+                  "hide": true,
+                  "name": "media_type"
+                },
+                {
+                  "enableSorting": false,
+                  "hide": true,
+                  "name": "firmware_version"
+                }
+              ],
+              "defaultColumnWidth": "auto",
+              "density": "compact",
+              "pagination": true,
+              "transforms": [
+                {
+                  "kind": "MergeSeries",
+                  "spec": {}
+                }
+              ]
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_info{node=~\"$node\", disk=~\"/dev/sd(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_error_counts_total{node=~\"$node\", disk=~\"/dev/sd(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
       "UniqueDevices": {
         "kind": "Panel",
         "spec": {
@@ -1018,7 +1359,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "query": "count(disk_capacity_gb{disk=~\"/dev/nvme(.*)\", node=~\"$node\"})",
-                    "seriesNameFormat": "NVMes"
+                    "seriesNameFormat": "NVME"
                   }
                 }
               }
@@ -1030,7 +1371,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "query": "count(disk_capacity_gb{disk=~\"/dev/sd(.*)\", node=~\"$node\"})",
-                    "seriesNameFormat": "HDDs"
+                    "seriesNameFormat": "SAS/SCSI"
                   }
                 }
               }
@@ -1051,17 +1392,62 @@
           },
           "items": [
             {
-              "x": 7,
-              "y": 5,
-              "width": 8,
-              "height": 9,
+              "x": 0,
+              "y": 0,
+              "width": 5,
+              "height": 4,
               "content": {
-                "$ref": "#/spec/panels/DataWriteProcessed-1"
+                "$ref": "#/spec/panels/UniqueDevices"
               }
             },
             {
-              "x": 15,
-              "y": 5,
+              "x": 0,
+              "y": 8,
+              "width": 5,
+              "height": 4,
+              "content": {
+                "$ref": "#/spec/panels/Errors"
+              }
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "width": 5,
+              "height": 4,
+              "content": {
+                "$ref": "#/spec/panels/Errors-1"
+              }
+            },
+            {
+              "x": 5,
+              "y": 0,
+              "width": 9,
+              "height": 12,
+              "content": {
+                "$ref": "#/spec/panels/Inventory"
+              }
+            },
+            {
+              "x": 14,
+              "y": 0,
+              "width": 10,
+              "height": 12,
+              "content": {
+                "$ref": "#/spec/panels/Inventory-1"
+              }
+            },
+            {
+              "x": 0,
+              "y": 12,
+              "width": 8,
+              "height": 9,
+              "content": {
+                "$ref": "#/spec/panels/ActiveHealthCheckAlerts"
+              }
+            },
+            {
+              "x": 8,
+              "y": 12,
               "width": 8,
               "height": 9,
               "content": {
@@ -1069,8 +1455,17 @@
               }
             },
             {
+              "x": 16,
+              "y": 12,
+              "width": 8,
+              "height": 9,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed-1"
+              }
+            },
+            {
               "x": 0,
-              "y": 14,
+              "y": 21,
               "width": 13,
               "height": 12,
               "content": {
@@ -1079,47 +1474,11 @@
             },
             {
               "x": 13,
-              "y": 14,
+              "y": 21,
               "width": 11,
               "height": 12,
               "content": {
                 "$ref": "#/spec/panels/DataWriteProcessed-5"
-              }
-            },
-            {
-              "x": 0,
-              "y": 0,
-              "width": 7,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/ActiveHealthCheckAlerts"
-              }
-            },
-            {
-              "x": 7,
-              "y": 0,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/UniqueDevices"
-              }
-            },
-            {
-              "x": 12,
-              "y": 0,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/Errors"
-              }
-            },
-            {
-              "x": 17,
-              "y": 0,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/Errors-1"
               }
             }
           ]
@@ -1187,6 +1546,27 @@
             }
           },
           "name": "node"
+        }
+      },
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "name": "disk",
+          "display": {
+            "name": "Disk"
+          },
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "disk",
+              "matchers": [
+                "disk_info"
+              ]
+            }
+          },
+          "defaultValue": "$__all"
         }
       }
     ],
