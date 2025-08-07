@@ -19,17 +19,10 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "table",
-                "position": "bottom",
-                "size": "small",
-                "values": [
-                  "mean",
-                  "last",
-                  "max"
-                ]
+                "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -63,23 +56,16 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "4er Errors By Bucket"
+            "name": "Top 10 - 4er Errors By Bucket"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "table",
-                "position": "bottom",
-                "size": "small",
-                "values": [
-                  "mean",
-                  "last",
-                  "max"
-                ]
+                "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -100,7 +86,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "query": "topk(10,\n  sum by (bucket, http_status) (\n    rate(radosgw_errors_detailed{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{bucket}} - {{http_status}}"
                   }
                 }
@@ -119,17 +105,10 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "table",
-                "position": "bottom",
-                "size": "small",
-                "values": [
-                  "mean",
-                  "last",
-                  "max"
-                ]
+                "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -169,17 +148,10 @@
             "kind": "TimeSeriesChart",
             "spec": {
               "legend": {
-                "mode": "table",
-                "position": "bottom",
-                "size": "small",
-                "values": [
-                  "mean",
-                  "last",
-                  "max"
-                ]
+                "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -213,7 +185,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Requests DELETE"
+            "name": "Top 10 - Bucket Requests DELETE"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -225,7 +197,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -246,7 +218,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"DELETE\"}[$__rate_interval])\n)",
+                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"DELETE\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}}"
                   }
                 }
@@ -259,7 +231,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Requests GET"
+            "name": "Top 10 - Bucket Requests GET"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -271,7 +243,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -292,7 +264,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"GET\"}[$__rate_interval])\n)",
+                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"GET\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}}"
                   }
                 }
@@ -305,7 +277,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Requests PUT"
+            "name": "Top 10 - Bucket Requests PUT"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -317,7 +289,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -338,7 +310,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"PUT\"}[$__rate_interval])\n)",
+                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"PUT\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}}"
                   }
                 }
@@ -351,7 +323,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Bucket Requests per Client IP"
+            "name": "Top 10 - Bucket Requests per Client IP"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -363,7 +335,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -384,7 +356,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip, bucket, method) (\n  rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "query": "topk(10,\n  sum by (ip, bucket, method) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", bucket=~\"$bucket\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}} - {{bucket}}"
                   }
                 }
@@ -409,7 +381,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -455,7 +427,7 @@
                 "values": []
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -498,7 +470,7 @@
                 "position": "bottom"
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -532,7 +504,7 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Requests per User and IP"
+            "name": "Top 10 - Requests per User and IP"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -541,7 +513,7 @@
                 "position": "right"
               },
               "visual": {
-                "areaOpacity": 0.1,
+                "areaOpacity": 0,
                 "connectNulls": false,
                 "lineWidth": 1.25,
                 "pointRadius": 2.75
@@ -562,7 +534,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (user, ip) (\n  rate(radosgw_requests_by_ip{ip=~\"$ip\", user=~\"$user\"}[$__rate_interval])\n)",
+                    "query": "topk(10,\n  sum by (user, ip) (\n    rate(radosgw_requests_by_ip{ip=~\"$ip\", user=~\"$user\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}} - {{user}}"
                   }
                 }
@@ -586,34 +558,34 @@
             {
               "x": 0,
               "y": 0,
-              "width": 12,
-              "height": 10,
+              "width": 9,
+              "height": 9,
               "content": {
                 "$ref": "#/spec/panels/4erErrors"
               }
             },
             {
-              "x": 12,
-              "y": 10,
-              "width": 12,
+              "x": 9,
+              "y": 9,
+              "width": 8,
               "height": 10,
               "content": {
                 "$ref": "#/spec/panels/4erErrors-3"
               }
             },
             {
-              "x": 12,
+              "x": 9,
               "y": 0,
-              "width": 12,
-              "height": 10,
+              "width": 8,
+              "height": 9,
               "content": {
                 "$ref": "#/spec/panels/4erErrors-4"
               }
             },
             {
               "x": 0,
-              "y": 10,
-              "width": 12,
+              "y": 9,
+              "width": 9,
               "height": 10,
               "content": {
                 "$ref": "#/spec/panels/4erErrors-2"
