@@ -194,7 +194,8 @@
                   "name": "region"
                 }
               ],
-              "density": "compact"
+              "density": "compact",
+              "pagination": false
             }
           },
           "queries": [
@@ -427,7 +428,8 @@
                   "kind": "MergeSeries",
                   "spec": {}
                 }
-              ]
+              ],
+              "pagination": true
             }
           },
           "queries": [
@@ -485,10 +487,10 @@
                 ]
               },
               "visual": {
-                "areaOpacity": 0.05,
+                "areaOpacity": 0,
                 "connectNulls": false,
-                "lineWidth": 1,
-                "pointRadius": 2.5
+                "lineWidth": 1.25,
+                "pointRadius": 2.75
               }
             }
           },
@@ -701,11 +703,11 @@
                 "position": "bottom"
               },
               "yAxis": {
-                "show": true,
-                "label": "",
                 "format": {
                   "unit": "events/sec"
-                }
+                },
+                "label": "",
+                "show": true
               }
             }
           },
@@ -1037,6 +1039,171 @@
             }
           ]
         }
+      },
+      "Inventory": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Inventory"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "density": "compact",
+              "pagination": true,
+              "columnSettings": [
+                {
+                  "name": "node",
+                  "width": 100,
+                  "enableSorting": true
+                },
+                {
+                  "name": "disk",
+                  "width": 81,
+                  "enableSorting": true
+                },
+                {
+                  "name": "osd_id",
+                  "width": 73,
+                  "align": "left",
+                  "enableSorting": true
+                },
+                {
+                  "name": "vendor",
+                  "width": "auto",
+                  "enableSorting": true
+                },
+                {
+                  "name": "model"
+                },
+                {
+                  "name": "product"
+                },
+                {
+                  "name": "serial_number"
+                },
+                {
+                  "name": "value #2",
+                  "header": "error count",
+                  "enableSorting": true
+                },
+                {
+                  "name": "value #1",
+                  "hide": true
+                },
+                {
+                  "name": "__name__",
+                  "hide": true
+                },
+                {
+                  "name": "cluster",
+                  "hide": true
+                },
+                {
+                  "name": "cluster_type",
+                  "hide": true
+                },
+                {
+                  "name": "container",
+                  "hide": true
+                },
+                {
+                  "name": "dwpd",
+                  "hide": true
+                },
+                {
+                  "name": "endpoint",
+                  "hide": true
+                },
+                {
+                  "name": "instance",
+                  "hide": true
+                },
+                {
+                  "name": "job",
+                  "hide": true
+                },
+                {
+                  "name": "namespace",
+                  "hide": true
+                },
+                {
+                  "name": "pod",
+                  "hide": true
+                },
+                {
+                  "name": "prometheus",
+                  "hide": true
+                },
+                {
+                  "name": "region",
+                  "hide": true
+                },
+                {
+                  "name": "rpm",
+                  "hide": true
+                },
+                {
+                  "name": "service",
+                  "hide": true
+                },
+                {
+                  "name": "timestamp",
+                  "hide": true
+                },
+                {
+                  "name": "capacity_gb",
+                  "hide": true
+                },
+                {
+                  "name": "form_factor",
+                  "hide": true
+                },
+                {
+                  "name": "media_type",
+                  "hide": true
+                },
+                {
+                  "name": "firmware_version",
+                  "hide": true,
+                  "enableSorting": false
+                }
+              ],
+              "defaultColumnWidth": "auto",
+              "transforms": [
+                {
+                  "kind": "MergeSeries",
+                  "spec": {}
+                }
+              ],
+              "cellSettings": []
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_info{node=~\"$node\"}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "disk_error_counts_total{node=~\"$node\"}"
+                  }
+                }
+              }
+            }
+          ]
+        }
       }
     },
     "layouts": [
@@ -1051,8 +1218,53 @@
           },
           "items": [
             {
-              "x": 7,
-              "y": 5,
+              "x": 0,
+              "y": 0,
+              "width": 5,
+              "height": 4,
+              "content": {
+                "$ref": "#/spec/panels/UniqueDevices"
+              }
+            },
+            {
+              "x": 0,
+              "y": 8,
+              "width": 5,
+              "height": 4,
+              "content": {
+                "$ref": "#/spec/panels/Errors"
+              }
+            },
+            {
+              "x": 0,
+              "y": 4,
+              "width": 5,
+              "height": 4,
+              "content": {
+                "$ref": "#/spec/panels/Errors-1"
+              }
+            },
+            {
+              "x": 5,
+              "y": 0,
+              "width": 6,
+              "height": 13,
+              "content": {
+                "$ref": "#/spec/panels/ActiveHealthCheckAlerts"
+              }
+            },
+            {
+              "x": 11,
+              "y": 0,
+              "width": 13,
+              "height": 13,
+              "content": {
+                "$ref": "#/spec/panels/Inventory"
+              }
+            },
+            {
+              "x": 16,
+              "y": 13,
               "width": 8,
               "height": 9,
               "content": {
@@ -1060,8 +1272,8 @@
               }
             },
             {
-              "x": 15,
-              "y": 5,
+              "x": 8,
+              "y": 13,
               "width": 8,
               "height": 9,
               "content": {
@@ -1070,7 +1282,7 @@
             },
             {
               "x": 0,
-              "y": 14,
+              "y": 22,
               "width": 13,
               "height": 12,
               "content": {
@@ -1079,47 +1291,11 @@
             },
             {
               "x": 13,
-              "y": 14,
+              "y": 22,
               "width": 11,
               "height": 12,
               "content": {
                 "$ref": "#/spec/panels/DataWriteProcessed-5"
-              }
-            },
-            {
-              "x": 0,
-              "y": 0,
-              "width": 7,
-              "height": 10,
-              "content": {
-                "$ref": "#/spec/panels/ActiveHealthCheckAlerts"
-              }
-            },
-            {
-              "x": 7,
-              "y": 0,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/UniqueDevices"
-              }
-            },
-            {
-              "x": 12,
-              "y": 0,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/Errors"
-              }
-            },
-            {
-              "x": 17,
-              "y": 0,
-              "width": 5,
-              "height": 5,
-              "content": {
-                "$ref": "#/spec/panels/Errors-1"
               }
             }
           ]
