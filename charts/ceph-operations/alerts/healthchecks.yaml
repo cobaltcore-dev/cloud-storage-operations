@@ -31,4 +31,82 @@ groups:
       description: "`{{`{{ $labels.ceph_daemon }}`}}` operations are taking too long to process (complaint time exceeded)"
       documentation: "https://docs.ceph.com/en/latest/rados/operations/health-checks#slow-ops"
 {{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.HardwareStorageError | default false) }}
+  - alert: "HardwareStorageError"
+    expr: "ceph_health_detail{name=\"HARDWARE_STORAGE\"} > 0"
+    for: "30s"
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.13.1"
+      severity: "critical"
+      type: "ceph_default"
+    annotations:
+      description: "Some storage devices are in error. Check `ceph health detail`."
+      summary: "Storage devices error(s) detected"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.HardwareMemoryError | default false) }}
+  - alert: "HardwareMemoryError"
+    expr: "ceph_health_detail{name=\"HARDWARE_MEMORY\"} > 0"
+    for: "30s"
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.13.2"
+      severity: "critical"
+      type: "ceph_default"
+    annotations:
+      description: "DIMM error(s) detected. Check `ceph health detail`."
+      summary: "DIMM error(s) detected"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.HardwareProcessorError | default false) }}
+  - alert: "HardwareProcessorError"
+    expr: "ceph_health_detail{name=\"HARDWARE_PROCESSOR\"} > 0"
+    for: "30s"
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.13.3"
+      severity: "critical"
+      type: "ceph_default"
+    annotations:
+      description: "Processor error(s) detected. Check `ceph health detail`."
+      summary: "Processor error(s) detected"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.HardwareNetworkError | default false) }}
+  - alert: "HardwareNetworkError"
+    expr: "ceph_health_detail{name=\"HARDWARE_NETWORK\"} > 0"
+    for: "30s"
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.13.4"
+      severity: "critical"
+      type: "ceph_default"
+    annotations:
+      description: "Network error(s) detected. Check `ceph health detail`."
+      summary: "Network error(s) detected"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.HardwarePowerError | default false) }}
+  - alert: "HardwarePowerError"
+    expr: "ceph_health_detail{name=\"HARDWARE_POWER\"} > 0"
+    for: "30s"
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.13.5"
+      severity: "critical"
+      type: "ceph_default"
+    annotations:
+      description: "Power supply error(s) detected. Check `ceph health detail`."
+      summary: "Power supply error(s) detected"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.HardwareFanError | default false) }}
+  - alert: "HardwareFanError"
+    expr: "ceph_health_detail{name=\"HARDWARE_FANS\"} > 0"
+    for: "30s"
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.13.6"
+      severity: "critical"
+      type: "ceph_default"
+    annotations:
+      description: "Fan error(s) detected. Check `ceph health detail`."
+      summary: "Fan error(s) detected"
+{{- end }}
 {{- end }}
