@@ -45,4 +45,17 @@ groups:
         A pool has exceeded the warning (percent full) threshold, or OSDs supporting the pool have reached the NEARFULL threshold. Writes may continue, but you are at risk of the pool going read-only if more capacity isn't made available. Determine the affected pool with `ceph df detail`, looking at QUOTA BYTES and STORED. Increase the pool's quota, or add capacity to the cluster first then increase the pool's quota (e.g. `ceph osd pool set quota <pool_name> max_bytes <bytes>`). Also ensure that the balancer is active.
       summary: "One or more Ceph pools are nearly full"
 {{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephPoolGrowthWarning | default false) }}
+  - alert: "CephPoolGrowthWarning"
+    expr: "(predict_linear(ceph_pool_percent_used[2d], 3600 * 24 * 5) * on(pool_id, instance, pod) group_right() ceph_pool_metadata) >= 95"
+    for: 5m
+    labels:
+      oid: "1.3.6.1.4.1.50495.1.2.1.9.2"
+      severity: "warning"
+      type: "ceph_default"
+    annotations:
+      description: "Pool '{{ $labels.name }}' will be full in less than 5 days assuming the average fill-up rate of the past 48 hours."
+      summary: "Pool growth rate may soon exceed capacity"
+{{- end }}
 {{- end }}
