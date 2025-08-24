@@ -1,4 +1,4 @@
-name: "Helm lint and tests"
+name: "Helm lint"
 on:
   pull_request:
     types: [opened, synchronize, reopened]
