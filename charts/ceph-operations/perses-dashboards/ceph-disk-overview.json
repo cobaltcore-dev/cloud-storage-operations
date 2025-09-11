@@ -122,15 +122,18 @@
               "columnSettings": [
                 {
                   "enableSorting": true,
-                  "name": "node"
+                  "name": "node",
+                  "width": 80
                 },
                 {
                   "enableSorting": true,
-                  "name": "disk"
+                  "name": "disk",
+                  "width": 65
                 },
                 {
                   "enableSorting": true,
-                  "name": "osd_id"
+                  "name": "osd_id",
+                  "width": 50
                 },
                 {
                   "enableSorting": true,
@@ -226,15 +229,18 @@
               "columnSettings": [
                 {
                   "enableSorting": true,
-                  "name": "node"
+                  "name": "node",
+                  "width": 80
                 },
                 {
                   "enableSorting": true,
-                  "name": "disk"
+                  "name": "disk",
+                  "width": 65
                 },
                 {
                   "enableSorting": true,
-                  "name": "osd_id"
+                  "name": "osd_id",
+                  "width": 50
                 },
                 {
                   "enableSorting": true,
@@ -997,24 +1003,64 @@
               "columnSettings": [
                 {
                   "enableSorting": true,
+                  "header": "Node",
                   "name": "node",
-                  "width": 100
+                  "width": "auto"
                 },
                 {
                   "enableSorting": true,
+                  "header": "Disk",
                   "name": "disk",
-                  "width": 81
+                  "width": "auto"
                 },
                 {
                   "align": "left",
                   "enableSorting": true,
+                  "header": "OSD ID",
                   "name": "osd_id",
-                  "width": 73
+                  "width": "auto"
                 },
                 {
                   "enableSorting": true,
+                  "header": "Vendor",
                   "name": "vendor",
                   "width": "auto"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "Serial Number",
+                  "name": "serial_number"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "Error Count",
+                  "name": "value #2"
+                },
+                {
+                  "enableSorting": true,
+                  "format": {
+                    "unit": "percent"
+                  },
+                  "header": "Used %",
+                  "name": "value #3"
+                },
+                {
+                  "header": "Wear Level",
+                  "name": "value #4"
+                },
+                {
+                  "header": "Media Errors",
+                  "name": "value #5"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "Error Log Entries",
+                  "name": "value #6"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "Critical Warning",
+                  "name": "value #7"
                 },
                 {
                   "enableSorting": true,
@@ -1025,15 +1071,6 @@
                   "enableSorting": true,
                   "hide": true,
                   "name": "product"
-                },
-                {
-                  "enableSorting": true,
-                  "name": "serial_number"
-                },
-                {
-                  "enableSorting": true,
-                  "header": "error count",
-                  "name": "value #2"
                 },
                 {
                   "hide": true,
@@ -1115,6 +1152,10 @@
                   "enableSorting": false,
                   "hide": true,
                   "name": "firmware_version"
+                },
+                {
+                  "hide": true,
+                  "name": "attribute"
                 }
               ],
               "defaultColumnWidth": "auto",
@@ -1124,6 +1165,16 @@
                 {
                   "kind": "MergeSeries",
                   "spec": {}
+                },
+                {
+                  "kind": "JoinByColumnValue",
+                  "spec": {
+                    "columns": [
+                      "node",
+                      "disk",
+                      "osd_id"
+                    ]
+                  }
                 }
               ]
             }
@@ -1150,6 +1201,62 @@
                   }
                 }
               }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"percentage_used\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"media_wearout_indicator\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"nvme_media_errors\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"nvme_error_log_entries\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "smart_attributes{attribute=\"critical_warning\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}",
+                    "seriesNameFormat": ""
+                  }
+                }
+              }
             }
           ]
         }
@@ -1167,42 +1274,48 @@
               "columnSettings": [
                 {
                   "enableSorting": true,
+                  "header": "Node",
                   "name": "node",
-                  "width": 100
+                  "width": "auto"
                 },
                 {
                   "enableSorting": true,
+                  "header": "Disk",
                   "name": "disk",
-                  "width": 81
+                  "width": "auto"
                 },
                 {
                   "align": "left",
                   "enableSorting": true,
+                  "header": "OSD ID",
                   "name": "osd_id",
-                  "width": 73
+                  "width": "auto"
                 },
                 {
                   "enableSorting": true,
+                  "header": "Vendor",
                   "name": "vendor",
-                  "width": 100
+                  "width": "auto"
                 },
                 {
                   "enableSorting": true,
+                  "header": "Model",
                   "name": "model"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "Serial Number",
+                  "name": "serial_number"
+                },
+                {
+                  "enableSorting": true,
+                  "header": "Error Count",
+                  "name": "value #2"
                 },
                 {
                   "enableSorting": true,
                   "hide": true,
                   "name": "product"
-                },
-                {
-                  "enableSorting": true,
-                  "name": "serial_number"
-                },
-                {
-                  "enableSorting": true,
-                  "header": "error count",
-                  "name": "value #2"
                 },
                 {
                   "hide": true,
@@ -1402,7 +1515,7 @@
             },
             {
               "x": 0,
-              "y": 8,
+              "y": 4,
               "width": 5,
               "height": 4,
               "content": {
@@ -1411,7 +1524,7 @@
             },
             {
               "x": 0,
-              "y": 4,
+              "y": 8,
               "width": 5,
               "height": 4,
               "content": {
@@ -1421,51 +1534,51 @@
             {
               "x": 5,
               "y": 0,
-              "width": 9,
+              "width": 5,
               "height": 12,
+              "content": {
+                "$ref": "#/spec/panels/ActiveHealthCheckAlerts"
+              }
+            },
+            {
+              "x": 10,
+              "y": 0,
+              "width": 7,
+              "height": 12,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed-1"
+              }
+            },
+            {
+              "x": 17,
+              "y": 0,
+              "width": 7,
+              "height": 12,
+              "content": {
+                "$ref": "#/spec/panels/DataWriteProcessed"
+              }
+            },
+            {
+              "x": 0,
+              "y": 12,
+              "width": 24,
+              "height": 11,
               "content": {
                 "$ref": "#/spec/panels/Inventory"
               }
             },
             {
-              "x": 14,
-              "y": 0,
-              "width": 10,
-              "height": 12,
+              "x": 0,
+              "y": 23,
+              "width": 24,
+              "height": 11,
               "content": {
                 "$ref": "#/spec/panels/Inventory-1"
               }
             },
             {
               "x": 0,
-              "y": 12,
-              "width": 8,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/ActiveHealthCheckAlerts"
-              }
-            },
-            {
-              "x": 8,
-              "y": 12,
-              "width": 8,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/DataWriteProcessed"
-              }
-            },
-            {
-              "x": 16,
-              "y": 12,
-              "width": 8,
-              "height": 9,
-              "content": {
-                "$ref": "#/spec/panels/DataWriteProcessed-1"
-              }
-            },
-            {
-              "x": 0,
-              "y": 21,
+              "y": 34,
               "width": 13,
               "height": 12,
               "content": {
@@ -1474,7 +1587,7 @@
             },
             {
               "x": 13,
-              "y": 21,
+              "y": 34,
               "width": 11,
               "height": 12,
               "content": {
@@ -1551,10 +1664,11 @@
       {
         "kind": "ListVariable",
         "spec": {
-          "name": "disk",
           "display": {
-            "name": "Disk"
+            "name": "Disk",
+            "hidden": false
           },
+          "defaultValue": "$__all",
           "allowAllValue": true,
           "allowMultiple": true,
           "plugin": {
@@ -1566,7 +1680,7 @@
               ]
             }
           },
-          "defaultValue": "$__all"
+          "name": "disk"
         }
       }
     ],
