@@ -1024,7 +1024,7 @@
                   "enableSorting": true,
                   "header": "Vendor",
                   "name": "vendor",
-                  "width": "auto"
+                  "width": 300
                 },
                 {
                   "enableSorting": true,
@@ -1156,6 +1156,10 @@
                 {
                   "hide": true,
                   "name": "attribute"
+                },
+                {
+                  "name": "vendor_id",
+                  "hide": true
                 }
               ],
               "defaultColumnWidth": "auto",
