@@ -139,7 +139,7 @@ groups:
       )
   # Server / Service Error Rate (5xx) – per second, per bucket & error
   - record: objectstore_server_error_rate
-    expr: |
+    expr: >
     (
       sum by (bucket,project_id,http_status) (
         label_replace(
