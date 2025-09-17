@@ -165,7 +165,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "ceph_health_status",
+                    "query": "ceph_health_status{region=~\"$region\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -178,7 +178,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "count(ALERTS{alertstate=\"firing\",alertname=~\"^Ceph.+\"}) by (region)",
+                    "query": "count(ALERTS{alertstate=\"firing\", alertname=~\"^Ceph.+\", region=~\"$region\"}) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -191,7 +191,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(irate(ceph_osd_op_w_in_bytes{}[$__rate_interval])) by (region)",
+                    "query": "sum(irate(ceph_osd_op_w_in_bytes{region=~\"$region\"}[$__rate_interval])) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -204,7 +204,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(irate(ceph_osd_op_r_out_bytes{}[$__rate_interval])) by (region)",
+                    "query": "sum(irate(ceph_osd_op_r_out_bytes{region=~\"$region\"}[$__rate_interval])) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -217,7 +217,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(irate(ceph_osd_op_w{}[$__rate_interval])) by (region)",
+                    "query": "sum(irate(ceph_osd_op_w{region=~\"$region\"}[$__rate_interval])) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -230,7 +230,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(irate(ceph_osd_op_r{}[$__rate_interval])) by (region)",
+                    "query": "sum(irate(ceph_osd_op_r{region=~\"$region\"}[$__rate_interval])) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -243,7 +243,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(ceph_osd_in == bool 0) by (region)",
+                    "query": "sum(ceph_osd_in{region=~\"$region\"} == bool 0) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -256,7 +256,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(ceph_osd_up == bool 0) by (region)",
+                    "query": "sum(ceph_osd_up{region=~\"$region\"} == bool 0) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -269,7 +269,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(ceph_osd_up) by (region)",
+                    "query": "sum(ceph_osd_up{region=~\"$region\"}) by (region)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -282,8 +282,127 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "sum(ceph_osd_in) by (region)",
+                    "query": "sum(ceph_osd_in{region=~\"$region\"}) by (region)",
                     "seriesNameFormat": ""
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "CephAlerts": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Ceph Alerts"
+          },
+          "plugin": {
+            "kind": "Table",
+            "spec": {
+              "density": "standard",
+              "columnSettings": [
+                {
+                  "name": "region",
+                  "header": "Region"
+                },
+                {
+                  "name": "alertname",
+                  "header": "Alert Name"
+                },
+                {
+                  "name": "name",
+                  "header": "Name"
+                },
+                {
+                  "name": "node",
+                  "header": "Node"
+                },
+                {
+                  "name": "pod",
+                  "hide": false,
+                  "header": "Pod"
+                },
+                {
+                  "name": "__name__",
+                  "hide": true
+                },
+                {
+                  "name": "alertstate",
+                  "hide": true
+                },
+                {
+                  "name": "cluster",
+                  "hide": true
+                },
+                {
+                  "name": "cluster_type",
+                  "hide": true
+                },
+                {
+                  "name": "container",
+                  "hide": true
+                },
+                {
+                  "name": "endpoint",
+                  "hide": true
+                },
+                {
+                  "name": "inhibited_by",
+                  "hide": true
+                },
+                {
+                  "name": "instance",
+                  "hide": true
+                },
+                {
+                  "name": "job",
+                  "hide": true
+                },
+                {
+                  "name": "namespace",
+                  "hide": true
+                },
+                {
+                  "name": "prometheus",
+                  "hide": true
+                },
+                {
+                  "name": "service",
+                  "hide": true
+                },
+                {
+                  "name": "severity",
+                  "hide": true
+                },
+                {
+                  "name": "support_group",
+                  "hide": true
+                },
+                {
+                  "name": "timestamp",
+                  "hide": true
+                },
+                {
+                  "name": "type",
+                  "hide": true
+                },
+                {
+                  "name": "value",
+                  "hide": true
+                }
+              ],
+              "pagination": true
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "ALERTS{alertstate=\"firing\", alertname=~\"^Ceph.+\", region=~\"$region\"}"
                   }
                 }
               }
@@ -299,18 +418,47 @@
           "items": [
             {
               "x": 0,
-              "y": 0,
+              "y": 10,
               "width": 24,
               "height": 14,
               "content": {
                 "$ref": "#/spec/panels/0"
+              }
+            },
+            {
+              "x": 0,
+              "y": 0,
+              "width": 24,
+              "height": 10,
+              "content": {
+                "$ref": "#/spec/panels/CephAlerts"
               }
             }
           ]
         }
       }
     ],
-    "variables": [],
+    "variables": [
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "Region",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "region"
+            }
+          },
+          "name": "region"
+        }
+      }
+    ],
     "duration": "1h",
     "refreshInterval": "0s"
   }
