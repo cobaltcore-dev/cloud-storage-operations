@@ -2,7 +2,7 @@ apiVersion: v2
 name: ceph-operations
 description: Ceph operations bundle
 type: application
-version: 1.7.9
+version: 1.8.0
 maintainers:
   - name: sumitarora2786
   - name: richardtief
