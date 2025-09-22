@@ -9,6 +9,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_total - ceph_pg_active) > 0
     for: 5m
     labels:
+      service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.7.1"
       severity: critical
       type: ceph_default
@@ -25,6 +26,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_total - ceph_pg_clean) > 0
     for: 15m
     labels:
+      service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.7.2"
       severity: warning
       type: ceph_default
@@ -41,6 +43,7 @@ groups:
     expr: ceph_health_detail{name=~"PG_DAMAGED|OSD_SCRUB_ERRORS"} == 1
     for: 5m
     labels:
+      service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.7.4"
       severity: critical
       type: ceph_default
@@ -57,6 +60,7 @@ groups:
     expr: ceph_health_detail{name="PG_RECOVERY_FULL"} == 1
     for: 1m
     labels:
+      service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.7.5"
       severity: critical
       type: ceph_default
@@ -72,6 +76,7 @@ groups:
     expr: ((ceph_health_detail{name="PG_AVAILABILITY"} == 1) - scalar(ceph_health_detail{name="OSD_DOWN"})) == 1
     for: 1m
     labels:
+      service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.7.3"
       severity: critical
       type: ceph_default
@@ -87,6 +92,7 @@ groups:
     expr: ceph_health_detail{name="PG_BACKFILL_FULL"} == 1
     for: 1m
     labels:
+      service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.7.6"
       severity: critical
       type: ceph_default
@@ -102,6 +108,7 @@ groups:
     expr: ceph_health_detail{name="PG_NOT_SCRUBBED"} == 1
     for: 5m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -117,6 +124,7 @@ groups:
     expr: ceph_health_detail{name="TOO_MANY_PGS"} == 1
     for: 1m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -132,6 +140,7 @@ groups:
     expr: ceph_health_detail{name="PG_NOT_DEEP_SCRUBBED"} == 1
     for: 5m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -147,6 +156,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_unknown) > 0
     for: 15m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -161,6 +171,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_stale) > 0
     for: 15m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -175,6 +186,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_wait) > 0
     for: 15m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -189,6 +201,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_laggy) > 0
     for: 15m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -203,6 +216,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_peering) > 0
     for: 15m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
@@ -217,6 +231,7 @@ groups:
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_peered) > 0
     for: 15m
     labels:
+      service: ceph
       severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
