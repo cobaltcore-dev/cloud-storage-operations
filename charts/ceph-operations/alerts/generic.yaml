@@ -61,7 +61,7 @@ groups:
       type: "ceph_default"
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
-      description: "The ServiceMonitor target 'rook-ceph-mgr' is not responding to Prometheus for more than 5 minutes (instance: {{ $labels.instance }})."
+      description: "The ServiceMonitor target 'rook-ceph-mgr' is not responding to Prometheus for more than 5 minutes."
       summary: "The scrape job for Ceph MGR is missing from Prometheus"
 {{- end }}
 
@@ -76,7 +76,7 @@ groups:
       type: "ceph_default"
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
-      description: "The ServiceMonitor target 'rook-ceph-exporter' is not responding to Prometheus for more than 5 minutes (instance: {{ $labels.instance }})."
+      description: "The ServiceMonitor target 'rook-ceph-exporter' is not responding to Prometheus for more than 5 minutes."
       summary: "CephExporterService is having scrape issue"
 {{- end }}
 {{- end }}
