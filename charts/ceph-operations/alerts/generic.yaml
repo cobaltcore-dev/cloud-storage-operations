@@ -9,6 +9,7 @@ groups:
     expr: ceph_health_detail{name="RECENT_CRASH"} == 1
     for: 1m
     labels:
+      service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.1.2"
       severity: critical
       type: ceph_default
@@ -20,13 +21,15 @@ groups:
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.PrometheusJobMissing | default false) }}
-  - alert: "PrometheusJobMissing"
+  - alert: "PrometheusMgrJobMissing"
     expr: "absent(up{job=\"rook-ceph-mgr\"})"
-    for: "30s"
+    for: "1m"
     labels:
-      oid: "1.3.6.1.4.1.50495.1.2.1.12.1"
-      severity: "critical"
+      service: ceph
+      oid: "1.3.6.1.4.1.50495.1.2.1.12.2"
+      severity: "warning"
       type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The prometheus job that scrapes from Ceph MGR is no longer defined, this will effectively mean you'll have no metrics or alerts for the cluster.  Please review the job definitions in the prometheus.yml file of the prometheus instance."
       summary: "The scrape job for Ceph MGR is missing from Prometheus"
@@ -35,13 +38,45 @@ groups:
 {{- if not (.Values.prometheusRules.disabled.PrometheusJobExporterMissing | default false) }}
   - alert: "PrometheusJobExporterMissing"
     expr: "sum(absent(up{job=\"rook-ceph-exporter\"})) and sum(ceph_osd_metadata{ceph_version=~\"^ceph version (1[89]|[2-9][0-9]).*\"}) > 0"
-    for: "30s"
+    for: "1m"
     labels:
-      oid: "1.3.6.1.4.1.50495.1.2.1.12.1"
-      severity: "critical"
+      service: ceph
+      oid: "1.3.6.1.4.1.50495.1.2.1.12.3"
+      severity: "warning"
       type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "The prometheus job that scrapes from Ceph Exporter is no longer defined, this will effectively mean you'll have no metrics or alerts for the cluster.  Please review the job definitions in the prometheus.yml file of the prometheus instance."
       summary: "The scrape job for Ceph Exporter is missing from Prometheus"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephMgrServiceScrapeIssue | default false) }}
+  - alert: "CephMgrServiceScrapeIssue"
+    expr: up{service="rook-ceph-mgr"} == 0
+    for: "1m"
+    labels:
+      service: ceph
+      oid: "1.3.6.1.4.1.50495.1.2.1.12.4"
+      severity: "warning"
+      type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "The ServiceMonitor target 'rook-ceph-mgr' is not responding to Prometheus for more than 5 minutes (instance: {{ $labels.instance }})."
+      summary: "The scrape job for Ceph MGR is missing from Prometheus"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephExporterServiceScrapeIssue | default false) }}
+  - alert: "CephExporterServiceScrapeIssue"
+    expr: up{service="rook-ceph-exporter"} == 0
+    for: "1m"
+    labels:
+      service: ceph
+      oid: "1.3.6.1.4.1.50495.1.2.1.12.5"
+      severity: "warning"
+      type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      description: "The ServiceMonitor target 'rook-ceph-exporter' is not responding to Prometheus for more than 5 minutes (instance: {{ $labels.instance }})."
+      summary: "CephExporterService is having scrape issue"
 {{- end }}
 {{- end }}
