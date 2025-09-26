@@ -1021,10 +1021,14 @@
                   "width": "auto"
                 },
                 {
-                  "enableSorting": true,
-                  "header": "Vendor",
-                  "name": "vendor",
-                  "width": "auto"
+                  "name": "vendor_id",
+                  "header": "Vendor ID",
+                  "enableSorting": true
+                },
+                {
+                  "name": "subsystem_vendor_id",
+                  "header": "Subsystem Vendor ID",
+                  "enableSorting": true
                 },
                 {
                   "enableSorting": true,
@@ -1063,12 +1067,15 @@
                   "name": "value #7"
                 },
                 {
-                  "enableSorting": true,
+                  "header": "Vendor",
+                  "name": "vendor",
+                  "hide": true
+                },
+                {
                   "hide": true,
                   "name": "model"
                 },
                 {
-                  "enableSorting": true,
                   "hide": true,
                   "name": "product"
                 },
