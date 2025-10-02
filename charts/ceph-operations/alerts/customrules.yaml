@@ -148,5 +148,19 @@ groups:
           )
         )
       )
-      OR vector(0)
+      OR
+      (
+        sum by (bucket, project_id, http_status) (
+          label_replace(
+            0 *
+            sum by (project_id) (
+              label_replace(
+                radosgw_user_metadata,
+                "project_id", "$1", "user", "^([a-f0-9]{32}).*"
+              )
+            ),
+            "http_status", "5xx", "", ""
+          )
+        )
+      )
 {{- end }}
