@@ -31,10 +31,10 @@
               ],
               "columnSettings": [
                 {
+                  "enableSorting": true,
                   "header": "Region",
                   "hide": false,
                   "name": "region",
-                  "enableSorting": true,
                   "sort": "asc"
                 },
                 {
@@ -297,7 +297,8 @@
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Ceph Health Details"
+            "name": "Ceph Health Details",
+            "description": "Will contain Ceph warnings or errors even though an alert as not been firing (yet)."
           },
           "plugin": {
             "kind": "Table",
@@ -422,11 +423,26 @@
                   "name": "name"
                 },
                 {
-                  "header": "Node",
+                  "hide": true,
                   "name": "node"
                 },
                 {
-                  "header": "Pod",
+                  "hide": true,
+                  "name": "device"
+                },
+                {
+                  "hide": true,
+                  "name": "fstype"
+                },
+                {
+                  "hide": true,
+                  "name": "mountpoint"
+                },
+                {
+                  "hide": true,
+                  "name": "nodename"
+                },
+                {
                   "hide": true,
                   "name": "pod"
                 },
