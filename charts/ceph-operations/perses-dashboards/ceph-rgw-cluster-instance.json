@@ -6,7 +6,7 @@
   },
   "spec": {
     "display": {
-      "name": "ceph rgw cluster + instance"
+      "name": "ceph rgw cluster, instance + KMS"
     },
     "panels": {
       "0_0": {
@@ -1452,6 +1452,297 @@
             }
           ]
         }
+      },
+      "697fa00656d844d9b9b8c262e3aece86": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "KMS Fetch OP vs Total OP"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {}
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(\n  rate(ceph_rgw_kms_fetch_lat_count[5m])\n)",
+                    "seriesNameFormat": "Fetch"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(rgw_ops_status_total[5m]))",
+                    "seriesNameFormat": "Total RGW OPs"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "92c6069bf53d4c6c949c1caceeaa654f": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Cache OPs"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {}
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_hit[5m]))",
+                    "seriesNameFormat": "Hit"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_miss[5m]))",
+                    "seriesNameFormat": "Miss"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_expired[5m]))",
+                    "seriesNameFormat": "Expired"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_clear[5m]))",
+                    "seriesNameFormat": "Clear"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "e9569dd2968f4f66b33ab4d9296f9199": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "KMS Fetch Latency"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "yAxis": {
+                "show": true,
+                "label": "",
+                "format": {
+                  "unit": "seconds"
+                }
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "rate(ceph_rgw_kms_fetch_lat_sum[5m]) / rate(ceph_rgw_kms_fetch_lat_count[5m])",
+                    "seriesNameFormat": "{{ pod }}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "1ab0ff4a089b4e948a9edb1778f313f1": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "KMS Error Rate"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {}
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_rgw_kms_error_permanent[5m]))",
+                    "seriesNameFormat": "Permanent"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_rgw_kms_error_transient[5m]))",
+                    "seriesNameFormat": "Transient"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_rgw_kms_error_secret_store[5m]))",
+                    "seriesNameFormat": "Secret Store"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "a105a04104e840c7b54a621a022d596f": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Cache Capacity vs. Size"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {}
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "min(ceph_kms_cache_capacity)",
+                    "seriesNameFormat": "Min Capacity"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "ceph_kms_cache_size",
+                    "seriesNameFormat": "Size {{instance}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "6c2011be3bf940ed9b6014190c2bff98": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "KMS Secret Store Errors (any == bad)"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {}
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "ceph_rgw_kms_error_secret_store > 0",
+                    "seriesNameFormat": "Secret Store"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "bfd41d7da08c43dcb6a0d4ab7e407e27": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Hit Miss Ratio"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "yAxis": {
+                "show": true,
+                "label": "",
+                "format": {
+                  "unit": "percent-decimal"
+                },
+                "min": 0,
+                "max": 1
+              },
+              "thresholds": {
+                "steps": [
+                  {
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "rate(ceph_kms_cache_hit[5m]) / (rate(ceph_kms_cache_hit[5m]) + rate(ceph_kms_cache_miss[5m]))",
+                    "seriesNameFormat": "Hit / (Hit + Miss) {{instance}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
       }
     },
     "layouts": [
@@ -1713,6 +2004,83 @@
               }
             }
           ]
+        }
+      },
+      {
+        "kind": "Grid",
+        "spec": {
+          "display": {
+            "title": "KMS Cache",
+            "collapse": {
+              "open": true
+            }
+          },
+          "items": [
+            {
+              "x": 0,
+              "y": 0,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/697fa00656d844d9b9b8c262e3aece86"
+              }
+            },
+            {
+              "x": 0,
+              "y": 8,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/92c6069bf53d4c6c949c1caceeaa654f"
+              }
+            },
+            {
+              "x": 12,
+              "y": 8,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/e9569dd2968f4f66b33ab4d9296f9199"
+              }
+            },
+            {
+              "x": 0,
+              "y": 16,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/1ab0ff4a089b4e948a9edb1778f313f1"
+              }
+            },
+            {
+              "x": 12,
+              "y": 16,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/a105a04104e840c7b54a621a022d596f"
+              }
+            },
+            {
+              "x": 0,
+              "y": 24,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/6c2011be3bf940ed9b6014190c2bff98"
+              }
+            },
+            {
+              "x": 12,
+              "y": 0,
+              "width": 12,
+              "height": 8,
+              "content": {
+                "$ref": "#/spec/panels/bfd41d7da08c43dcb6a0d4ab7e407e27"
+              }
+            }
+          ],
+          "repeatVariable": ""
         }
       }
     ],
