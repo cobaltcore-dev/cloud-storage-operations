@@ -232,7 +232,7 @@ groups:
     for: 15m
     labels:
       service: ceph
-      severity: warning
+      severity: critical
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
