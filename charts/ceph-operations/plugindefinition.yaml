@@ -6,7 +6,7 @@ kind: PluginDefinition
 metadata:
   name: ceph-operations
 spec:
-  version: 1.8.7
+  version: 1.8.8
   displayName: Ceph operations bundle
   description: Operations bundle for the Ceph storage backend
   docMarkDownUrl: https://raw.githubusercontent.com/cobaltcore-dev/cloud-storage-operations/main/ceph-operations/README.md
@@ -14,7 +14,7 @@ spec:
   helmChart:
     name: ceph-operations
     repository: oci://ghcr.io/cobaltcore-dev/cloud-storage-operations/charts
-    version: 1.8.7
+    version: 1.8.8
   options:
     - name: prometheusRules.create
       description: Create Prometheus rules
@@ -29,6 +29,16 @@ spec:
       description: Additional labels to be added every Prometheus rule. E.g support_group, service
       required: false
       type: map
+    - name: prometheusRules.ruleGroups.absentMetrics
+      description: Create Absent Metrics alerts
+      required: false
+      default: true
+      type: bool
+    - name: prometheusRules.ruleGroups.customrules
+      description: Create Custom alerts
+      required: false
+      default: true
+      type: bool
     - name: dashboards.create
       description: Create Plutono dashboards
       required: false
