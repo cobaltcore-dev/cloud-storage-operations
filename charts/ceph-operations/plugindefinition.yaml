@@ -14,7 +14,7 @@ spec:
   helmChart:
     name: ceph-operations
     repository: oci://ghcr.io/cobaltcore-dev/cloud-storage-operations/charts
-    version: 1.8.7
+    version: 1.8.8
   options:
     - name: prometheusRules.create
       description: Create Prometheus rules
