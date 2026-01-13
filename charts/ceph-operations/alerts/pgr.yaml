@@ -28,7 +28,7 @@ groups:
     labels:
       service: ceph
       oid: "1.3.6.1.4.1.50495.1.2.1.7.2"
-      severity: warning
+      severity: critical
       type: ceph_default
       inhibited_by: cluster-maintenance
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
