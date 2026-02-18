@@ -128,7 +128,7 @@
                       "name": "thanos-global-st1-eu-de-1-query"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_bytes",
+                    "query": "ceph_cluster_total_bytes{region=~\"$region\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -145,7 +145,7 @@
                       "name": "thanos-global-st1-eu-de-1-query"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_used_bytes",
+                    "query": "ceph_cluster_total_used_bytes{region=~\"$region\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -162,7 +162,7 @@
                       "name": "thanos-global-st1-eu-de-1-query"
                     },
                     "minStep": "",
-                    "query": "1 - (ceph_cluster_total_bytes - ceph_cluster_total_used_bytes) / ceph_cluster_total_bytes",
+                    "query": "1 - (ceph_cluster_total_bytes{region=~\"$region\"} - ceph_cluster_total_used_bytes{region=~\"$region\"}) / ceph_cluster_total_bytes{region=~\"$region\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -248,7 +248,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_max_avail\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
+                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\", region=~\"$region\"} * on (region, pool_id) group_right(name) ceph_pool_max_avail{region=~\"$region\"}\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
                     "seriesNameFormat": ""
                   }
                 }
@@ -260,7 +260,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_stored\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")"
+                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\", region=~\"$region\"} * on (region, pool_id) group_right(name) ceph_pool_stored{region=~\"$region\"}\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")"
                   }
                 }
               }
@@ -271,7 +271,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\"} * on (region, pool_id) group_right(name) ceph_pool_percent_used\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
+                    "query": "label_replace(\n  sum by (region, name) (\n    ceph_pool_metadata{name=~\"(.*).data\", region=~\"$region\"} * on (region, pool_id) group_right(name) ceph_pool_percent_used{region=~\"$region\"}\n  )\n, \"region_name\", \"$1\", \"name\", \"(.*).rgw.buckets.data\")",
                     "seriesNameFormat": ""
                   }
                 }
@@ -348,8 +348,19 @@
                   "name": "value #3"
                 },
                 {
+                  "format": {
+                    "unit": "percent-decimal"
+                  },
+                  "header": "Capacity Allocation Ratio",
+                  "name": "value #7"
+                },
+                {
                   "hide": true,
                   "name": "timestamp"
+                },
+                {
+                  "hide": true,
+                  "name": "resource"
                 }
               ],
               "density": "compact",
@@ -371,7 +382,7 @@
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
                     "minStep": "",
-                    "query": "max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
+                    "query": "max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -387,7 +398,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
+                    "query": "sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -403,7 +414,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) - (\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
+                    "query": "(\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)\n) - (\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -419,7 +430,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)",
+                    "query": "sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -435,7 +446,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
+                    "query": "(\n  sum(global:limes_consolidated_domain_quota{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -451,8 +462,19 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(\n  sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\"}) by (region, full_resource)\n)",
+                    "query": "(\n  sum(global:limes_consolidated_domain_usage{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)\n) / (\n  max(global:limes_consolidated_cluster_capacity{full_resource=~\"ceph/(.*)\", region=~\"$region\"}) by (region, full_resource)\n)",
                     "seriesNameFormat": ""
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(\n  label_replace(\n    limes_project_used_and_or_committed_per_az{service_name=\"ceph\", region=~\"$region\"}, \"full_resource\", \"ceph/$1\", \"resource\", \"(.*)\"\n  )\n) by (region, full_resource)\n/\nsum(\n  label_replace(\n    limes_cluster_capacity{service_name=\"ceph\", region=~\"$region\"}, \"full_resource\", \"ceph/$1\", \"resource\", \"(.*)\"\n  )\n) by (region, full_resource)"
                   }
                 }
               }
@@ -465,6 +487,12 @@
       {
         "kind": "Grid",
         "spec": {
+          "display": {
+            "title": "",
+            "collapse": {
+              "open": true
+            }
+          },
           "items": [
             {
               "x": 0,
@@ -497,7 +525,27 @@
         }
       }
     ],
-    "variables": [],
+    "variables": [
+      {
+        "kind": "ListVariable",
+        "spec": {
+          "display": {
+            "name": "Region",
+            "hidden": false
+          },
+          "defaultValue": "$__all",
+          "allowAllValue": true,
+          "allowMultiple": true,
+          "plugin": {
+            "kind": "PrometheusLabelValuesVariable",
+            "spec": {
+              "labelName": "region"
+            }
+          },
+          "name": "region"
+        }
+      }
+    ],
     "duration": "1h",
     "refreshInterval": "0s"
   }
