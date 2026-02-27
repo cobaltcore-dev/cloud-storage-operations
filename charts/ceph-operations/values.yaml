@@ -48,7 +48,7 @@ prometheusRules:
 
   # -- Additional labels for PrometheusRule alerts
   ## This is useful for adding additional labels such as "support_group" or "service" for the routing of alerts to each rule
-  additionalRuleLabels:
+  additionalRuleLabels: {}
     # support_group: support
     # service: my-service
 
