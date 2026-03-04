@@ -83,11 +83,12 @@ groups:
     for: 5m
     labels:
       service: ceph
-      severity: warning
+      severity: critical
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Pool `{{`{{ $labels.name }}`}}` capacity utilization is criticaly high, it impacts cluster operations and possess risk of pool full if not addressed in short time, either release space or add more capacity immediately"
       summary: "One or more Ceph pools are criticaly full"
+{{- end }}
 {{- end }}
 {{- end }}
