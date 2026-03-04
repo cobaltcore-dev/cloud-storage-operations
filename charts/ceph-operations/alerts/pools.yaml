@@ -65,7 +65,7 @@ groups:
 
 {{- if not (.Values.prometheusRules.disabled.CephPoolUsageHigh | default false) }}
   - alert: CephPoolUsageHigh
-    expr: ceph_pool_percent_used > 70
+    expr: "ceph_pool_percent_used > 70"
     for: 5m
     labels:
       service: ceph
@@ -80,7 +80,7 @@ groups:
 
 {{- if not (.Values.prometheusRules.disabled.CephPoolUsageCritical | default false) }}
   - alert: CephPoolUsageCritical
-    expr: ceph_pool_percent_used > 80
+    expr: "ceph_pool_percent_used > 80"
     for: 5m
     labels:
       service: ceph
