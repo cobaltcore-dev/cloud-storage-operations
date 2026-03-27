@@ -25,7 +25,7 @@ groups:
     expr: ceph_daemon_health_metrics{type="SLOW_OPS"} > 0
     labels:
       service: ceph
-      severity: warning
+      severity: critical
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
