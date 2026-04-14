@@ -6,7 +6,7 @@ groups:
   rules:
 {{- if not (.Values.prometheusRules.disabled.CephNodeRootFilesystemFull | default false) }}
   - alert: CephNodeRootFilesystemFull
-    expr: node_filesystem_avail_bytes{mountpoint="/"} / node_filesystem_size_bytes{mountpoint="/"} * 100 < 5
+    expr: node_filesystem_avail_bytes{mountpoint="/", device!~"/dev/loop.*"} / node_filesystem_size_bytes{mountpoint="/", device!~"/dev/loop.*"} * 100 < 5
     for: 5m
     labels:
       service: ceph
