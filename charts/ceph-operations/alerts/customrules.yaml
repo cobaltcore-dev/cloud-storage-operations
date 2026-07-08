@@ -8,7 +8,7 @@ groups:
     expr: |
       sum by (bucket,project_id) (
         label_replace(
-          irate(radosgw_bytes_received[5m]),
+          rate(radosgw_bytes_received[5m]),
           "project_id", "$1",
           "tenant", "(.*)"
         )
@@ -17,7 +17,7 @@ groups:
     expr: |
       sum by (bucket,project_id) (
         label_replace(
-          irate(radosgw_bytes_sent[5m]),
+          rate(radosgw_bytes_sent[5m]),
           "project_id", "$1",
           "tenant", "(.*)"
         )
