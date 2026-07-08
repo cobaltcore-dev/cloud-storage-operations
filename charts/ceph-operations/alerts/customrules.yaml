@@ -8,7 +8,7 @@ groups:
     expr: |
       sum by (bucket,project_id) (
         label_replace(
-          radosgw_bytes_received,
+          rate(radosgw_bytes_received[5m]),
           "project_id", "$1",
           "tenant", "(.*)"
         )
@@ -17,7 +17,7 @@ groups:
     expr: |
       sum by (bucket,project_id) (
         label_replace(
-          radosgw_bytes_sent,
+          rate(radosgw_bytes_sent[5m]),
           "project_id", "$1",
           "tenant", "(.*)"
         )
@@ -26,7 +26,7 @@ groups:
     expr: |
       sum by (bucket,project_id) (
         label_replace(
-          radosgw_total_requests{method="GET"},
+          rate(radosgw_total_requests{method="GET"}[5m]),
           "project_id", "$1",
           "tenant", "(.*)"
         )
@@ -35,7 +35,7 @@ groups:
     expr: |
       sum by (bucket,project_id) (
         label_replace(
-          radosgw_total_requests{method=~"PUT|POST"},
+          rate(radosgw_total_requests{method=~"PUT|POST"}[5m]),
           "project_id", "$1",
           "tenant", "(.*)"
         )
