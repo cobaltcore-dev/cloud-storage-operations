@@ -148,7 +148,7 @@
         {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
       annotations:
         summary: "High throughput on RGW instance {{`{{ $labels.instance }}`}}"
-        description: "Average PUT latency is {{`{{ $value | humanizeDuration }}`}} — threshold is 5s"
+        description: "RGW instance {{`{{ $labels.instance }}`}} is sending {{`{{ $value | humanize }}`}} GiB/s"
   {{- end }}
 
   {{- if not (.Values.prometheusRules.disabled.RGWNodeHighLoad | default false) }}
