@@ -148,14 +148,6 @@
         {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
       annotations:
         summary: "High throughput on RGW instance {{`{{ $labels.instance }}`}}"
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High RGW PUT latency on bucket {{`{{ $labels.bucket }}`}}"
         description: "Average PUT latency is {{`{{ $value | humanizeDuration }}`}} — threshold is 5s"
   {{- end }}
 
