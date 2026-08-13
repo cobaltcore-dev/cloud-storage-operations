@@ -26,6 +26,7 @@ prometheusRules:
     rados: true
     customrules: true
     absentMetrics: true
+    rgw: true
 
   # -- Disables specific PrometheusRule alerts
   disabled:
