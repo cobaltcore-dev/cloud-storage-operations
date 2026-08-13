@@ -69,6 +69,7 @@ cloud-storage-operations
 | prometheusRules.ruleGroups.pgr | bool | `true` |  |
 | prometheusRules.ruleGroups.pools | bool | `true` |  |
 | prometheusRules.ruleGroups.rados | bool | `true` |  |
+| prometheusRules.ruleGroups.rgw | bool | `true` |  |
 | prometheusRules.ruleSelectors | string | `nil` |  |
 
 ## Support, Feedback, Contributing
