@@ -148,8 +148,7 @@
         {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
       annotations:
         summary: "High throughput on RGW instance {{`{{ $labels.instance }}`}}"
-        description: "RGW instance {{`{{ $labels.instance }}`}} is sending {{`{{ $value | humanize }}`}} GiB/s"
-  {{- end }}
+      for: 5m
       labels:
         service: ceph
         severity: warning
@@ -197,25 +196,25 @@
         summary: "High request rate on RGW instance {{`{{ $labels.instance }}`}}"
         description: "RGW instance {{`{{ $labels.instance }}`}} is handling {{`{{ $value | humanize }}`}} req/s"
   {{- end }}
-
+  
   {{- if not (.Values.prometheusRules.disabled.RGWUnbalancedLoad | default false) }}
     - alert: RGWUnbalancedLoad
       expr: |
         sum by (instance) (rate(radosgw_total_requests[5m]))
-        /
+        / 
         avg(sum by (instance) (rate(radosgw_total_requests[5m])))
         > 2
       for: 5m
       labels:
         service: ceph
-        severity: warning 
+        severity: warning
         type: ceph_default
         {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
       annotations:
         summary: "Unbalanced RGW load on {{`{{ $labels.instance }}`}}"
         description: "RGW instance {{`{{ $labels.instance }}`}} is handling {{`{{ $value | humanize }}`}}x the average load — possible noisy neighbour"
   {{- end }}
-  
+
   {{- if not (.Values.prometheusRules.disabled.RGWHighBytesSent | default false) }}
     - alert: RGWHighBytesSent
       expr: |
