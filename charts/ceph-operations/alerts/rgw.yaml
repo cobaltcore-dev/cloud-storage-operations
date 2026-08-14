@@ -45,7 +45,7 @@ groups:
       /
       sum by (bucket) (
         rate(radosgw_requests_duration_count{method="GET"}[5m])
-      ) > 3
+      ) > 5
     for: 5m
     labels:
       service: ceph
@@ -87,7 +87,7 @@ groups:
       /
       sum by (bucket, method) (
         rate(radosgw_requests_duration_count{method=~"GET|PUT"}[5m])
-      ) > 3
+      ) > 5
     for: 5m
     labels:
       service: ceph
@@ -104,7 +104,7 @@ groups:
     expr: |
       sum by (instance, pod) (
         rate(radosgw_total_requests[5m])
-      ) > 100
+      ) > 500
     for: 5m
     labels:
       service: ceph
@@ -119,10 +119,15 @@ groups:
 {{- if not (.Values.prometheusRules.disabled.RGWUnbalancedLoad | default false) }}
   - alert: RGWUnbalancedLoad
     expr: |
-      sum by (instance) (rate(radosgw_total_requests[5m]))
-      /
-      avg(sum by (instance) (rate(radosgw_total_requests[5m])))
-      > 2
+      (
+        sum by (instance) (rate(radosgw_total_requests[5m]))
+        / scalar(avg(sum by (instance) (rate(radosgw_total_requests[5m]))))
+        > 2
+      )
+      and
+      (
+        sum by (instance) (rate(radosgw_total_requests[5m])) > 20
+      )
     for: 5m
     labels:
       service: ceph
@@ -139,7 +144,7 @@ groups:
     expr: |
       sum by (instance) (
         rate(radosgw_bytes_sent[5m])
-      ) / (1024 * 1024 * 1024) > 1
+      ) / (1024 * 1024 * 1024) > 3
     for: 5m
     labels:
       service: ceph
@@ -154,10 +159,7 @@ groups:
 {{- if not (.Values.prometheusRules.disabled.RGWNodeHighLoad | default false) }}
   - alert: RGWNodeHighLoad
     expr: |
-      node_load5{job="node-exporter"}
-      /
-      (node_load5{job="node-exporter"} offset 5m)
-      >= 2
+      node_load5{job="node-exporter"} > 500
     for: 5m
     labels:
       service: ceph
