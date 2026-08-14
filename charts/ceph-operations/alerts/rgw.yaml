@@ -1,201 +1,201 @@
 {{- if not .Values.prometheusRules.ruleGroups.rgw }}
-  groups: []
-  {{- else -}}
-  groups:
-  - name: rgw
-    rules:
-  {{- if not (.Values.prometheusRules.disabled.RGWHighServerErrorRate | default false) }}
-    - alert: RGWHighServerErrorRate
-      expr: |
-        sum by (instance, http_status) (
-          rate(radosgw_errors_detailed{http_status=~"5.."}[5m])
-        ) > 50
-      for: 5m
-      labels:
-        service: ceph
-        severity: critical
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High RGW 5xx error rate on {{`{{ $labels.instance }}`}}"
-        description: "RGW instance {{`{{ $labels.instance }}`}} is returning HTTP {{`{{ $labels.http_status }}`}} at {{`{{ $value | humanize }}`}} errors/s"
-  {{- end }}
+groups: []
+{{- else -}}
+groups:
+- name: rgw
+  rules:
+{{- if not (.Values.prometheusRules.disabled.RGWHighServerErrorRate | default false) }}
+  - alert: RGWHighServerErrorRate
+    expr: |
+      sum by (instance, http_status) (
+        rate(radosgw_errors_detailed{http_status=~"5.."}[5m])
+      ) > 50
+    for: 5m
+    labels:
+      service: ceph
+      severity: critical
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High RGW 5xx error rate on {{`{{ $labels.instance }}`}}"
+      description: "RGW instance {{`{{ $labels.instance }}`}} is returning HTTP {{`{{ $labels.http_status }}`}} at {{`{{ $value | humanize }}`}} errors/s"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWRateLimitErrors | default false) }}
-    - alert: RGWRateLimitErrors
-      expr: |
-        sum(rate(radosgw_errors_detailed{http_status="429"}[5m])) > 20
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "RGW rate limit errors detected"
-        description: "RGW is returning 429 Too Many Requests at {{`{{ $value | humanize }}`}} req/s — possible noisy neighbour"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWRateLimitErrors | default false) }}
+  - alert: RGWRateLimitErrors
+    expr: |
+      sum(rate(radosgw_errors_detailed{http_status="429"}[5m])) > 20
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "RGW rate limit errors detected"
+      description: "RGW is returning 429 Too Many Requests at {{`{{ $value | humanize }}`}} req/s — possible noisy neighbour"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWHighGetLatency | default false) }}
-    - alert: RGWHighGetLatency
-      expr: |
-        sum by (bucket) (
-          rate(radosgw_requests_duration_sum{method="GET"}[5m])
-        )
-        /
-        sum by (bucket) (
-          rate(radosgw_requests_duration_count{method="GET"}[5m])
-        ) > 3
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High RGW GET latency on bucket {{`{{ $labels.bucket }}`}}"
-        description: "Average GET latency is {{`{{ $value | humanizeDuration }}`}} — threshold is 3s"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWHighGetLatency | default false) }}
+  - alert: RGWHighGetLatency
+    expr: |
+      sum by (bucket) (
+        rate(radosgw_requests_duration_sum{method="GET"}[5m])
+      )
+      /
+      sum by (bucket) (
+        rate(radosgw_requests_duration_count{method="GET"}[5m])
+      ) > 3
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High RGW GET latency on bucket {{`{{ $labels.bucket }}`}}"
+      description: "Average GET latency is {{`{{ $value | humanizeDuration }}`}} — threshold is 3s"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWHighPutLatency | default false) }}
-    - alert: RGWHighPutLatency
-      expr: |
-        sum by (bucket) (
-          rate(radosgw_requests_duration_sum{method="PUT"}[5m])
-        )
-        /
-        sum by (bucket) (
-          rate(radosgw_requests_duration_count{method="PUT"}[5m])
-        ) > 5
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High RGW PUT latency on bucket {{`{{ $labels.bucket }}`}}"
-        description: "Average PUT latency is {{`{{ $value | humanizeDuration }}`}} — threshold is 5s"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWHighPutLatency | default false) }}
+  - alert: RGWHighPutLatency
+    expr: |
+      sum by (bucket) (
+        rate(radosgw_requests_duration_sum{method="PUT"}[5m])
+      )
+      /
+      sum by (bucket) (
+        rate(radosgw_requests_duration_count{method="PUT"}[5m])
+      ) > 5
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High RGW PUT latency on bucket {{`{{ $labels.bucket }}`}}"
+      description: "Average PUT latency is {{`{{ $value | humanizeDuration }}`}} — threshold is 5s"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWHighLatency | default false) }}
-    - alert: RGWHighLatency
-      expr: |
-        sum by (bucket, method) (
-          rate(radosgw_requests_duration_sum{method=~"GET|PUT"}[5m])
-        )
-        /
-        sum by (bucket, method) (
-          rate(radosgw_requests_duration_count{method=~"GET|PUT"}[5m])
-        ) > 3
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High RGW {{`{{ $labels.method }}`}} latency on bucket {{`{{ $labels.bucket }}`}}"
-        description: "Average {{`{{ $labels.method }}`}} latency is {{`{{ $value | humanizeDuration }}`}}"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWHighLatency | default false) }}
+  - alert: RGWHighLatency
+    expr: |
+      sum by (bucket, method) (
+        rate(radosgw_requests_duration_sum{method=~"GET|PUT"}[5m])
+      )
+      /
+      sum by (bucket, method) (
+        rate(radosgw_requests_duration_count{method=~"GET|PUT"}[5m])
+      ) > 3
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High RGW {{`{{ $labels.method }}`}} latency on bucket {{`{{ $labels.bucket }}`}}"
+      description: "Average {{`{{ $labels.method }}`}} latency is {{`{{ $value | humanizeDuration }}`}}"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWHighRequestRate | default false) }}
-    - alert: RGWHighRequestRate
-      expr: |
-        sum by (instance, pod) (
-          rate(radosgw_total_requests[5m])
-        ) > 100
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High request rate on RGW instance {{`{{ $labels.instance }}`}}"
-        description: "RGW instance {{`{{ $labels.instance }}`}} is handling {{`{{ $value | humanize }}`}} req/s"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWHighRequestRate | default false) }}
+  - alert: RGWHighRequestRate
+    expr: |
+      sum by (instance, pod) (
+        rate(radosgw_total_requests[5m])
+      ) > 100
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High request rate on RGW instance {{`{{ $labels.instance }}`}}"
+      description: "RGW instance {{`{{ $labels.instance }}`}} is handling {{`{{ $value | humanize }}`}} req/s"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWUnbalancedLoad | default false) }}
-    - alert: RGWUnbalancedLoad
-      expr: |
-        sum by (instance) (rate(radosgw_total_requests[5m]))
-        /
-        avg(sum by (instance) (rate(radosgw_total_requests[5m])))
-        > 2
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "Unbalanced RGW load on {{`{{ $labels.instance }}`}}"
-        description: "RGW instance {{`{{ $labels.instance }}`}} is handling {{`{{ $value | humanize }}`}}x the average load — possible noisy neighbour"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWUnbalancedLoad | default false) }}
+  - alert: RGWUnbalancedLoad
+    expr: |
+      sum by (instance) (rate(radosgw_total_requests[5m]))
+      /
+      avg(sum by (instance) (rate(radosgw_total_requests[5m])))
+      > 2
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "Unbalanced RGW load on {{`{{ $labels.instance }}`}}"
+      description: "RGW instance {{`{{ $labels.instance }}`}} is handling {{`{{ $value | humanize }}`}}x the average load — possible noisy neighbour"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWHighBytesSent | default false) }}
-    - alert: RGWHighBytesSent
-      expr: |
-        sum by (instance) (
-          rate(radosgw_bytes_sent[5m])
-        ) / (1024 * 1024 * 1024) > 1
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High throughput on RGW instance {{`{{ $labels.instance }}`}}"
-        description: "RGW instance {{`{{ $labels.instance }}`}} is sending {{`{{ $value | humanize }}`}} GiB/s"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWHighBytesSent | default false) }}
+  - alert: RGWHighBytesSent
+    expr: |
+      sum by (instance) (
+        rate(radosgw_bytes_sent[5m])
+      ) / (1024 * 1024 * 1024) > 1
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High throughput on RGW instance {{`{{ $labels.instance }}`}}"
+      description: "RGW instance {{`{{ $labels.instance }}`}} is sending {{`{{ $value | humanize }}`}} GiB/s"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWNodeHighLoad | default false) }}
-    - alert: RGWNodeHighLoad
-      expr: |
-        node_load5{job="node-exporter"}
-        /
-        (node_load5{job="node-exporter"} offset 5m)
-        >= 2
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "High system load on node {{`{{ $labels.instance }}`}}"
-        description: "5-minute load average on {{`{{ $labels.instance }}`}} doubled compared to 5 minutes ago (ratio: {{`{{ $value | humanize }}`}})"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWNodeHighLoad | default false) }}
+  - alert: RGWNodeHighLoad
+    expr: |
+      node_load5{job="node-exporter"}
+      /
+      (node_load5{job="node-exporter"} offset 5m)
+      >= 2
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High system load on node {{`{{ $labels.instance }}`}}"
+      description: "5-minute load average on {{`{{ $labels.instance }}`}} doubled compared to 5 minutes ago (ratio: {{`{{ $value | humanize }}`}})"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWQueueFull | default false) }}
-    - alert: RGWQueueFull
-      expr: |
-        ceph_rgw_qlen > 900
-      for: 2m
-      labels:
-        service: ceph
-        severity: critical
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "RGW request queue near full on {{`{{ $labels.instance }}`}}"
-        description: "RGW queue length is {{`{{ $value }}`}} — approaching limit of 1023, requests will be rejected"
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWQueueFull | default false) }}
+  - alert: RGWQueueFull
+    expr: |
+      ceph_rgw_qlen > 900
+    for: 2m
+    labels:
+      service: ceph
+      severity: critical
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "RGW request queue near full on {{`{{ $labels.instance }}`}}"
+      description: "RGW queue length is {{`{{ $value }}`}} — approaching limit of 1023, requests will be rejected"
+{{- end }}
 
-  {{- if not (.Values.prometheusRules.disabled.RGWQueueWarning | default false) }}
-    - alert: RGWQueueWarning
-      expr: |
-        ceph_rgw_qlen > 500
-      for: 5m
-      labels:
-        service: ceph
-        severity: warning
-        type: ceph_default
-        {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
-      annotations:
-        summary: "RGW request queue growing on {{`{{ $labels.instance }}`}}"
-        description: "RGW queue length is {{`{{ $value }}`}} — monitor for further increase"
-  {{- end }}
-  {{- end }}
+{{- if not (.Values.prometheusRules.disabled.RGWQueueWarning | default false) }}
+  - alert: RGWQueueWarning
+    expr: |
+      ceph_rgw_qlen > 500
+    for: 5m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "RGW request queue growing on {{`{{ $labels.instance }}`}}"
+      description: "RGW queue length is {{`{{ $value }}`}} — monitor for further increase"
+{{- end }}
+{{- end }}
