@@ -10,7 +10,7 @@ groups:
       sum by (instance, http_status) (
         rate(radosgw_errors_detailed{http_status=~"5.."}[5m])
       ) > 50
-    for: 5m
+    for: 10m
     labels:
       service: ceph
       severity: critical
@@ -25,7 +25,7 @@ groups:
   - alert: RGWRateLimitErrors
     expr: |
       sum(rate(radosgw_errors_detailed{http_status="429"}[5m])) > 20
-    for: 5m
+    for: 10m
     labels:
       service: ceph
       severity: warning
@@ -46,7 +46,7 @@ groups:
       sum by (bucket) (
         rate(radosgw_requests_duration_count{method="GET"}[5m])
       ) > 5
-    for: 5m
+    for: 15m
     labels:
       service: ceph
       severity: warning
@@ -67,7 +67,7 @@ groups:
       sum by (bucket) (
         rate(radosgw_requests_duration_count{method="PUT"}[5m])
       ) > 5
-    for: 5m
+    for: 15m
     labels:
       service: ceph
       severity: warning
@@ -88,7 +88,7 @@ groups:
       sum by (bucket, method) (
         rate(radosgw_requests_duration_count{method=~"GET|PUT"}[5m])
       ) > 5
-    for: 5m
+    for: 15m
     labels:
       service: ceph
       severity: warning
@@ -104,8 +104,8 @@ groups:
     expr: |
       sum by (instance, pod) (
         rate(radosgw_total_requests[5m])
-      ) > 500
-    for: 5m
+      ) > 1000
+    for: 15m
     labels:
       service: ceph
       severity: warning
@@ -121,14 +121,14 @@ groups:
     expr: |
       (
         sum by (instance) (rate(radosgw_total_requests[5m]))
-        / scalar(avg(sum by (instance) (rate(radosgw_total_requests[5m]))))
+        / scalar(quantile(0.5, sum by (instance) (rate(radosgw_total_requests[5m]))))
         > 2
       )
       and
       (
         sum by (instance) (rate(radosgw_total_requests[5m])) > 20
       )
-    for: 5m
+    for: 30m
     labels:
       service: ceph
       severity: warning
@@ -145,7 +145,7 @@ groups:
       sum by (instance) (
         rate(radosgw_bytes_sent[5m])
       ) / (1024 * 1024 * 1024) > 3
-    for: 5m
+    for: 15m
     labels:
       service: ceph
       severity: warning
@@ -160,7 +160,7 @@ groups:
   - alert: RGWNodeHighLoad
     expr: |
       node_load5{job="node-exporter"} > 500
-    for: 5m
+    for: 15m
     labels:
       service: ceph
       severity: warning
@@ -175,7 +175,7 @@ groups:
   - alert: RGWQueueFull
     expr: |
       ceph_rgw_qlen > 900
-    for: 2m
+    for: 5m
     labels:
       service: ceph
       severity: critical
