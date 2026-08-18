@@ -104,7 +104,7 @@ groups:
     expr: |
       sum by (instance, pod) (
         rate(radosgw_total_requests[5m])
-      ) > 1000
+      ) > 1500
     for: 15m
     labels:
       service: ceph
@@ -144,7 +144,7 @@ groups:
     expr: |
       sum by (instance) (
         rate(radosgw_bytes_sent[5m])
-      ) / (1024 * 1024 * 1024) > 3
+      ) / (1024 * 1024 * 1024) > 5
     for: 15m
     labels:
       service: ceph
