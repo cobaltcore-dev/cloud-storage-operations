@@ -45,7 +45,7 @@ groups:
       /
       sum by (bucket) (
         rate(radosgw_requests_duration_count{method="GET"}[5m])
-      ) > 5
+      ) > 10
     for: 15m
     labels:
       service: ceph
@@ -66,7 +66,7 @@ groups:
       /
       sum by (bucket) (
         rate(radosgw_requests_duration_count{method="PUT"}[5m])
-      ) > 5
+      ) > 10
     for: 15m
     labels:
       service: ceph
@@ -87,7 +87,7 @@ groups:
       /
       sum by (bucket, method) (
         rate(radosgw_requests_duration_count{method=~"GET|PUT"}[5m])
-      ) > 5
+      ) > 10
     for: 15m
     labels:
       service: ceph
