@@ -33,6 +33,7 @@ prometheusRules:
     CephNodeInconsistentMTU: true
     CephAPodNodePGImbalance: true
     CephStorageNodePGImbalance: true
+    RGWUnbalancedLoad: true
 
   ## Label selectors for the Prometheus rules to be picked up by Prometheus.
   ruleSelectors:
