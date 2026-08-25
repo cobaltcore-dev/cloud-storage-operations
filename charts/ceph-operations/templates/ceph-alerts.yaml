@@ -1,4 +1,4 @@
-{{- if .Values.prometheusRules.create -}}
+{{- if and .Values.prometheusRules.create (.Capabilities.APIVersions.Has "monitoring.coreos.com/v1/PrometheusRule") -}}
 {{- $root := . -}}
 {{- range $path, $bytes := .Files.Glob "alerts/*.yaml" }}
 apiVersion: monitoring.coreos.com/v1
