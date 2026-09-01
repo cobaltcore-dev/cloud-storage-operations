@@ -1030,7 +1030,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(rate(ceph_rgw_get_b{cluster_type=\"ceph\"}[$__rate_interval]))",
+                    "query": "sum(rate(ceph_rgw_op_get_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "GETs"
                   }
                 }
@@ -1046,7 +1046,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(rate(ceph_rgw_put_b{cluster_type=\"ceph\"}[$__rate_interval]))",
+                    "query": "sum(rate(ceph_rgw_op_put_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "PUTs"
                   }
                 }
@@ -1289,7 +1289,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  rate(ceph_rgw_get_b{cluster_type=\"ceph\"}[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
+                    "query": "label_replace(\n  rate(ceph_rgw_op_get_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
                     "seriesNameFormat": "GETs {{ rgw_host }}"
                   }
                 }
@@ -1305,7 +1305,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(rate(ceph_rgw_put_b{cluster_type=\"ceph\"}[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+                    "query": "label_replace(rate(ceph_rgw_op_put_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
                     "seriesNameFormat": "PUTs {{ rgw_host }}"
                   }
                 }
