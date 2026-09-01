@@ -37,7 +37,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_bytes_sent[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -74,7 +74,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_bytes_received[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_bytes_received{cluster_type=\"ceph\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -111,7 +111,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"POST\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"POST\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -148,7 +148,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{method=\"DELETE\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{method=\"DELETE\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"DELETE\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"DELETE\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -185,7 +185,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  (\n    (sum by (bucket, user) (rate(radosgw_bytes_sent[$__rate_interval])) or on() vector(0)) +\n    (sum by (bucket, user) (rate(radosgw_bytes_received[$__rate_interval])) or on() vector(0))\n  )\n)",
+                    "query": "topk(10,\n  (\n    (sum by (bucket, user) (rate(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0)) +\n    (sum by (bucket, user) (rate(radosgw_bytes_received{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0))\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -222,7 +222,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_total_requests[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_total_requests{cluster_type=\"ceph\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -259,7 +259,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=~\"GET|HEAD\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -296,7 +296,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -333,7 +333,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"GET\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"GET\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -370,7 +370,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"PUT\"}[$__rate_interval])\n  ) /\n  sum by (bucket, user) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"PUT\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }} - {{ bucket }}"
                   }
                 }
@@ -404,7 +404,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10, radosgw_usage_bucket_objects)",
+                    "query": "topk(10, radosgw_usage_bucket_objects{cluster_type=\"ceph\"})",
                     "seriesNameFormat": " {{owner}} - {{bucket}}"
                   }
                 }
@@ -437,7 +437,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10, radosgw_usage_bucket_size)",
+                    "query": "topk(10, radosgw_usage_bucket_size{cluster_type=\"ceph\"})",
                     "seriesNameFormat": " {{owner}} - {{bucket}}"
                   }
                 }
@@ -484,7 +484,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10,\n  (\n    (sum by (user) (rate(radosgw_bytes_sent[$__rate_interval])) or on() vector(0)) +\n    (sum by (user) (rate(radosgw_bytes_received[$__rate_interval])) or on() vector(0))\n  )\n)",
+                    "query": "topk(10,\n  (\n    (sum by (user) (rate(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0)) +\n    (sum by (user) (rate(radosgw_bytes_received{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0))\n  )\n)",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -531,7 +531,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (rate(radosgw_bytes_sent[$__rate_interval]))",
+                    "query": "sum by (user) (rate(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -578,7 +578,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (rate(radosgw_bytes_received[$__rate_interval]))",
+                    "query": "sum by (user) (rate(radosgw_bytes_received{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -625,7 +625,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10,\n  sum by (user) (\n    rate(radosgw_total_requests[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (user) (\n    rate(radosgw_total_requests{cluster_type=\"ceph\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ user }}"
                   }
                 }
@@ -672,7 +672,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n)",
+                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=~\"GET|HEAD\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ user }}"
                   }
                 }
@@ -719,7 +719,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
+                    "query": "sum by (user) (\n  rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ user }}"
                   }
                 }
@@ -757,7 +757,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_user_objects_total)",
+                    "query": "topk(10, radosgw_user_objects_total{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -795,7 +795,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_user_buckets_total)",
+                    "query": "topk(10, radosgw_user_buckets_total{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{user}}"
                   }
                 }
@@ -845,7 +845,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (user, tenant) (\n    rate(radosgw_requests_duration_sum[$__rate_interval])\n  ) /\n  sum by (user, tenant) (\n    rate(radosgw_requests_duration_count[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (user, tenant) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\"}[$__rate_interval])\n  ) /\n  sum by (user, tenant) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{user}} - {{tenant}} "
                   }
                 }
@@ -883,7 +883,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "topk(10, radosgw_user_data_size_bytes)",
+                    "query": "topk(10, radosgw_user_data_size_bytes{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{user}}"
                   }
                 }

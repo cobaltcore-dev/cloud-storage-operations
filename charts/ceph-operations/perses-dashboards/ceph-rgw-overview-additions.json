@@ -43,7 +43,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_detailed{cluster_type=\"ceph\", http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{http_status}}"
                   }
                 }
@@ -86,7 +86,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (bucket, http_status) (\n    rate(radosgw_errors_detailed{http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (bucket, http_status) (\n    rate(radosgw_errors_detailed{cluster_type=\"ceph\", http_status=~\"4[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{bucket}} - {{http_status}}"
                   }
                 }
@@ -129,7 +129,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
+                    "query": "sum by (bucket, http_status) (\n  rate(radosgw_errors_detailed{cluster_type=\"ceph\", http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\", bucket=~\"$bucket\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{bucket}} - {{http_status}}"
                   }
                 }
@@ -172,7 +172,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (http_status) (\n  rate(radosgw_errors_detailed{http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "query": "sum by (http_status) (\n  rate(radosgw_errors_detailed{cluster_type=\"ceph\", http_status=~\"5[0-9][0-9]\", http_status=~\"$errors\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{http_status}}"
                   }
                 }
@@ -218,7 +218,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"DELETE\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{cluster_type=\"ceph\", ip=~\"$ip\", method=\"DELETE\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}}"
                   }
                 }
@@ -264,7 +264,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"GET\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{cluster_type=\"ceph\", ip=~\"$ip\", method=\"GET\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}}"
                   }
                 }
@@ -310,7 +310,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", method=\"PUT\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (ip) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{cluster_type=\"ceph\", ip=~\"$ip\", method=\"PUT\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}}"
                   }
                 }
@@ -356,7 +356,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (ip, bucket, method) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{ip=~\"$ip\", bucket=~\"$bucket\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (ip, bucket, method) (\n    rate(radosgw_requests_by_ip_bucket_method_tenant{cluster_type=\"ceph\", ip=~\"$ip\", bucket=~\"$bucket\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}} - {{bucket}}"
                   }
                 }
@@ -402,7 +402,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip) (\n  rate(radosgw_bytes_sent_by_ip{ip=~\"$ip\"}[$__rate_interval])\n)",
+                    "query": "sum by (ip) (\n  rate(radosgw_bytes_sent_by_ip{cluster_type=\"ceph\", ip=~\"$ip\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ip}} "
                   }
                 }
@@ -448,7 +448,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip) (\n  rate(radosgw_bytes_received_by_ip{ip=~\"$ip\"}[$__rate_interval])\n)",
+                    "query": "sum by (ip) (\n  rate(radosgw_bytes_received_by_ip{cluster_type=\"ceph\", ip=~\"$ip\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ip}} "
                   }
                 }
@@ -491,7 +491,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (ip, http_status) (\n  rate(radosgw_errors_per_ip{http_status=~\"$errors\"}[$__rate_interval])\n)",
+                    "query": "sum by (ip, http_status) (\n  rate(radosgw_errors_per_ip{cluster_type=\"ceph\", http_status=~\"$errors\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "{{ip}} - {{http_status}}"
                   }
                 }
@@ -534,7 +534,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(10,\n  sum by (user, ip) (\n    rate(radosgw_requests_by_ip{ip=~\"$ip\", user=~\"$user\"}[$__rate_interval])\n  )\n)",
+                    "query": "topk(10,\n  sum by (user, ip) (\n    rate(radosgw_requests_by_ip{cluster_type=\"ceph\", ip=~\"$ip\", user=~\"$user\"}[$__rate_interval])\n  )\n)",
                     "seriesNameFormat": "{{ip}} - {{user}}"
                   }
                 }

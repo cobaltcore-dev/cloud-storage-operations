@@ -48,7 +48,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "ceph_health_status{}",
+                    "query": "ceph_health_status{cluster_type=\"ceph\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -91,7 +91,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_w_in_bytes{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_w_in_bytes{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": ""
                   }
                 }
@@ -139,7 +139,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_r{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_r{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": ""
                   }
                 }
@@ -190,7 +190,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "ceph_cluster_total_used_bytes{}",
+                    "query": "ceph_cluster_total_used_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -238,7 +238,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pool_objects)",
+                    "query": "sum(ceph_pool_objects{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -282,7 +282,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_mon_num_sessions{})",
+                    "query": "sum(ceph_mon_num_sessions{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -330,7 +330,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "count(ceph_mon_quorum_status{}) or vector(0)",
+                    "query": "count(ceph_mon_quorum_status{cluster_type=\"ceph\"}) or vector(0)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -381,7 +381,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_r_out_bytes{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_r_out_bytes{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": ""
                   }
                 }
@@ -432,7 +432,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "ceph_cluster_total_bytes{}",
+                    "query": "ceph_cluster_total_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -484,7 +484,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "(ceph_cluster_total_bytes{}-ceph_cluster_total_used_bytes{})/ceph_cluster_total_bytes{}",
+                    "query": "(ceph_cluster_total_bytes{cluster_type=\"ceph\"}-ceph_cluster_total_used_bytes{cluster_type=\"ceph\"})/ceph_cluster_total_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -528,7 +528,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pool_objects{})",
+                    "query": "sum(ceph_pool_objects{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -575,7 +575,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_osd_op_w_in_bytes{})",
+                    "query": "sum(ceph_osd_op_w_in_bytes{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -622,7 +622,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_osd_op_r_out_bytes{})",
+                    "query": "sum(ceph_osd_op_r_out_bytes{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -670,7 +670,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "count(ALERTS{alertstate=\"firing\",alertname=~\"^Ceph.+\"}) OR vector(0)",
+                    "query": "count(ALERTS{cluster_type=\"ceph\",alertstate=\"firing\",alertname=~\"^Ceph.+\"}) OR vector(0)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -710,7 +710,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_w{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_w{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": ""
                   }
                 }
@@ -758,7 +758,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "count(ceph_osd_up{}) - count(ceph_osd_in{})",
+                    "query": "count(ceph_osd_up{cluster_type=\"ceph\"}) - count(ceph_osd_in{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -806,7 +806,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "count(ceph_osd_up{} == 0.0) OR vector(0)",
+                    "query": "count(ceph_osd_up{cluster_type=\"ceph\"} == 0.0) OR vector(0)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -850,7 +850,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_osd_up{})",
+                    "query": "sum(ceph_osd_up{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -894,7 +894,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_osd_in{})",
+                    "query": "sum(ceph_osd_in{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -942,7 +942,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_osd_numpg{})",
+                    "query": "sum(ceph_osd_numpg{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -993,7 +993,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "avg(ceph_osd_apply_latency_ms{})",
+                    "query": "avg(ceph_osd_apply_latency_ms{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1044,7 +1044,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "avg(ceph_osd_commit_latency_ms{})",
+                    "query": "avg(ceph_osd_commit_latency_ms{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1095,7 +1095,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "avg(rate(ceph_osd_op_w_latency_sum{}[5m]) / rate(ceph_osd_op_w_latency_count{}[5m]) >= 0)",
+                    "query": "avg(rate(ceph_osd_op_w_latency_sum{cluster_type=\"ceph\"}[5m]) / rate(ceph_osd_op_w_latency_count{cluster_type=\"ceph\"}[5m]) >= 0)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1146,7 +1146,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "avg(rate(ceph_osd_op_r_latency_sum{}[5m])/rate(ceph_osd_op_r_latency_count{}[5m]) >= 0)",
+                    "query": "avg(rate(ceph_osd_op_r_latency_sum{cluster_type=\"ceph\"}[5m])/rate(ceph_osd_op_r_latency_count{cluster_type=\"ceph\"}[5m]) >= 0)",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1198,7 +1198,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "ceph_cluster_total_bytes{}-ceph_cluster_total_used_bytes{}",
+                    "query": "ceph_cluster_total_bytes{cluster_type=\"ceph\"}-ceph_cluster_total_used_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": "Available"
                   }
                 }
@@ -1214,7 +1214,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "ceph_cluster_total_used_bytes{}",
+                    "query": "ceph_cluster_total_used_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": "Used"
                   }
                 }
@@ -1230,7 +1230,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "ceph_cluster_total_bytes{}",
+                    "query": "ceph_cluster_total_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": "Total Capacity"
                   }
                 }
@@ -1277,7 +1277,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_w{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_w{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": "Write"
                   }
                 }
@@ -1293,7 +1293,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_r{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_r{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": "Read"
                   }
                 }
@@ -1345,7 +1345,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_w_in_bytes{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_w_in_bytes{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": "Write"
                   }
                 }
@@ -1361,7 +1361,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_op_r_out_bytes{}[5m]))",
+                    "query": "sum(irate(ceph_osd_op_r_out_bytes{cluster_type=\"ceph\"}[5m]))",
                     "seriesNameFormat": "Read"
                   }
                 }
@@ -1407,7 +1407,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "(ceph_pool_bytes_used{}) *on (pool_id) group_left(name)(ceph_pool_metadata{})",
+                    "query": "(ceph_pool_bytes_used{cluster_type=\"ceph\"}) *on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{name}}"
                   }
                 }
@@ -1454,7 +1454,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(ceph_pool_avail_raw{}) *on (pool_id) group_left(name)(ceph_pool_metadata{})",
+                    "query": "(ceph_pool_avail_raw{cluster_type=\"ceph\"}) *on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{name}} Avail"
                   }
                 }
@@ -1470,7 +1470,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(ceph_pool_stored_raw{}) *on (pool_id) group_left(name)(ceph_pool_metadata{})",
+                    "query": "(ceph_pool_stored_raw{cluster_type=\"ceph\"}) *on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{name}} Stored"
                   }
                 }
@@ -1511,7 +1511,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "(ceph_pool_objects{}) *on (pool_id) group_left(name)(ceph_pool_metadata{})",
+                    "query": "(ceph_pool_objects{cluster_type=\"ceph\"}) *on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{name}}"
                   }
                 }
@@ -1557,7 +1557,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "(ceph_pool_quota_bytes{}) *on (pool_id) group_left(name)(ceph_pool_metadata{})",
+                    "query": "(ceph_pool_quota_bytes{cluster_type=\"ceph\"}) *on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{name}}"
                   }
                 }
@@ -1598,7 +1598,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "(ceph_pool_quota_objects{}) *on (pool_id) group_left(name)(ceph_pool_metadata{})",
+                    "query": "(ceph_pool_quota_objects{cluster_type=\"ceph\"}) *on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{name}}"
                   }
                 }
@@ -1639,7 +1639,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "count(ceph_bluestore_kv_commit_lat_count{})",
+                    "query": "count(ceph_bluestore_kv_commit_lat_count{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "BlueStore"
                   }
                 }
@@ -1687,7 +1687,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_pool_avail_raw * on (pool_id) group_left(name)(ceph_pool_metadata)",
+                    "query": "ceph_pool_avail_raw{cluster_type=\"ceph\"} * on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{ name }}"
                   }
                 }
@@ -1735,7 +1735,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_pool_max_avail * on (pool_id) group_left(name)(ceph_pool_metadata)",
+                    "query": "ceph_pool_max_avail{cluster_type=\"ceph\"} * on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{ name }}"
                   }
                 }
@@ -1783,7 +1783,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_pool_bytes_used * on (pool_id) group_left(name)(ceph_pool_metadata)",
+                    "query": "ceph_pool_bytes_used{cluster_type=\"ceph\"} * on (pool_id) group_left(name)(ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "{{ name }}"
                   }
                 }
@@ -1881,7 +1881,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sort_desc(ceph_pool_percent_used * on(pool_id) group_left(name) ceph_pool_metadata)",
+                    "query": "sort_desc(ceph_pool_percent_used{cluster_type=\"ceph\"} * on(pool_id) group_left(name) ceph_pool_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1917,7 +1917,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "ALERTS{alertstate=\"firing\",alertname=~\"^Ceph.+\"}",
+                    "query": "ALERTS{cluster_type=\"ceph\",alertstate=\"firing\",alertname=~\"^Ceph.+\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1953,7 +1953,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "topk(5,sort_desc(ceph_osd_apply_latency_ms{} + ceph_osd_commit_latency_ms{}))",
+                    "query": "topk(5,sort_desc(ceph_osd_apply_latency_ms{cluster_type=\"ceph\"} + ceph_osd_commit_latency_ms{cluster_type=\"ceph\"}))",
                     "seriesNameFormat": "_auto"
                   }
                 }
@@ -1989,7 +1989,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "ceph_osd_up{} == 0",
+                    "query": "ceph_osd_up{cluster_type=\"ceph\"} == 0",
                     "seriesNameFormat": ""
                   }
                 }
@@ -2039,7 +2039,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "node_memory_Active_anon_bytes{}",
+                    "query": "node_memory_Active_anon_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": "{{instance}}"
                   }
                 }
@@ -2054,7 +2054,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "sum(node_memory_Active_anon_bytes{})",
+                    "query": "sum(node_memory_Active_anon_bytes{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Cluster Memory Usage"
                   }
                 }
@@ -2103,7 +2103,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "avg by(instance)(irate(node_cpu_seconds_total{job='node',mode!=\"idle\"}[$interval])) * 100",
+                    "query": "avg by(instance)(irate(node_cpu_seconds_total{cluster_type=\"ceph\",job='node',mode!=\"idle\"}[$interval])) * 100",
                     "seriesNameFormat": "{{instance}}"
                   }
                 }
@@ -2153,7 +2153,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "sum by (instance)(irate(node_disk_read_bytes_total{}[$interval]))",
+                    "query": "sum by (instance)(irate(node_disk_read_bytes_total{cluster_type=\"ceph\"}[$interval]))",
                     "seriesNameFormat": "{{instance}}"
                   }
                 }
@@ -2203,7 +2203,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "sum by (instance)(irate(node_disk_written_bytes_total{}[$interval]))",
+                    "query": "sum by (instance)(irate(node_disk_written_bytes_total{cluster_type=\"ceph\"}[$interval]))",
                     "seriesNameFormat": "{{instance}}"
                   }
                 }
@@ -2249,7 +2249,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "(node_filesystem_free_bytes{ mountpoint=\"/\", device != \"rootfs\"})*100 / (node_filesystem_size_bytes{ mountpoint=\"/\", device != \"rootfs\"})",
+                    "query": "(node_filesystem_free_bytes{cluster_type=\"ceph\", mountpoint=\"/\", device != \"rootfs\"})*100 / (node_filesystem_size_bytes{cluster_type=\"ceph\", mountpoint=\"/\", device != \"rootfs\"})",
                     "seriesNameFormat": "{{instance}}"
                   }
                 }
@@ -2286,7 +2286,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pool_objects)",
+                    "query": "sum(ceph_pool_objects{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Total"
                   }
                 }
@@ -2333,7 +2333,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_active{})",
+                    "query": "sum(ceph_pg_active{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Active"
                   }
                 }
@@ -2349,7 +2349,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_clean{})",
+                    "query": "sum(ceph_pg_clean{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Clean"
                   }
                 }
@@ -2365,7 +2365,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_peering{})",
+                    "query": "sum(ceph_pg_peering{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Peering"
                   }
                 }
@@ -2381,7 +2381,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_degraded{})",
+                    "query": "sum(ceph_pg_degraded{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Degraded"
                   }
                 }
@@ -2397,7 +2397,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_stale{})",
+                    "query": "sum(ceph_pg_stale{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Stale"
                   }
                 }
@@ -2413,7 +2413,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_unclean_pgs{})",
+                    "query": "sum(ceph_unclean_pgs{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Unclean"
                   }
                 }
@@ -2429,7 +2429,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_undersized{})",
+                    "query": "sum(ceph_pg_undersized{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Undersized"
                   }
                 }
@@ -2445,7 +2445,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_incomplete{})",
+                    "query": "sum(ceph_pg_incomplete{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Incomplete"
                   }
                 }
@@ -2461,7 +2461,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_forced_backfill{})",
+                    "query": "sum(ceph_pg_forced_backfill{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Forced Backfill"
                   }
                 }
@@ -2477,7 +2477,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_forced_recovery{})",
+                    "query": "sum(ceph_pg_forced_recovery{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Forced Recovery"
                   }
                 }
@@ -2493,7 +2493,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_creating{})",
+                    "query": "sum(ceph_pg_creating{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Creating"
                   }
                 }
@@ -2509,7 +2509,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_wait_backfill{})",
+                    "query": "sum(ceph_pg_wait_backfill{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Wait Backfill"
                   }
                 }
@@ -2525,7 +2525,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_deep{})",
+                    "query": "sum(ceph_pg_deep{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Deep"
                   }
                 }
@@ -2541,7 +2541,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_scrubbing{})",
+                    "query": "sum(ceph_pg_scrubbing{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Scrubbing"
                   }
                 }
@@ -2557,7 +2557,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_recovering{})",
+                    "query": "sum(ceph_pg_recovering{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Recovering"
                   }
                 }
@@ -2573,7 +2573,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_repair{})",
+                    "query": "sum(ceph_pg_repair{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Repair"
                   }
                 }
@@ -2589,7 +2589,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_down{})",
+                    "query": "sum(ceph_pg_down{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Down"
                   }
                 }
@@ -2605,7 +2605,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_peered{})",
+                    "query": "sum(ceph_pg_peered{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Peered"
                   }
                 }
@@ -2621,7 +2621,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_backfill{})",
+                    "query": "sum(ceph_pg_backfill{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Backfill"
                   }
                 }
@@ -2637,7 +2637,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_remapped{})",
+                    "query": "sum(ceph_pg_remapped{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Remapped"
                   }
                 }
@@ -2653,7 +2653,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_backfill_toofull{})",
+                    "query": "sum(ceph_pg_backfill_toofull{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Backfill Toofull"
                   }
                 }
@@ -2701,7 +2701,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_degraded{})",
+                    "query": "sum(ceph_pg_degraded{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Degraded"
                   }
                 }
@@ -2717,7 +2717,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_stale{})",
+                    "query": "sum(ceph_pg_stale{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Stale"
                   }
                 }
@@ -2733,7 +2733,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(ceph_pg_undersized{})",
+                    "query": "sum(ceph_pg_undersized{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Undersized"
                   }
                 }
@@ -2776,7 +2776,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "sum(irate(ceph_osd_recovery_ops{}[$interval]))",
+                    "query": "sum(irate(ceph_osd_recovery_ops{cluster_type=\"ceph\"}[$interval]))",
                     "seriesNameFormat": "OPS"
                   }
                 }
@@ -2822,7 +2822,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "avg(rate(ceph_osd_op_r_latency_sum{}[5m]) / rate(ceph_osd_op_r_latency_count{}[5m]) >= 0)",
+                    "query": "avg(rate(ceph_osd_op_r_latency_sum{cluster_type=\"ceph\"}[5m]) / rate(ceph_osd_op_r_latency_count{cluster_type=\"ceph\"}[5m]) >= 0)",
                     "seriesNameFormat": "Read"
                   }
                 }
@@ -2837,7 +2837,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "avg(rate(ceph_osd_op_w_latency_sum{}[5m]) / rate(ceph_osd_op_w_latency_count{}[5m]) >= 0)",
+                    "query": "avg(rate(ceph_osd_op_w_latency_sum{cluster_type=\"ceph\"}[5m]) / rate(ceph_osd_op_w_latency_count{cluster_type=\"ceph\"}[5m]) >= 0)",
                     "seriesNameFormat": "Write"
                   }
                 }
@@ -2887,7 +2887,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "avg(ceph_osd_apply_latency_ms{})",
+                    "query": "avg(ceph_osd_apply_latency_ms{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "apply"
                   }
                 }
@@ -2903,7 +2903,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "$interval",
-                    "query": "avg(ceph_osd_commit_latency_ms{})",
+                    "query": "avg(ceph_osd_commit_latency_ms{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "commit"
                   }
                 }
@@ -2944,7 +2944,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "count by (ceph_version)(ceph_osd_metadata{})",
+                    "query": "count by (ceph_version)(ceph_osd_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -2985,7 +2985,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "count by (ceph_version)(ceph_mon_metadata{})",
+                    "query": "count by (ceph_version)(ceph_mon_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -3026,7 +3026,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "count by (ceph_version)(ceph_mds_metadata{})",
+                    "query": "count by (ceph_version)(ceph_mds_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -3067,7 +3067,7 @@
                     "datasource": {
                       "kind": "PrometheusDatasource"
                     },
-                    "query": "count by (ceph_version)(ceph_rgw_metadata{})",
+                    "query": "count by (ceph_version)(ceph_rgw_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
