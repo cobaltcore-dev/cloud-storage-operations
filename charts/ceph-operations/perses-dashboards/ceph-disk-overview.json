@@ -340,10 +340,6 @@
                 },
                 {
                   "enableSorting": true,
-                  "name": "disk"
-                },
-                {
-                  "enableSorting": true,
                   "format": {
                     "unit": "percent"
                   },
@@ -370,6 +366,11 @@
                   "header": "Avg Power Cycle Count",
                   "name": "value #3",
                   "sort": "desc"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk",
+                  "hide": true
                 },
                 {
                   "hide": true,
@@ -1021,14 +1022,14 @@
                   "width": "auto"
                 },
                 {
-                  "name": "vendor_id",
+                  "enableSorting": true,
                   "header": "Vendor ID",
-                  "enableSorting": true
+                  "name": "vendor_id"
                 },
                 {
-                  "name": "subsystem_vendor_id",
+                  "enableSorting": true,
                   "header": "Subsystem Vendor ID",
-                  "enableSorting": true
+                  "name": "subsystem_vendor_id"
                 },
                 {
                   "enableSorting": true,
@@ -1068,8 +1069,8 @@
                 },
                 {
                   "header": "Vendor",
-                  "name": "vendor",
-                  "hide": true
+                  "hide": true,
+                  "name": "vendor"
                 },
                 {
                   "hide": true,

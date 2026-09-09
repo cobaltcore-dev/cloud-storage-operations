@@ -1167,7 +1167,12 @@
               "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["mean", "last-number", "max", "min"]
+                "values": [
+                  "mean",
+                  "last-number",
+                  "max",
+                  "min"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.4,
@@ -1246,7 +1251,12 @@
               "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["mean", "last-number", "max", "min"]
+                "values": [
+                  "mean",
+                  "last-number",
+                  "max",
+                  "min"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.15,
@@ -1304,7 +1314,12 @@
               "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["mean", "last-number", "max", "min"]
+                "values": [
+                  "mean",
+                  "last-number",
+                  "max",
+                  "min"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
@@ -1995,7 +2010,11 @@
               "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["mean", "max", "min"]
+                "values": [
+                  "mean",
+                  "max",
+                  "min"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
@@ -2056,7 +2075,10 @@
               "legend": {
                 "mode": "table",
                 "position": "right",
-                "values": ["last-number", "max"]
+                "values": [
+                  "last-number",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
@@ -2102,7 +2124,11 @@
               "legend": {
                 "mode": "table",
                 "position": "right",
-                "values": ["mean", "last-number", "max"]
+                "values": [
+                  "mean",
+                  "last-number",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
@@ -2148,7 +2174,11 @@
               "legend": {
                 "mode": "table",
                 "position": "right",
-                "values": ["mean", "last-number", "max"]
+                "values": [
+                  "mean",
+                  "last-number",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
@@ -2277,7 +2307,9 @@
               "legend": {
                 "mode": "table",
                 "position": "right",
-                "values": ["last-number"]
+                "values": [
+                  "last-number"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.15,
@@ -2642,7 +2674,10 @@
               "legend": {
                 "mode": "table",
                 "position": "right",
-                "values": ["mean", "last-number"]
+                "values": [
+                  "mean",
+                  "last-number"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.1,
@@ -2823,7 +2858,10 @@
               "legend": {
                 "mode": "table",
                 "position": "bottom",
-                "values": ["last-number", "max"]
+                "values": [
+                  "last-number",
+                  "max"
+                ]
               },
               "visual": {
                 "areaOpacity": 0.15,
@@ -3668,7 +3706,9 @@
             "kind": "PrometheusLabelValuesVariable",
             "spec": {
               "labelName": "job",
-              "matchers": ["prometheus_build_info"]
+              "matchers": [
+                "prometheus_build_info"
+              ]
             }
           },
           "name": "datasource"

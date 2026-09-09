@@ -1125,7 +1125,7 @@
         "kind": "Grid",
         "spec": {
           "display": {
-            "title": "User Latencies  + Capacities",
+            "title": "User Latencies + Capacities",
             "collapse": {
               "open": false
             }
