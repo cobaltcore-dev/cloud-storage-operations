@@ -287,7 +287,7 @@ groups:
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
-      description: "Cluster recovery bandwidth is {{ $value | humanizeBytes }}/s."
+      description: "Cluster recovery bandwidth is {{`{{ $value | humanize1024 }}`}}B/s."
       summary: "Ceph recovery bandwidth exceeds 10 GB/s — inter-AZ traffic impact likely"
 {{- end }}
 
