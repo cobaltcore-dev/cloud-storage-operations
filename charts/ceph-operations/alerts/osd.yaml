@@ -276,4 +276,25 @@ groups:
       description: "OSD `{{`{{ $labels.ceph_daemon }}`}}` on storage node `{{`{{ $labels.hostname }}`}}` deviates by more than 30% from average PG count."
       summary: "PGs are not balanced across OSDs"
 {{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephRecoveryTrafficHigh | default false) }}
+  - alert: CephRecoveryTrafficHigh
+    expr: sum(rate(ceph_osd_recovery_bytes[5m])) > 10737418240  # 10 GB/s
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Ceph recovery bandwidth exceeds 10 GB/s — inter-AZ traffic impact likely"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephRecoveryTrafficCritical | default false) }}
+  - alert: CephRecoveryTrafficCritical
+    expr: sum(rate(ceph_osd_recovery_bytes[5m])) > 53687091200  # 50 GB/s
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      description: "Cluster recovery bandwidth is {{ $value | humanizeBytes }}/s. This matches the Sep 2026 incident threshold. Immediate action required."
+      summary: "Ceph recovery bandwidth critical - inter-AZ links at risk"
+{{- end }}
 {{- end }}
