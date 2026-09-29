@@ -242,22 +242,28 @@ groups:
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephPGBackfillQueueHigh | default false) }}
-    - alert: CephPGBackfillQueueHigh
+  - alert: CephPGBackfillQueueHigh
     expr: sum(ceph_pg_backfill_wait) > 50
     for: 5m
     labels:
       severity: warning
+      service: ceph
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Large PG backfill queue building"
       description: "{{ $value }} PGs are waiting to backfill. Recovery traffic wave incoming."
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephScrubStorm | default false) }}
-    - alert: CephScrubStorm
+  - alert: CephScrubStorm
     expr: sum(ceph_pg_scrubbing + ceph_pg_deep) > 50
     for: 5m
     labels:
       severity: warning
+      service: ceph
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Ceph scrub storm detected"
       description: "{{ $value }} PGs scrubbing simultaneously. This generates high inter-AZ read traffic. Normal baseline is 10-25 PGs."
