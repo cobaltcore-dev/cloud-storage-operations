@@ -252,7 +252,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Large PG backfill queue building"
-      description: "{{ $value }} PGs are waiting to backfill. Recovery traffic wave incoming."
+      description: "{{`{{ $value }}`}} PGs are waiting to backfill. Recovery traffic wave incoming."
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephScrubStorm | default false) }}
