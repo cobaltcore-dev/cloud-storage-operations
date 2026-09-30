@@ -79,4 +79,72 @@ groups:
       description: "The ServiceMonitor target 'rook-ceph-exporter' is not responding to Prometheus for more than 2 minutes."
       summary: "CephExporterService is having scrape issue"
 {{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDOOMKilled | default false) }}
+  - alert: "CephOSDOOMKilled"
+    expr: |
+      increase(kube_pod_container_status_restarts_total{
+        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[15m]) > 0
+      and on(pod)
+      kube_pod_container_status_last_terminated_reason{
+        namespace="rook-ceph", pod=~"rook-ceph-osd-.*",
+        reason="OOMKilled"} == 1
+    for: "1m"
+    labels:
+      service: ceph
+      severity: "warning"
+      type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "Ceph OSD OOMKilled - recovery wave incoming"
+      description: "OSD pod {{ $labels.pod }} was OOMKilled. This will trigger PG backfill and inter-AZ traffic spike.
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDPodRestartingFrequently | default false) }}
+  - alert: "CephOSDPodRestartingFrequently"
+    expr: |
+      increase(kube_pod_container_status_restarts_total{
+        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[1h]) > 1
+    for: "5m"
+    labels:
+      service: ceph
+      severity: "warning"
+      type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "Ceph OSD pod restarting frequently"
+      description: "OSD pod {{ $labels.pod }} has restarted {{ $value }} times in the last hour."
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDRestartingDaily | default false) }}
+  - alert: "CephOSDRestartingDaily"
+    expr: |
+      increase(kube_pod_container_status_restarts_total{
+        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[24h]) >= 2
+    for: "5m"
+    labels:
+      service: ceph
+      severity: "critical"
+      type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "Ceph OSD restarting multiple times per day"
+      description: "OSD pod {{ $labels.pod }} has restarted {{ $value }} times in the last 24 hours. Immediate investigation required."
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.CephOSDRestartingWeekly | default false) }}
+  - alert: "CephOSDRestartingWeekly"
+    expr: |
+      increase(kube_pod_container_status_restarts_total{
+        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[7d]) >= 2 
+    for: "5m"
+    labels:
+      service: ceph
+      severity: "critical"
+      type: "ceph_default"
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "Ceph OSD has restarted 3+ times this week"
+      description: "OSD pod {{ $labels.pod }} has restarted {{ $value }} times in 7 days. Root cause not fixed — check OMAP bloat and memory limits."
+{{- end }}
 {{- end }}
