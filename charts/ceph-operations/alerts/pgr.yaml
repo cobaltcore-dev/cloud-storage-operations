@@ -266,6 +266,6 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Ceph scrub storm detected"
-      description: "{{ $value }} PGs scrubbing simultaneously. This generates high inter-AZ read traffic. Normal baseline is 10-25 PGs."
+      description: "{{`{{ $value }}`}} PGs scrubbing simultaneously. This generates high inter-AZ read traffic. Normal baseline is 10-25 PGs."
 {{- end }}
 {{- end }}
