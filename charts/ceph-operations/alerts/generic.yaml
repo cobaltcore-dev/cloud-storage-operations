@@ -82,13 +82,7 @@ groups:
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDOOMKilled | default false) }}
   - alert: "CephOSDOOMKilled"
-    expr: |
-      increase(kube_pod_container_status_restarts_total{
-        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[15m]) > 0
-      and on(pod)
-      kube_pod_container_status_last_terminated_reason{
-        namespace="rook-ceph", pod=~"rook-ceph-osd-.*",
-        reason="OOMKilled"} == 1
+    expr: "(increase(kube_pod_container_status_restarts_total{namespace=\"rook-ceph\", pod=~\"rook-ceph-osd-.*\"}[15m]) > 0) and on(pod) (kube_pod_container_status_last_terminated_reason{namespace=\"rook-ceph\", pod=~\"rook-ceph-osd-.*\", reason=\"OOMKilled\"} == 1)"
     for: "1m"
     labels:
       service: ceph
@@ -102,9 +96,7 @@ groups:
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDPodRestartingFrequently | default false) }}
   - alert: "CephOSDPodRestartingFrequently"
-    expr: |
-      increase(kube_pod_container_status_restarts_total{
-        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[1h]) > 1
+    expr: "increase(kube_pod_container_status_restarts_total{namespace=\"rook-ceph\", pod=~\"rook-ceph-osd-.*\"}[1h]) > 1"
     for: "5m"
     labels:
       service: ceph
@@ -118,9 +110,7 @@ groups:
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDRestartingDaily | default false) }}
   - alert: "CephOSDRestartingDaily"
-    expr: |
-      increase(kube_pod_container_status_restarts_total{
-        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[24h]) >= 2
+    expr: "increase(kube_pod_container_status_restarts_total{namespace=\"rook-ceph\", pod=~\"rook-ceph-osd-.*\"}[24h]) >= 2"
     for: "5m"
     labels:
       service: ceph
@@ -134,9 +124,7 @@ groups:
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDRestartingWeekly | default false) }}
   - alert: "CephOSDRestartingWeekly"
-    expr: |
-      increase(kube_pod_container_status_restarts_total{
-        namespace="rook-ceph", pod=~"rook-ceph-osd-.*"}[7d]) >= 2 
+    expr: "increase(kube_pod_container_status_restarts_total{namespace=\"rook-ceph\", pod=~\"rook-ceph-osd-.*\"}[7d]) >= 2"
     for: "5m"
     labels:
       service: ceph
