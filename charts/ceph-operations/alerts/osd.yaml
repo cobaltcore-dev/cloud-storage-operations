@@ -288,7 +288,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Cluster recovery bandwidth is `{{`{{ $value | humanizeBytes }}`}}`B/s."
-      summary: "Ceph recovery bandwidth exceeds 10 GB/s — inter-AZ traffic impact likely"
+      summary: "Ceph recovery bandwidth exceeds 10 GB/s, inter-AZ traffic impact likely"
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephRecoveryTrafficCritical | default false) }}
@@ -302,6 +302,6 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       description: "Cluster recovery bandwidth is `{{`{{ $value | humanizeBytes }}`}}`B/s."
-      summary: "Ceph recovery bandwidth exceeds 50 GB/s - inter-AZ links at risk"
+      summary: "Ceph recovery bandwidth exceeds 50 GB/s, inter-AZ links at risk"
 {{- end }}
 {{- end }}
