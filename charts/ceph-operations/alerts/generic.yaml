@@ -91,7 +91,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Ceph OSD OOMKilled - recovery wave incoming"
-      description: "OSD pod {{`{{ $labels.pod}}`}} was OOMKilled. This will trigger PG backfill and inter-AZ traffic spike."
+      description: "OSD pod `{{`{{ $labels.pod }}`}}` was OOMKilled. This will trigger PG backfill and inter-AZ traffic spike."
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDPodRestartingFrequently | default false) }}
@@ -105,7 +105,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Ceph OSD pod restarting frequently"
-      description: "OSD pod {{`{{ $labels.pod }}`}} has restarted multiple times in the last hour."
+      description: "OSD pod `{{`{{ $labels.pod }}`}}` has restarted multiple times in the last hour."
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDRestartingDaily | default false) }}
@@ -119,7 +119,7 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Ceph OSD restarting multiple times per day"
-      description: "OSD pod {{`{{ $labels.pod }}`}} has restarted multiple times in the last 24 hours. Immediate investigation required."
+      description: "OSD pod `{{`{{ $labels.pod }}`}}` has restarted multiple times in the last 24 hours. Immediate investigation required."
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephOSDRestartingWeekly | default false) }}
@@ -133,6 +133,6 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Ceph OSD has restarted 3+ times this week"
-      description: "OSD pod {{`{{ $labels.pod }}`}} has restarted multiple times in 7 days. Root cause not fixed — check OMAP bloat and memory limits."
+      description: "OSD pod `{{`{{ $labels.pod }}`}}` has restarted multiple times in 7 days. Root cause not fixed — check OMAP bloat and memory limits."
 {{- end }}
 {{- end }}
