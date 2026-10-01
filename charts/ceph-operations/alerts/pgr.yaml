@@ -196,7 +196,7 @@ groups:
       summary: "The set of OSDs for this PG has just changed and IO is temporarily paused until the previous interval’s leases expire."
 {{- end }}
 
-{{- if not (.Values.prometheusRules.disabled.CephPGCreating | default false) }}
+{{- if not (.Values.prometheusRules.disabled.CephPGLaggy | default false) }}
   - alert: CephPGLaggy
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_laggy) > 0
     for: 15m
@@ -211,7 +211,7 @@ groups:
       summary: "A replica is not acknowledging new leases from the primary in a timely fashion; IO is temporarily paused."
 {{- end }}
 
-{{- if not (.Values.prometheusRules.disabled.CephPGCreating | default false) }}
+{{- if not (.Values.prometheusRules.disabled.CephPGPeering | default false) }}
   - alert: CephPGPeering
     expr: ceph_pool_metadata * on(pool_id,instance) group_left() (ceph_pg_peering) > 0
     for: 15m
@@ -252,12 +252,12 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Large PG backfill queue building"
-      description: "{{`{{ $value }}`}} PGs are waiting to backfill. Recovery traffic wave incoming."
+      description: "`{{`{{ $value }}`}}` PGs are waiting to backfill. Recovery traffic wave incoming."
 {{- end }}
 
 {{- if not (.Values.prometheusRules.disabled.CephScrubStorm | default false) }}
   - alert: CephScrubStorm
-    expr: sum(ceph_pg_scrubbing + ceph_pg_deep) > 50
+    expr: sum(ceph_pg_scrubbing) + sum(ceph_pg_deep) > 50
     for: 5m
     labels:
       severity: warning
@@ -266,6 +266,6 @@ groups:
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
       summary: "Ceph scrub storm detected"
-      description: "{{`{{ $value }}`}} PGs scrubbing simultaneously. This generates high inter-AZ read traffic. Normal baseline is 10-25 PGs."
+      description: "`{{`{{ $value }}`}}` PGs scrubbing simultaneously. This generates high inter-AZ read traffic. Normal baseline is 10-25 PGs."
 {{- end }}
 {{- end }}
