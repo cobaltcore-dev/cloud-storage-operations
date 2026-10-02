@@ -200,4 +200,26 @@ groups:
       summary: "RGW request queue growing on {{`{{ $labels.instance }}`}}"
       description: "RGW queue length is {{`{{ $value }}`}} — monitor for further increase"
 {{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.RGWHermesAuditOwnerQuotaHigh | default false) }}
+  - alert: RGWHermesAuditOwnerQuotaHigh
+    expr: |
+      (
+        max by (user) (radosgw_user_data_size_bytes)
+        / max by (user) (radosgw_usage_user_quota_size > 0)
+      ) * 100 > 80
+      and on (user)
+      max by (user) (
+        label_replace(radosgw_usage_bucket_size{bucket="hermes-audit"}, "user", "$1$$$1", "owner", "([^$]+)\\$.*")
+      )
+    for: 15m
+    labels:
+      service: ceph
+      severity: warning
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "Owner of hermes-audit bucket at {{`{{ $value | humanize }}`}}% of its user quota"
+      description: "RGW user {{`{{ $labels.user }}`}} owns the hermes-audit bucket and is at {{`{{ $value | humanize }}`}}% of its user quota. At 100% every write to hermes-audit fails with 413 QuotaExceeded. Raise it with `radosgw-admin quota set --quota-scope=user --uid=<uid> --max-size=<size>`."
+{{- end }}
 {{- end }}
