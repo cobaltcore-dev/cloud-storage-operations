@@ -2,7 +2,10 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "ceph-rgw-cluster-instance",
-    "project": "ceph-storage"
+    "createdAt": "2025-08-29T21:33:01.099352719Z",
+    "updatedAt": "2025-08-29T21:33:01.099352719Z",
+    "version": 0,
+    "project": "compute-storage-api"
   },
   "spec": {
     "display": {
@@ -38,7 +41,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "count(ceph_rgw_metadata)",
+                    "query": "count(ceph_rgw_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
                   }
                 }
@@ -81,7 +84,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "count(ceph_rgw_metadata) - sum(ceph_rgw_metadata)",
+                    "query": "count(ceph_rgw_metadata{cluster_type=\"ceph\"}) - sum(ceph_rgw_metadata{cluster_type=\"ceph\"})",
                     "seriesNameFormat": "Down"
                   }
                 }
@@ -143,7 +146,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum (\n  rate(radosgw_requests_by_method{method=~\"GET|HEAD\"}[$__rate_interval])\n)",
+                    "query": "sum (\n  rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=~\"GET|HEAD\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "Read OPs"
                   }
                 }
@@ -159,7 +162,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum (\n  rate(radosgw_requests_by_method{method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
+                    "query": "sum (\n  rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=~\"PUT|POST|DELETE\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "Write OPs"
                   }
                 }
@@ -206,7 +209,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (method) (rate(radosgw_requests_by_method[$__rate_interval]))",
+                    "query": "sum by (method) (rate(radosgw_requests_by_method{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "{{method}}"
                   }
                 }
@@ -253,7 +256,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (status) (rate(radosgw_requests_by_status_detailed[$__rate_interval]))",
+                    "query": "sum by (status) (rate(radosgw_requests_by_status_detailed{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "{{status}}"
                   }
                 }
@@ -312,7 +315,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (increase(radosgw_bytes_received[$__range]))",
+                    "query": "sum by (cluster) (increase(radosgw_bytes_received{cluster_type=\"ceph\"}[$__range]))",
                     "seriesNameFormat": "Uploaded"
                   }
                 }
@@ -324,7 +327,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (increase(radosgw_bytes_sent[$__range]))",
+                    "query": "sum by (cluster) (increase(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__range]))",
                     "seriesNameFormat": "Downloaded"
                   }
                 }
@@ -374,7 +377,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum (ceph_pool_objects) by (pool_id)",
+                    "query": "sum (ceph_pool_objects{cluster_type=\"ceph\"}) by (pool_id)",
                     "seriesNameFormat": "pool id {{ pool_id }}"
                   }
                 }
@@ -426,7 +429,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(ceph_cluster_total_bytes - ceph_cluster_total_used_bytes) / ceph_cluster_total_bytes",
+                    "query": "(ceph_cluster_total_bytes{cluster_type=\"ceph\"} - ceph_cluster_total_used_bytes{cluster_type=\"ceph\"}) / ceph_cluster_total_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": " "
                   }
                 }
@@ -473,7 +476,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_bytes",
+                    "query": "ceph_cluster_total_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -525,7 +528,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_used_bytes / ceph_cluster_total_bytes",
+                    "query": "ceph_cluster_total_used_bytes{cluster_type=\"ceph\"} / ceph_cluster_total_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": " "
                   }
                 }
@@ -573,7 +576,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "ceph_cluster_total_used_bytes",
+                    "query": "ceph_cluster_total_used_bytes{cluster_type=\"ceph\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -638,7 +641,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"GET\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"GET\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "GET {{cluster}}"
                   }
                 }
@@ -650,7 +653,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"PUT\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"PUT\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "PUT {{cluster}}"
                   }
                 }
@@ -662,7 +665,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"POST\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"POST\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "POST {{cluster}}"
                   }
                 }
@@ -674,7 +677,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{method=\"DELETE\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{method=\"DELETE\"}[$__rate_interval])\n)",
+                    "query": "sum by (cluster) (\n  rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"DELETE\"}[$__rate_interval])\n) /\nsum by (cluster) (\n  rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"DELETE\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "DELETE {{cluster}}"
                   }
                 }
@@ -724,7 +727,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "(sum by (cluster) (rate(radosgw_bytes_sent[$__rate_interval])) or on() vector(0)) +\n(sum by (cluster) (rate(radosgw_bytes_received[$__rate_interval])) or on() vector(0))",
+                    "query": "(sum by (cluster) (rate(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0)) +\n(sum by (cluster) (rate(radosgw_bytes_received{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0))",
                     "seriesNameFormat": "{{ cluster }}"
                   }
                 }
@@ -771,7 +774,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (rate(radosgw_total_requests[$__rate_interval]))",
+                    "query": "sum by (cluster) (rate(radosgw_total_requests{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "{{ cluster }}"
                   }
                 }
@@ -818,7 +821,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (rate(radosgw_bytes_sent[$__rate_interval]))",
+                    "query": "sum by (cluster) (rate(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "Data Sent"
                   }
                 }
@@ -834,7 +837,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (cluster) (rate(radosgw_bytes_received[$__rate_interval]))",
+                    "query": "sum by (cluster) (rate(radosgw_bytes_received{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "Data Received"
                   }
                 }
@@ -884,7 +887,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests{cluster_type=\"ceph\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -932,7 +935,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"GET\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"GET\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"GET\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"GET\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -982,7 +985,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_detailed[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_detailed{cluster_type=\"ceph\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1030,7 +1033,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(rate(ceph_rgw_get_b[$__rate_interval]))",
+                    "query": "sum(rate(ceph_rgw_op_get_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "GETs"
                   }
                 }
@@ -1046,7 +1049,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(rate(ceph_rgw_put_b[$__rate_interval]))",
+                    "query": "sum(rate(ceph_rgw_op_put_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "PUTs"
                   }
                 }
@@ -1095,7 +1098,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  (sum by (pod) (rate(radosgw_bytes_sent[$__rate_interval])) or on() vector(0)) +\n  (sum by (pod) (rate(radosgw_bytes_received[$__rate_interval])) or on() vector(0)),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  (sum by (pod) (rate(radosgw_bytes_sent{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0)) +\n  (sum by (pod) (rate(radosgw_bytes_received{cluster_type=\"ceph\"}[$__rate_interval])) or on() vector(0)),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1143,7 +1146,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"PUT\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"PUT\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"PUT\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"PUT\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1193,7 +1196,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_detailed[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_errors_detailed{cluster_type=\"ceph\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "Requests Failed {{ pod_id }}"
                   }
                 }
@@ -1209,7 +1212,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_by_method{method=\"GET\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=\"GET\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "GETs {{ pod_id }}"
                   }
                 }
@@ -1225,7 +1228,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum by (pod) (\n  rate(radosgw_requests_by_method{method=\"PUT\"}[$__rate_interval])\n)",
+                    "query": "sum by (pod) (\n  rate(radosgw_requests_by_method{cluster_type=\"ceph\", method=\"PUT\"}[$__rate_interval])\n)",
                     "seriesNameFormat": "PUTs {{ pod }}"
                   }
                 }
@@ -1241,7 +1244,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests[$__rate_interval])\n  ) -\n  sum by (pod) (\n    rate(radosgw_total_requests{method=~\"GET|PUT\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_total_requests{cluster_type=\"ceph\"}[$__rate_interval])\n  ) -\n  sum by (pod) (\n    rate(radosgw_total_requests{cluster_type=\"ceph\", method=~\"GET|PUT\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "Other {{ pod_id }}"
                   }
                 }
@@ -1289,7 +1292,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  rate(ceph_rgw_get_b[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
+                    "query": "label_replace(\n  rate(ceph_rgw_op_get_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]),\n  \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\"\n)",
                     "seriesNameFormat": "GETs {{ rgw_host }}"
                   }
                 }
@@ -1305,7 +1308,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(rate(ceph_rgw_put_b[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
+                    "query": "label_replace(rate(ceph_rgw_op_put_obj_bytes{cluster_type=\"ceph\"}[$__rate_interval]), \"rgw_host\", \"$1\", \"pod\", \"rook-ceph-exporter-(.*)-.*-.*\")",
                     "seriesNameFormat": "PUTs {{ rgw_host }}"
                   }
                 }
@@ -1353,7 +1356,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"DELETE\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"DELETE\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"DELETE\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"DELETE\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1401,7 +1404,7 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{method=\"POST\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{method=\"POST\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
+                    "query": "label_replace(\n  sum by (pod) (\n    rate(radosgw_requests_duration_sum{cluster_type=\"ceph\", method=\"POST\"}[$__rate_interval])\n  ) /\n  sum by (pod) (\n    rate(radosgw_requests_duration_count{cluster_type=\"ceph\", method=\"POST\"}[$__rate_interval])\n  ),\n  \"pod_id\", \"$1\", \"pod\", \"rook-ceph-rgw-ceph-objectstore-.*-[0-9]-(.*)\"\n)",
                     "seriesNameFormat": "{{ pod_id }}"
                   }
                 }
@@ -1444,142 +1447,8 @@
                       "kind": "PrometheusDatasource"
                     },
                     "minStep": "",
-                    "query": "sum(ceph_rgw_qlen)",
+                    "query": "sum(ceph_rgw_qlen{cluster_type=\"ceph\"})",
                     "seriesNameFormat": ""
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "697fa00656d844d9b9b8c262e3aece86": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "KMS Fetch OP vs Total OP"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {}
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum(\n  rate(ceph_rgw_kms_fetch_lat_count[5m])\n)",
-                    "seriesNameFormat": "Fetch"
-                  }
-                }
-              }
-            },
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum(rate(rgw_ops_status_total[5m]))",
-                    "seriesNameFormat": "Total RGW OPs"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "92c6069bf53d4c6c949c1caceeaa654f": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "Cache OPs"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {}
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum(rate(ceph_kms_cache_hit[5m]))",
-                    "seriesNameFormat": "Hit"
-                  }
-                }
-              }
-            },
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum(rate(ceph_kms_cache_miss[5m]))",
-                    "seriesNameFormat": "Miss"
-                  }
-                }
-              }
-            },
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum(rate(ceph_kms_cache_expired[5m]))",
-                    "seriesNameFormat": "Expired"
-                  }
-                }
-              }
-            },
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "sum(rate(ceph_kms_cache_clear[5m]))",
-                    "seriesNameFormat": "Clear"
-                  }
-                }
-              }
-            }
-          ]
-        }
-      },
-      "e9569dd2968f4f66b33ab4d9296f9199": {
-        "kind": "Panel",
-        "spec": {
-          "display": {
-            "name": "KMS Fetch Latency"
-          },
-          "plugin": {
-            "kind": "TimeSeriesChart",
-            "spec": {
-              "yAxis": {
-                "show": true,
-                "label": "",
-                "format": {
-                  "unit": "seconds"
-                }
-              }
-            }
-          },
-          "queries": [
-            {
-              "kind": "TimeSeriesQuery",
-              "spec": {
-                "plugin": {
-                  "kind": "PrometheusTimeSeriesQuery",
-                  "spec": {
-                    "query": "rate(ceph_rgw_kms_fetch_lat_sum[5m]) / rate(ceph_rgw_kms_fetch_lat_count[5m])",
-                    "seriesNameFormat": "{{ pod }}"
                   }
                 }
               }
@@ -1604,7 +1473,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(rate(ceph_rgw_kms_error_permanent[5m]))",
+                    "query": "sum(rate(ceph_rgw_kms_error_permanent{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "Permanent"
                   }
                 }
@@ -1616,7 +1485,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(rate(ceph_rgw_kms_error_transient[5m]))",
+                    "query": "sum(rate(ceph_rgw_kms_error_transient{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "Transient"
                   }
                 }
@@ -1628,7 +1497,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(rate(ceph_rgw_kms_error_secret_store[5m]))",
+                    "query": "sum(rate(ceph_rgw_kms_error_secret_store{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "Secret Store"
                   }
                 }
@@ -1637,11 +1506,11 @@
           ]
         }
       },
-      "a105a04104e840c7b54a621a022d596f": {
+      "697fa00656d844d9b9b8c262e3aece86": {
         "kind": "Panel",
         "spec": {
           "display": {
-            "name": "Cache Capacity vs. Size"
+            "name": "KMS Fetch OP vs Total OP"
           },
           "plugin": {
             "kind": "TimeSeriesChart",
@@ -1654,8 +1523,8 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "min(ceph_kms_cache_capacity)",
-                    "seriesNameFormat": "Min Capacity"
+                    "query": "sum(\n  rate(ceph_rgw_kms_fetch_lat_count{cluster_type=\"ceph\"}[$__rate_interval])\n)",
+                    "seriesNameFormat": "Fetch"
                   }
                 }
               }
@@ -1666,8 +1535,8 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "ceph_kms_cache_size",
-                    "seriesNameFormat": "Size {{instance}}"
+                    "query": "sum(rate(ceph_rgw_req{cluster_type=\"ceph\"}[$__rate_interval]))",
+                    "seriesNameFormat": "Total RGW OPs"
                   }
                 }
               }
@@ -1692,8 +1561,108 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "ceph_rgw_kms_error_secret_store > 0",
+                    "query": "ceph_rgw_kms_error_secret_store{cluster_type=\"ceph\"} > 0",
                     "seriesNameFormat": "Secret Store"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "92c6069bf53d4c6c949c1caceeaa654f": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Cache OPs"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {}
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_hit{cluster_type=\"ceph\"}[$__rate_interval]))",
+                    "seriesNameFormat": "Hit"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_miss{cluster_type=\"ceph\"}[$__rate_interval]))",
+                    "seriesNameFormat": "Miss"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_expired{cluster_type=\"ceph\"}[$__rate_interval]))",
+                    "seriesNameFormat": "Expired"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "sum(rate(ceph_kms_cache_clear{cluster_type=\"ceph\"}[$__rate_interval]))",
+                    "seriesNameFormat": "Clear"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "a105a04104e840c7b54a621a022d596f": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "Cache Capacity vs. Size"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {}
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "min(ceph_kms_cache_capacity{cluster_type=\"ceph\"})",
+                    "seriesNameFormat": "Min Capacity"
+                  }
+                }
+              }
+            },
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "ceph_kms_cache_size{cluster_type=\"ceph\"}",
+                    "seriesNameFormat": "Size {{instance}}"
                   }
                 }
               }
@@ -1710,21 +1679,21 @@
           "plugin": {
             "kind": "TimeSeriesChart",
             "spec": {
-              "yAxis": {
-                "show": true,
-                "label": "",
-                "format": {
-                  "unit": "percent-decimal"
-                },
-                "min": 0,
-                "max": 1
-              },
               "thresholds": {
                 "steps": [
                   {
                     "value": 1
                   }
                 ]
+              },
+              "yAxis": {
+                "format": {
+                  "unit": "percent-decimal"
+                },
+                "label": "",
+                "max": 1,
+                "min": 0,
+                "show": true
               }
             }
           },
@@ -1735,8 +1704,42 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "rate(ceph_kms_cache_hit[5m]) / (rate(ceph_kms_cache_hit[5m]) + rate(ceph_kms_cache_miss[5m]))",
+                    "query": "rate(ceph_kms_cache_hit{cluster_type=\"ceph\"}[$__rate_interval]) / (rate(ceph_kms_cache_hit{cluster_type=\"ceph\"}[$__rate_interval]) + rate(ceph_kms_cache_miss{cluster_type=\"ceph\"}[$__rate_interval]))",
                     "seriesNameFormat": "Hit / (Hit + Miss) {{instance}}"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      "e9569dd2968f4f66b33ab4d9296f9199": {
+        "kind": "Panel",
+        "spec": {
+          "display": {
+            "name": "KMS Fetch Latency"
+          },
+          "plugin": {
+            "kind": "TimeSeriesChart",
+            "spec": {
+              "yAxis": {
+                "format": {
+                  "unit": "seconds"
+                },
+                "label": "",
+                "show": true
+              }
+            }
+          },
+          "queries": [
+            {
+              "kind": "TimeSeriesQuery",
+              "spec": {
+                "plugin": {
+                  "kind": "PrometheusTimeSeriesQuery",
+                  "spec": {
+                    "query": "rate(ceph_rgw_kms_fetch_lat_sum{cluster_type=\"ceph\"}[$__rate_interval]) / rate(ceph_rgw_kms_fetch_lat_count{cluster_type=\"ceph\"}[$__rate_interval])",
+                    "seriesNameFormat": "{{ pod }}"
                   }
                 }
               }
@@ -2079,8 +2082,7 @@
                 "$ref": "#/spec/panels/bfd41d7da08c43dcb6a0d4ab7e407e27"
               }
             }
-          ],
-          "repeatVariable": ""
+          ]
         }
       }
     ],

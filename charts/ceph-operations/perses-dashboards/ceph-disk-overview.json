@@ -2,7 +2,10 @@
   "kind": "Dashboard",
   "metadata": {
     "name": "ceph-disk-overview",
-    "project": "ceph-storage"
+    "createdAt": "2026-09-03T14:10:04.083328168Z",
+    "updatedAt": "2026-09-03T14:10:04.083328168Z",
+    "version": 0,
+    "project": "compute-storage-api"
   },
   "spec": {
     "display": {
@@ -100,7 +103,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "ceph_health_detail{name=~\"BLUESTORE_SPURIOUS_READ_ERRORS|BLOCK_DEVICE_STALLED_READ_ALERT|DEVICE_HEALTH_IN_USE|DEVICE_HEALTH_TOOMANY\"} > 0",
+                    "query": "ceph_health_detail{cluster_type=\"ceph\", name=~\"BLUESTORE_SPURIOUS_READ_ERRORS|BLOCK_DEVICE_STALLED_READ_ALERT|DEVICE_HEALTH_IN_USE|DEVICE_HEALTH_TOOMANY\"} > 0",
                     "seriesNameFormat": "{{ name }}"
                   }
                 }
@@ -208,7 +211,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(\n  10,\n  smart_attributes{attribute=\"write_gigabytes_processed\", node=~\"$node\", disk=~\"$disk\"} * 1073741824\n)"
+                    "query": "topk(\n  10,\n  smart_attributes{cluster_type=\"ceph\", attribute=\"write_gigabytes_processed\", node=~\"$node\", disk=~\"$disk\"} * 1073741824\n)"
                   }
                 }
               }
@@ -315,7 +318,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(\n  10,\n  smart_attributes{attribute=\"read_gigabytes_processed\", node=~\"$node\", disk=~\"$disk\"} * 1073741824\n)"
+                    "query": "topk(\n  10,\n  smart_attributes{cluster_type=\"ceph\", attribute=\"read_gigabytes_processed\", node=~\"$node\", disk=~\"$disk\"} * 1073741824\n)"
                   }
                 }
               }
@@ -337,10 +340,6 @@
                 {
                   "enableSorting": true,
                   "name": "node"
-                },
-                {
-                  "enableSorting": true,
-                  "name": "disk"
                 },
                 {
                   "enableSorting": true,
@@ -370,6 +369,11 @@
                   "header": "Avg Power Cycle Count",
                   "name": "value #3",
                   "sort": "desc"
+                },
+                {
+                  "enableSorting": true,
+                  "name": "disk",
+                  "hide": true
                 },
                 {
                   "hide": true,
@@ -445,7 +449,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "avg(ssd_life_used_percentage{node=~\"$node\"}) by (node)"
+                    "query": "avg(ssd_life_used_percentage{cluster_type=\"ceph\", node=~\"$node\"}) by (node)"
                   }
                 }
               }
@@ -456,7 +460,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "avg(smart_attributes{attribute=\"power_on_hours\", node=~\"$node\"}) by (node)"
+                    "query": "avg(smart_attributes{cluster_type=\"ceph\", attribute=\"power_on_hours\", node=~\"$node\"}) by (node)"
                   }
                 }
               }
@@ -467,7 +471,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "avg(smart_attributes{attribute=\"power_cycle_count\", node=~\"$node\"}) by (node)"
+                    "query": "avg(smart_attributes{cluster_type=\"ceph\", attribute=\"power_cycle_count\", node=~\"$node\"}) by (node)"
                   }
                 }
               }
@@ -507,7 +511,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "topk(\n  10, avg(disk_temperature_celsius{node=~\"$node\"}) by (node)\n)",
+                    "query": "topk(\n  10, avg(disk_temperature_celsius{cluster_type=\"ceph\", node=~\"$node\"}) by (node)\n)",
                     "seriesNameFormat": "{{ node }}"
                   }
                 }
@@ -654,7 +658,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "disk_error_counts_total{node=~\"$node\"} > 0",
+                    "query": "disk_error_counts_total{cluster_type=\"ceph\", node=~\"$node\"} > 0",
                     "seriesNameFormat": ""
                   }
                 }
@@ -666,7 +670,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"total_uncorrected_read_errors\", node=~\"$node\"} > 0"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"total_uncorrected_read_errors\", node=~\"$node\"} > 0"
                   }
                 }
               }
@@ -677,7 +681,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"total_uncorrected_write_errors\", node=~\"$node\"} > 0"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"total_uncorrected_write_errors\", node=~\"$node\"} > 0"
                   }
                 }
               }
@@ -688,7 +692,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"total_uncorrected_verify_errors\", node=~\"$node\"} > 0"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"total_uncorrected_verify_errors\", node=~\"$node\"} > 0"
                   }
                 }
               }
@@ -724,7 +728,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "rate(disk_error_counts_total{node=~\"$node\"}[$__rate_interval])",
+                    "query": "rate(disk_error_counts_total{cluster_type=\"ceph\", node=~\"$node\"}[$__rate_interval])",
                     "seriesNameFormat": "{{node}} - {{disk}} - {{osd_id}}"
                   }
                 }
@@ -756,7 +760,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(disk_error_counts_total{node=~\"$node\"})",
+                    "query": "sum(disk_error_counts_total{cluster_type=\"ceph\", node=~\"$node\"})",
                     "seriesNameFormat": "Total"
                   }
                 }
@@ -768,7 +772,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(disk_error_counts_total{node=~\"$node\", disk=~\"/dev/nvme(.*)\"})",
+                    "query": "sum(disk_error_counts_total{cluster_type=\"ceph\", node=~\"$node\", disk=~\"/dev/nvme(.*)\"})",
                     "seriesNameFormat": "NVMes"
                   }
                 }
@@ -780,7 +784,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(disk_error_counts_total{node=~\"$node\", disk=~\"/dev/sd(.*)\"})",
+                    "query": "sum(disk_error_counts_total{cluster_type=\"ceph\", node=~\"$node\", disk=~\"/dev/sd(.*)\"})",
                     "seriesNameFormat": "HDDs"
                   }
                 }
@@ -812,7 +816,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\"})",
+                    "query": "sum(smart_attributes{cluster_type=\"ceph\", attribute=\"grown_defects_count\", node=~\"$node\"})",
                     "seriesNameFormat": "Total"
                   }
                 }
@@ -824,7 +828,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/nvme(.*)\"})",
+                    "query": "sum(smart_attributes{cluster_type=\"ceph\", attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/nvme(.*)\"})",
                     "seriesNameFormat": "NVME"
                   }
                 }
@@ -836,7 +840,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "sum(smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/sd(.*)\"})",
+                    "query": "sum(smart_attributes{cluster_type=\"ceph\", attribute=\"grown_defects_count\", node=~\"$node\", disk=~\"/dev/sd(.*)\"})",
                     "seriesNameFormat": "SAS/SCSI"
                   }
                 }
@@ -971,7 +975,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"grown_defects_count\", node=~\"$node\"} > 0"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"grown_defects_count\", node=~\"$node\"} > 0"
                   }
                 }
               }
@@ -982,7 +986,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "disk_reallocated_sectors{node=~\"$node\"} > 0"
+                    "query": "disk_reallocated_sectors{cluster_type=\"ceph\", node=~\"$node\"} > 0"
                   }
                 }
               }
@@ -1021,14 +1025,14 @@
                   "width": "auto"
                 },
                 {
-                  "name": "vendor_id",
+                  "enableSorting": true,
                   "header": "Vendor ID",
-                  "enableSorting": true
+                  "name": "vendor_id"
                 },
                 {
-                  "name": "subsystem_vendor_id",
+                  "enableSorting": true,
                   "header": "Subsystem Vendor ID",
-                  "enableSorting": true
+                  "name": "subsystem_vendor_id"
                 },
                 {
                   "enableSorting": true,
@@ -1068,8 +1072,8 @@
                 },
                 {
                   "header": "Vendor",
-                  "name": "vendor",
-                  "hide": true
+                  "hide": true,
+                  "name": "vendor"
                 },
                 {
                   "hide": true,
@@ -1193,7 +1197,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "disk_info{node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                    "query": "disk_info{cluster_type=\"ceph\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1204,7 +1208,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "disk_error_counts_total{node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                    "query": "disk_error_counts_total{cluster_type=\"ceph\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1215,7 +1219,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"percentage_used\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"percentage_used\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1226,7 +1230,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"media_wearout_indicator\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"media_wearout_indicator\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1237,7 +1241,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"nvme_media_errors\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"nvme_media_errors\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1248,7 +1252,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"nvme_error_log_entries\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"nvme_error_log_entries\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1259,7 +1263,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "smart_attributes{attribute=\"critical_warning\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}",
+                    "query": "smart_attributes{cluster_type=\"ceph\", attribute=\"critical_warning\", node=~\"$node\", disk=~\"/dev/nvme(.*)\", disk=~\"$disk\"}",
                     "seriesNameFormat": ""
                   }
                 }
@@ -1424,7 +1428,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "disk_info{node=~\"$node\", disk=~\"/dev/sd(.*)\", disk=~\"$disk\"}"
+                    "query": "disk_info{cluster_type=\"ceph\", node=~\"$node\", disk=~\"/dev/sd(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1435,7 +1439,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "disk_error_counts_total{node=~\"$node\", disk=~\"/dev/sd(.*)\", disk=~\"$disk\"}"
+                    "query": "disk_error_counts_total{cluster_type=\"ceph\", node=~\"$node\", disk=~\"/dev/sd(.*)\", disk=~\"$disk\"}"
                   }
                 }
               }
@@ -1466,7 +1470,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "count(disk_capacity_gb{node=~\"$node\"})",
+                    "query": "count(disk_capacity_gb{cluster_type=\"ceph\", node=~\"$node\"})",
                     "seriesNameFormat": "Total"
                   }
                 }
@@ -1478,7 +1482,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "count(disk_capacity_gb{disk=~\"/dev/nvme(.*)\", node=~\"$node\"})",
+                    "query": "count(disk_capacity_gb{cluster_type=\"ceph\", disk=~\"/dev/nvme(.*)\", node=~\"$node\"})",
                     "seriesNameFormat": "NVME"
                   }
                 }
@@ -1490,7 +1494,7 @@
                 "plugin": {
                   "kind": "PrometheusTimeSeriesQuery",
                   "spec": {
-                    "query": "count(disk_capacity_gb{disk=~\"/dev/sd(.*)\", node=~\"$node\"})",
+                    "query": "count(disk_capacity_gb{cluster_type=\"ceph\", disk=~\"/dev/sd(.*)\", node=~\"$node\"})",
                     "seriesNameFormat": "SAS/SCSI"
                   }
                 }
