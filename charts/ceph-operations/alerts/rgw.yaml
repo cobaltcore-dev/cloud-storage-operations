@@ -8,12 +8,29 @@ groups:
   - alert: RGWHighServerErrorRate
     expr: |
       sum by (instance, http_status) (
-        rate(radosgw_errors_detailed{http_status=~"5.."}[5m])
+        rate(radosgw_errors_detailed{http_status=~"5..", bucket!="doit-lithium-mart-sapcc-eu-de-1"}[5m])
       ) > 50
     for: 10m
     labels:
       service: ceph
       severity: critical
+      type: ceph_default
+      {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
+    annotations:
+      summary: "High RGW 5xx error rate on {{`{{ $labels.instance }}`}}"
+      description: "RGW instance {{`{{ $labels.instance }}`}} is returning HTTP {{`{{ $labels.http_status }}`}} at {{`{{ $value | humanize }}`}} errors/s"
+{{- end }}
+
+{{- if not (.Values.prometheusRules.disabled.RGWHighServerErrorRateHDA | default false) }}
+  - alert: RGWHighServerErrorRateHDA
+    expr: |
+      sum by (instance, http_status) (
+        rate(radosgw_errors_detailed{http_status=~"5..", bucket="doit-lithium-mart-sapcc-eu-de-1"}[5m])
+      ) > 50
+    for: 10m
+    labels:
+      service: ceph
+      severity: warning
       type: ceph_default
       {{- include "cloud-storage-operations.additionalRuleLabels" . | nindent 6 }}
     annotations:
